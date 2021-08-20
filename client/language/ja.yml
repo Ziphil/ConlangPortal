@@ -1,0 +1,5 @@
+common:
+  dateFormat: "yyyy/MM/dd HH:mm"
+  shortDateFormat: "MM/dd"
+  dateUndefined: "?"
+  numberUndefined: "?"

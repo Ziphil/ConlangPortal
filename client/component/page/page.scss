@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+.spacer {
+  width: calc(100% - #{$page-horizontal-margin} * 2);
+  margin-top: $page-top-margin;
+  margin-bottom: $page-bottom-margin;
+  margin-right: $page-horizontal-margin;
+  margin-left: $page-horizontal-margin;
+  padding: 0u;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.content {
+  width: 100%;
+  max-width: $page-width;
+  margin: 0u auto;
+}

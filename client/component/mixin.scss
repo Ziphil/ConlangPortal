@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+@import "/client/component/function.scss";
+
+
+$root-size: 16px;
+
+$page-width: 2400u;
+$page-top-margin: 180u;
+$page-bottom-margin: 240u;
+$page-horizontal-margin: 96u;
+
+$header-height: 210u;
+$footer-height: 150u;
+
+$european-font-family: "EB Garamond", "Times New Roman";
+$japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
+$icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
+
+
+@mixin smartphone {
+  @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
+    @content;
+  }
+}
+
+@mixin reset-first-margin($directions: top left) {
+  @each $direction in $directions {
+    $property-name: "margin-" + $direction;
+    &:first-child {
+      #{$property-name}: 0u;
+    }
+  }
+}
