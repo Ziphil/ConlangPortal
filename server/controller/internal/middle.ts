@@ -16,7 +16,7 @@ import {
 
 
 export function verifyUser(): RequestHandler {
-  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && data && "id" in data) {
