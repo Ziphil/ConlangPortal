@@ -48,11 +48,12 @@ export default class CodePage extends Component<Props, State, Params> {
     }
   }
 
-  public renderCreateCodeForm(): ReactNode {
-    let codes = this.props.match!.params.codeString.split("-");
-    if (codes.length === 1) {
+  public renderAddEntryForm(): ReactNode {
+    let user = this.props.store!.user;
+    let codeArray = this.props.match!.params.codeString.split("-");
+    if (codeArray.length === 1 && codeArray[0] === user.code) {
       let node = (
-        <AddEntryForm userCode={codes[0]}/>
+        <AddEntryForm userCode={codeArray[0]}/>
       );
       return node;
     } else {
@@ -60,64 +61,82 @@ export default class CodePage extends Component<Props, State, Params> {
     }
   }
 
-  public render(): ReactNode {
+  public renderHead(): ReactNode {
     let codeString = this.props.match!.params.codeString;
-    let entry = this.state.entry as any;
-    if (entry !== null) {
-      let codeArray = codeString.split("-");
-      let nameArray = ("name" in entry) ? [entry.name] : [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
-      let restCodeNodes = codeArray.slice(1).map((code, index) => {
-        let restCodeNode = (
-          <Fragment key={index}>
-            <div styleName="slash"/>
-            <div styleName="code">{code}</div>
-          </Fragment>
-        );
-        return restCodeNode;
-      });
-      let restNameNodes = nameArray.slice(1).map((name, index) => {
-        let restNameNode = (
-          <Fragment key={index}>
-            <span styleName="arrow"/>
-            <span styleName="name">{name}</span>
-          </Fragment>
-        );
-        return restNameNode;
-      });
-      let node = (
-        <Page>
-          <div styleName="pane">
-            <div styleName="head">
-              <div styleName="left">
-                <div styleName="main-code">{codeArray[0]}</div>
-              </div>
-              <div styleName="right">
-                <div styleName="right-top">
-                  <div styleName="rest-code">
-                    {restCodeNodes}
-                  </div>
-                  <div styleName="separator"/>
-                  <div styleName="kind">方言</div>
-                </div>
-                <div styleName="right-bottom">
-                  <div styleName="main-name">{nameArray[0]}</div>
-                  <div styleName="rest-name">
-                    {restNameNodes}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div styleName="content">
-              (ここに様々なプロパティが入る)
+    let codeArray = codeString.split("-");
+    let restCodeNodes = codeArray.slice(1).map((code, index) => {
+      let restCodeNode = (
+        <Fragment key={index}>
+          <div styleName="slash"/>
+          <div styleName="code">{code}</div>
+        </Fragment>
+      );
+      return restCodeNode;
+    });
+    let nameNode = (() => {
+      let entry = this.state.entry as any;
+      if (entry !== null) {
+        let nameArray = ("name" in entry) ? [entry.name] : [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
+        let restNameNodes = nameArray.slice(1).map((name, index) => {
+          let restNameNode = (
+            <Fragment key={index}>
+              <span styleName="arrow"/>
+              <span styleName="name">{name}</span>
+            </Fragment>
+          );
+          return restNameNode;
+        });
+        let nameNode = (
+          <div styleName="right-bottom">
+            <div styleName="main-name">{nameArray[0]}</div>
+            <div styleName="rest-name">
+              {restNameNodes}
             </div>
           </div>
-          {this.renderCreateCodeForm()}
-        </Page>
-      );
-      return node;
-    } else {
-      return "no such code";
-    }
+        );
+        return nameNode;
+      } else {
+        return null;
+      }
+    })();
+    let rightTopNode = (
+      <div styleName="right-top">
+        <div styleName="rest-code">
+          {restCodeNodes}
+        </div>
+        <div styleName="separator"/>
+        <div styleName="kind">方言</div>
+      </div>
+    );
+    let node = (
+      <div styleName="head">
+        <div styleName="left">
+          <div styleName="main-code">{codeArray[0]}</div>
+        </div>
+        <div styleName="right">
+          {rightTopNode}
+          {nameNode}
+        </div>
+      </div>
+    );
+    return node;
+  }
+
+  public render(): ReactNode {
+    let headNode = this.renderHead();
+    let addEntryForm = this.renderAddEntryForm();
+    let node = (
+      <Page>
+        <div styleName="pane">
+          {headNode}
+          <div styleName="content">
+            (ここに多言語との関係や公式サイトへのリンクなどの情報が載せられる予定)
+          </div>
+        </div>
+        {addEntryForm}
+      </Page>
+    );
+    return node;
   }
 
   public static createCodes(codeString: string): EntryCodes {

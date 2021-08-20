@@ -17,8 +17,8 @@
 }
 
 .left {
-  width: 600u;
-  height: 600u;
+  width: 700u;
+  height: 700u;
   top: -120u;
   left: -120u;
   margin-bottom: -120u;
@@ -27,7 +27,7 @@
   padding-right: 50u;
   padding-left: 120u;
   font-family: $special-font-family;
-  font-size: 240u;
+  font-size: 220u;
   font-weight: 900;
   font-style: italic;
   text-align: center;
@@ -47,8 +47,9 @@
 }
 
 .right-top {
-  margin-top: 48u;
-  margin-right: 64u;
+  height: 150u;
+  margin-top: 64u;
+  margin-right: 80u;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -118,4 +119,10 @@
   &:first-child {
     margin-left: 0em;
   }
+}
+
+.content {
+  margin: 0u;
+  padding: 0u 64u 64u 64u;
+  text-align: center;
 }
