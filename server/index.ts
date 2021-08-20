@@ -13,6 +13,9 @@ import fs from "fs";
 import mongoose from "mongoose";
 import multer from "multer";
 import {
+  UserController
+} from "/server/controller/internal";
+import {
   MongoUtil
 } from "/server/util/mongo";
 import {
@@ -76,6 +79,7 @@ export class Main {
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
+    UserController.use(this.application);
   }
 
   private setupStatic(): void {

@@ -5,6 +5,8 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import LoginForm from "/client/component/compound/login-form";
+import RegisterForm from "/client/component/compound/register-form";
 import {
   style
 } from "/client/component/decorator";
@@ -18,7 +20,8 @@ export default class TopPage extends Component<Props, State> {
     let node = (
       <Page>
         <div styleName="top">
-          Hello, World!
+          <LoginForm/>
+          <RegisterForm/>
         </div>
       </Page>
     );

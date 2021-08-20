@@ -1,5 +1,13 @@
 //
 
+import axios from "axios";
+import {
+  AxiosInstance,
+  AxiosRequestConfig
+} from "axios";
+import {
+  AxiosResponse
+} from "axios";
 import {
   Component,
   ReactNode
@@ -16,9 +24,18 @@ import {
 import {
   GlobalStore
 } from "/client/component/store";
+import {
+  ProcessName,
+  RequestData,
+  ResponseData,
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/internal/type";
 
 
 export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Props<P, Q>, S, H> {
+
+  private static client: AxiosInstance = BaseComponent.createClient();
 
   public constructor(props?: any) {
     super(props);
@@ -44,12 +61,68 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     }
   }
 
-  protected pushPath(path: string, state?: object): void {
+  protected pushPath(path: string, state?: object, preservesPopup?: boolean): void {
     this.props.history!.push(path, state);
   }
 
-  protected replacePath(path: string, state?: object): void {
+  protected replacePath(path: string, state?: object, preservesPopup?: boolean): void {
     this.props.history!.replace(path, state);
+  }
+
+  // サーバーに POST リクエストを送り、そのリスポンスを返します。
+  // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
+  // これにより、ページ上部にエラーを示すポップアップが表示されます。
+  // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
+  protected async request<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
+    let url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
+    let method = "post" as const;
+    let response = await (async () => {
+      try {
+        return await BaseComponent.client.request({url, method, ...config, data});
+      } catch (error) {
+        if (error.code === "ECONNABORTED") {
+          let data = undefined as any;
+          let headers = config.headers;
+          return {status: 408, statusText: "Request Timeout", data, headers, config};
+        } else {
+          throw error;
+        }
+      }
+    })();
+    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
+      this.catchError(response);
+    }
+    return response;
+  }
+
+  protected async login(data: RequestData<"login">, config?: RequestConfig): Promise<AxiosResponseSpec<"login">> {
+    let response = await this.request("login", data, config);
+    if (response.status === 200) {
+      let body = response.data;
+      this.props.store!.user = body.user;
+    }
+    return response;
+  }
+
+  protected async logout(config?: RequestConfig): Promise<AxiosResponseSpec<"logout">> {
+    let response = await this.request("logout", {}, config);
+    if (response.status === 200) {
+      this.props.store!.user = null;
+    }
+    return response;
+  }
+
+  private catchError<T>(response: AxiosResponse<T>): AxiosResponse<T> {
+    let status = response.status;
+    if (status === 401) {
+      this.props.store!.user = null;
+    }
+    return response;
+  }
+
+  private static createClient(): AxiosInstance {
+    let client = axios.create({timeout: 5000, validateStatus: () => true});
+    return client;
   }
 
 }
@@ -60,8 +133,13 @@ type AdditionalProps = {
   intl: IntlShape,
   store: GlobalStore
 };
+type AdditionalRequestConfig = {
+  ignoreError?: boolean
+};
 
 type Props<P, Q> = Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P;
 
+type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
+type AxiosResponseSpec<N extends ProcessName> = AxiosResponse<ResponseData<N>>;
 type StylesRecord = {[key: string]: string | undefined};
 type FormatFunction<T, R> = (parts: Array<string | T>) => R;

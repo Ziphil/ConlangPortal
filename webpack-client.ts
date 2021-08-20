@@ -95,7 +95,7 @@ let config = {
     historyApiFallback: true,
     static: path.join(__dirname, "dist", "client"),
     proxy: {
-      "/api": "http://localhost:8050",
+      "/internal": "http://localhost:8050",
       "/static": "http://localhost:8050"
     }
   },
