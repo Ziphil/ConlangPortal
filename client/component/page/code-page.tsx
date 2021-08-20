@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactNode
 } from "react";
 import Component from "/client/component/component";
@@ -15,35 +16,45 @@ import Page from "/client/component/page/page";
 export default class CodePage extends Component<Props, State, Params> {
 
   public render(): ReactNode {
+    let codes = this.props.match!.params.codeString.split("-");
+    let names = ["何とかかんとか ABC 地方方言", "何とか XY 語", "何とか語族", "Ziphil Aleshlas"];
+    let restCodeNodes = codes.slice(1).map((code) => {
+      let restCodeNode = (
+        <Fragment>
+          <div styleName="slash"/>
+          <div styleName="code">{code}</div>
+        </Fragment>
+      );
+      return restCodeNode;
+    });
+    let restNameNodes = names.slice(1).map((name) => {
+      let restNameNode = (
+        <Fragment>
+          <span styleName="arrow"/>
+          <span styleName="name">{name}</span>
+        </Fragment>
+      );
+      return restNameNode;
+    });
     let node = (
       <Page>
         <div styleName="pane">
           <div styleName="head">
             <div styleName="left">
-              <div styleName="main-code">xj</div>
+              <div styleName="main-code">{codes[0]}</div>
             </div>
             <div styleName="right">
               <div styleName="right-top">
                 <div styleName="rest-code">
-                  <div styleName="slash"/>
-                  <div styleName="code">de</div>
-                  <div styleName="slash"/>
-                  <div styleName="code">kr</div>
-                  <div styleName="slash"/>
-                  <div styleName="code">fgh</div>
+                  {restCodeNodes}
                 </div>
                 <div styleName="separator"/>
                 <div styleName="kind">方言</div>
               </div>
               <div styleName="right-bottom">
-                <div styleName="main-name">何とかかんとか ABC 地方方言</div>
+                <div styleName="main-name">{names[0]}</div>
                 <div styleName="rest-name">
-                  <span styleName="arrow"/>
-                  <span styleName="name">何とか XY 語</span>
-                  <span styleName="arrow"/>
-                  <span styleName="name">何とか語族</span>
-                  <span styleName="arrow"/>
-                  <span styleName="name">Ziphil Aleshlas</span>
+                  {restNameNodes}
                 </div>
               </div>
             </div>
