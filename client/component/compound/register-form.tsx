@@ -15,17 +15,8 @@ export default class RegisterForm extends Component<Props, State> {
 
   public state: State = {
     code: "",
-    email: "",
     password: ""
   };
-
-  public componentDidMount(): void {
-    let name = this.props.location!.state?.name;
-    let password = this.props.location!.state?.password;
-    if (name !== undefined && password !== undefined) {
-      this.setState({code: name, password});
-    }
-  }
 
   private async performRegister(): Promise<void> {
     let code = this.state.code;
@@ -62,6 +53,5 @@ type Props = {
 };
 type State = {
   code: string,
-  email: string,
   password: string
 };
