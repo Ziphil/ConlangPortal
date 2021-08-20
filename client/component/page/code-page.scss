@@ -115,4 +115,7 @@
   &:before {
     content: "«";
   }
+  &:first-child {
+    margin-left: 0em;
+  }
 }
