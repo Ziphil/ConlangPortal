@@ -20,6 +20,7 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
+  UserCreator,
   UserModel
 } from "/server/model/user";
 
@@ -32,7 +33,8 @@ export class UserController extends Controller {
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
-    let body = {token, user};
+    let userBody = UserCreator.create(user);
+    let body = {token, user: userBody};
     Controller.respond(response, body);
   }
 
@@ -48,11 +50,19 @@ export class UserController extends Controller {
     let password = request.body.password;
     try {
       let user = await UserModel.register(code, password);
-      let body = user;
+      let body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
       Controller.respondError(response, error, error);
     }
+  }
+
+  @post(SERVER_PATHS["fetchUser"])
+  @before(verifyUser())
+  public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
+    let user = request.user!;
+    let body = UserCreator.create(user);
+    Controller.respond(response, body);
   }
 
 }

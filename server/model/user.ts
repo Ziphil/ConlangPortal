@@ -86,7 +86,7 @@ export class UserSchema {
 
 export class UserCreator {
 
-  public static async create(raw: User): Promise<UserSkeleton> {
+  public static create(raw: User): UserSkeleton {
     let id = raw.id;
     let code = raw.code;
     let name = raw.name;

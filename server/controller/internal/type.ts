@@ -6,6 +6,9 @@ import {
 import {
   Entry
 } from "/client/skeleton/entry";
+import {
+  User
+} from "/client/skeleton/user";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
@@ -14,7 +17,8 @@ export const SERVER_PATHS = {
   fetchEntry: "/cla/fetch",
   login: "/user/login",
   logout: "/user/logout",
-  registerUser: "/user/register"
+  registerUser: "/user/register",
+  fetchUser: "/user/fetch"
 };
 
 type ServerSpecs = {
@@ -31,11 +35,11 @@ type ServerSpecs = {
       success: Entry | null,
       error: never
     }
-  }
+  },
   login: {
     request: {code: string, password: string},
     response: {
-      success: {token: string, user: any},
+      success: {token: string, user: User},
       error: never
     }
   },
@@ -46,10 +50,17 @@ type ServerSpecs = {
       error: never
     }
   },
+  fetchUser: {
+    request: {},
+    response: {
+      success: User,
+      error: never
+    }
+  },
   registerUser: {
     request: {code: string, password: string},
     response: {
-      success: any,
+      success: User,
       error: never
     }
   }
