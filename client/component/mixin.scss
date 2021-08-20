@@ -13,9 +13,22 @@ $page-horizontal-margin: 96u;
 $header-height: 210u;
 $footer-height: 150u;
 
-$european-font-family: "EB Garamond", "Times New Roman";
-$japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
+$european-font-family: "Nunito";
+$japanese-font-family: "M PLUS Rounded 1c";
+$special-font-family: "Nunito";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
+
+$themes: (
+  light: (
+    background-color: hsl(280, 90%, 96%),
+    accent-color: hsl(280, 50%, 58%),
+    dimmed-accent-color: rgba(hsl(280, 50%, 58%), 0.5),
+    accent-start-color: hsl(280, 50%, 65%),
+    accent-end-color: hsl(280, 50%, 50%),
+    pane-dark-shadow-color: hsla(280, 85%, 70%, 0.2),
+    pane-light-shadow-color: hsla(280, 85%, 100%, 0.7)
+  )
+);
 
 
 @mixin smartphone {
