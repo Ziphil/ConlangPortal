@@ -6,6 +6,15 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {
+  Language as LanguageSkeleton
+} from "/client/skeleton/language";
+import {
+  FamilyModel
+} from "/server/model/family";
+import {
+  UserModel
+} from "/server/model/user";
 
 
 @modelOptions({schemaOptions: {collection: "languages"}})
@@ -13,6 +22,9 @@ export class LanguageSchema {
 
   @prop({required: true})
   public codes!: LanguageCodes;
+
+  @prop({required: true})
+  public name!: string;
 
   @prop({required: true})
   public approved!: boolean;
@@ -30,8 +42,27 @@ export class LanguageSchema {
   }
 
   public static async findOneByCode(codes: LanguageCodes): Promise<Language | null> {
-    let family = await LanguageModel.findOne().where("code.user", codes.user).where("code.family", codes.family).where("code.language", codes.language);
+    let family = await LanguageModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language);
     return family;
+  }
+
+}
+
+
+export class LanguageCreator {
+
+  public static async create(raw: Language): Promise<LanguageSkeleton> {
+    let id = raw.id;
+    let codes = raw.codes;
+    let approved = raw.approved;
+    let createdDate = raw.createdDate.toISOString();
+    let userNamePromise = UserModel.fetchOneByCode(codes.user).then((user) => user?.name);
+    let familyNamePromise = FamilyModel.findOneByCode(codes).then((family) => family?.name);
+    let [userName, familyName] = await Promise.all([userNamePromise, familyNamePromise]);
+    let languageName = raw.name;
+    let names = {language: languageName, family: familyName, user: userName};
+    let skeleton = {id, codes, names, approved, createdDate};
+    return skeleton;
   }
 
 }

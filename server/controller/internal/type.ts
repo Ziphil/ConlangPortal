@@ -3,11 +3,15 @@
 import {
   Jsonify
 } from "jsonify-type";
+import {
+  Entry
+} from "/client/skeleton/entry";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 export const SERVER_PATHS = {
   addEntry: "/cla/create",
+  fetchEntry: "/cla/fetch",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register"
@@ -17,10 +21,17 @@ type ServerSpecs = {
   addEntry: {
     request: {codes: any, names: any},
     response: {
-      success: {},
+      success: true,
       error: never
     }
   },
+  fetchEntry: {
+    request: {codes: any},
+    response: {
+      success: Entry | null,
+      error: never
+    }
+  }
   login: {
     request: {code: string, password: string},
     response: {

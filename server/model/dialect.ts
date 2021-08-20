@@ -6,6 +6,18 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {
+  Dialect as DialectSkeleton
+} from "/client/skeleton/dialect";
+import {
+  FamilyModel
+} from "/server/model/family";
+import {
+  LanguageModel
+} from "/server/model/language";
+import {
+  UserModel
+} from "/server/model/user";
 
 
 @modelOptions({schemaOptions: {collection: "dialects"}})
@@ -33,8 +45,28 @@ export class DialectSchema {
   }
 
   public static async findOneByCode(codes: DialectCodes): Promise<Dialect | null> {
-    let family = await DialectModel.findOne().where("code.user", codes.user).where("code.family", codes.family).where("code.language", codes.language).where("code.dialect", codes.dialect);
+    let family = await DialectModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect);
     return family;
+  }
+
+}
+
+
+export class DialectCreator {
+
+  public static async create(raw: Dialect): Promise<DialectSkeleton> {
+    let id = raw.id;
+    let codes = raw.codes;
+    let approved = raw.approved;
+    let createdDate = raw.createdDate.toISOString();
+    let userNamePromise = UserModel.fetchOneByCode(codes.user).then((user) => user?.name);
+    let familyNamePromise = FamilyModel.findOneByCode(codes).then((family) => family?.name);
+    let languageNamePromise = LanguageModel.findOneByCode(codes).then((language) => language?.name);
+    let [userName, familyName, languageName] = await Promise.all([userNamePromise, familyNamePromise, languageNamePromise]);
+    let dialectName = raw.name;
+    let names = {dialect: dialectName, language: languageName, family: familyName, user: userName};
+    let skeleton = {id, codes, names, approved, createdDate};
+    return skeleton;
   }
 
 }

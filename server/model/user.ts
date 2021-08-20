@@ -11,6 +11,9 @@ import {
   hashSync
 } from "bcrypt";
 import {
+  User as UserSkeleton
+} from "/client/skeleton/user";
+import {
   CustomError
 } from "/server/model/error";
 
@@ -18,8 +21,11 @@ import {
 @modelOptions({schemaOptions: {collection: "users"}})
 export class UserSchema {
 
-  @prop({required: true, unique: true, validate: /^[a-z]{3}$/})
+  @prop({required: true, unique: true})
   public code!: string;
+
+  @prop({required: true})
+  public name!: string;
 
   @prop({required: true})
   public hash!: string;
@@ -73,6 +79,19 @@ export class UserSchema {
 
   private comparePassword(password: string): boolean {
     return compareSync(password, this.hash);
+  }
+
+}
+
+
+export class UserCreator {
+
+  public static async create(raw: User): Promise<UserSkeleton> {
+    let id = raw.id;
+    let code = raw.code;
+    let name = raw.name;
+    let skeleton = {id, code, name};
+    return skeleton;
   }
 
 }

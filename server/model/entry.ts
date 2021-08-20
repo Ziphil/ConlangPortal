@@ -1,19 +1,42 @@
 //
 
 import {
-  DialectModel
+  getClassForDocument
+} from "@typegoose/typegoose";
+import {
+  Entry as EntrySkeleton
+} from "/client/skeleton/entry";
+import {
+  Dialect,
+  DialectCodes,
+  DialectCreator,
+  DialectModel,
+  DialectSchema
 } from "/server/model/dialect";
 import {
-  FamilyModel
+  Family,
+  FamilyCodes,
+  FamilyCreator,
+  FamilyModel,
+  FamilySchema
 } from "/server/model/family";
 import {
-  LanguageModel
+  Language,
+  LanguageCodes,
+  LanguageCreator,
+  LanguageModel,
+  LanguageSchema
 } from "/server/model/language";
+import {
+  User,
+  UserCreator,
+  UserModel
+} from "/server/model/user";
 
 
 export class EntryUtil {
 
-  public static async create(codes: any, names: any): Promise<any> {
+  public static async create(codes: DialectCodes, names: DialectNames): Promise<any> {
     let familyPromise = (async () => {
       let family = await FamilyModel.findOneByCode(codes);
       if (family === null) {
@@ -36,4 +59,41 @@ export class EntryUtil {
     return {family, language, dialect};
   }
 
+  public static async fetchOneByCodes(codes: EntryCodes): Promise<Entry | null> {
+    if ("dialect" in codes) {
+      return await DialectModel.findOneByCode(codes);
+    } else if ("language" in codes) {
+      return await LanguageModel.findOneByCode(codes);
+    } else if ("family" in codes) {
+      return await FamilyModel.findOneByCode(codes);
+    } else {
+      return await UserModel.fetchOneByCode(codes.user);
+    }
+  }
+
 }
+
+
+export class EntryCreator {
+
+  public static async create(raw: Entry): Promise<EntrySkeleton> {
+    let anyRaw = raw as any;
+    let clazz = getClassForDocument(raw);
+    if (clazz === DialectSchema) {
+      return await DialectCreator.create(anyRaw);
+    } else if (clazz === LanguageSchema) {
+      return await LanguageCreator.create(anyRaw);
+    } else if (clazz === FamilySchema) {
+      return await FamilyCreator.create(anyRaw);
+    } else {
+      return await UserCreator.create(anyRaw);
+    }
+  }
+
+}
+
+
+export type Entry = Dialect | Language | Family | User;
+export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {user: string};
+
+export type DialectNames = {dialect: string, language: string, family: string, user: string};

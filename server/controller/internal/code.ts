@@ -19,6 +19,7 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
+  EntryCreator,
   EntryUtil
 } from "/server/model/entry";
 
@@ -32,7 +33,20 @@ export class CodeController extends Controller {
     let codes = request.body.codes;
     let names = request.body.names;
     await EntryUtil.create(codes, names);
-    Controller.respond(response, {});
+    Controller.respond(response, true);
+  }
+
+  @post(SERVER_PATHS["fetchEntry"])
+  @before()
+  public async [Symbol()](request: Request<"fetchEntry">, response: Response<"fetchEntry">): Promise<void> {
+    let codes = request.body.codes;
+    let entry = await EntryUtil.fetchOneByCodes(codes);
+    if (entry !== null) {
+      let body = await EntryCreator.create(entry);
+      Controller.respond(response, body);
+    } else {
+      Controller.respond(response, null);
+    }
   }
 
 }

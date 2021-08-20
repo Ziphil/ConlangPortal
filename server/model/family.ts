@@ -6,6 +6,12 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {
+  Family as FamilySkeleton
+} from "/client/skeleton/family";
+import {
+  UserModel
+} from "/server/model/user";
 
 
 @modelOptions({schemaOptions: {collection: "families"}})
@@ -33,8 +39,26 @@ export class FamilySchema {
   }
 
   public static async findOneByCode(codes: FamilyCodes): Promise<Family | null> {
-    let family = await FamilyModel.findOne().where("code.user", codes.user).where("code.family", codes.family);
+    let family = await FamilyModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family);
     return family;
+  }
+
+}
+
+
+export class FamilyCreator {
+
+  public static async create(raw: Family): Promise<FamilySkeleton> {
+    let id = raw.id;
+    let codes = raw.codes;
+    let approved = raw.approved;
+    let createdDate = raw.createdDate.toISOString();
+    let userNamePromise = UserModel.fetchOneByCode(codes.user).then((user) => user?.name);
+    let [userName] = await Promise.all([userNamePromise]);
+    let familyName = raw.name;
+    let names = {family: familyName, user: userName};
+    let skeleton = {id, codes, names, approved, createdDate};
+    return skeleton;
   }
 
 }
