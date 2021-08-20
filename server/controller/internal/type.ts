@@ -7,12 +7,20 @@ import {
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 export const SERVER_PATHS = {
+  addEntry: "/cla/create",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register"
 };
 
 type ServerSpecs = {
+  addEntry: {
+    request: {codes: any, names: any},
+    response: {
+      success: {},
+      error: never
+    }
+  },
   login: {
     request: {code: string, password: string},
     response: {

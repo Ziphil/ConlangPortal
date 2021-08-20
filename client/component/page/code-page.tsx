@@ -6,6 +6,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import AddEntryForm from "/client/component/compound/add-entry-form";
 import {
   style
 } from "/client/component/decorator";
@@ -14,6 +15,18 @@ import Page from "/client/component/page/page";
 
 @style(require("./code-page.scss"))
 export default class CodePage extends Component<Props, State, Params> {
+
+  public renderCreateCodeForm(): ReactNode {
+    let codes = this.props.match!.params.codeString.split("-");
+    if (codes.length === 1) {
+      let node = (
+        <AddEntryForm userCode={codes[0]}/>
+      );
+      return node;
+    } else {
+      return null;
+    }
+  }
 
   public render(): ReactNode {
     let codes = this.props.match!.params.codeString.split("-");
@@ -63,6 +76,7 @@ export default class CodePage extends Component<Props, State, Params> {
             (ここに様々なプロパティが入る)
           </div>
         </div>
+        {this.renderCreateCodeForm()}
       </Page>
     );
     return node;

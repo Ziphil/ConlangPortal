@@ -36,6 +36,20 @@ export function verifyUser(): RequestHandler {
   return handler;
 }
 
+export function verifyCode(): RequestHandler {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    let user = request.user!;
+    let userCode = request.query.codes?.user || request.body.codes?.user;
+    if (user.code === userCode) {
+      next();
+    } else {
+      let body = null;
+      response.status(403).send(body).end();
+    }
+  };
+  return handler;
+}
+
 export function login(expiresIn: number): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let code = request.body.code ?? request.query.code;
