@@ -12,7 +12,7 @@ import {
 export class DialectSchema {
 
   @prop({required: true})
-  public codes!: {dialect: string, language: string, family: string, user: string};
+  public codes!: DialectCodes;
 
   @prop({required: true})
   public name!: string;
@@ -23,7 +23,7 @@ export class DialectSchema {
   @prop({required: true})
   public createdDate!: Date;
 
-  public static async add(rawCodes: {dialect: string, language: string, family: string, user: string}, name: string): Promise<Dialect> {
+  public static async add(rawCodes: DialectCodes, name: string): Promise<Dialect> {
     let codes = {dialect: rawCodes.dialect, language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
     let approved = false;
@@ -32,7 +32,7 @@ export class DialectSchema {
     return dialect;
   }
 
-  public static async findOneByCode(codes: {dialect: string, language: string, family: string, user: string}): Promise<Dialect | null> {
+  public static async findOneByCode(codes: DialectCodes): Promise<Dialect | null> {
     let family = await DialectModel.findOne().where("code.user", codes.user).where("code.family", codes.family).where("code.language", codes.language).where("code.dialect", codes.dialect);
     return family;
   }
@@ -42,3 +42,5 @@ export class DialectSchema {
 
 export type Dialect = DocumentType<DialectSchema>;
 export let DialectModel = getModelForClass(DialectSchema);
+
+export type DialectCodes = {dialect: string, language: string, family: string, user: string};

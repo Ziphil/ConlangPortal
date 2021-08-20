@@ -20,7 +20,7 @@ import {
 } from "/server/controller/internal/type";
 import {
   EntryUtil
-} from "/server/model/family";
+} from "/server/model/entry";
 
 
 @controller(SERVER_PATH_PREFIX)

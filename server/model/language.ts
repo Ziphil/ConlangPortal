@@ -12,7 +12,7 @@ import {
 export class LanguageSchema {
 
   @prop({required: true})
-  public codes!: {language: string, family: string, user: string};
+  public codes!: LanguageCodes;
 
   @prop({required: true})
   public approved!: boolean;
@@ -20,7 +20,7 @@ export class LanguageSchema {
   @prop({required: true})
   public createdDate!: Date;
 
-  public static async add(rawCodes: {language: string, family: string, user: string}, name: string): Promise<Language> {
+  public static async add(rawCodes: LanguageCodes, name: string): Promise<Language> {
     let codes = {language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
     let approved = false;
@@ -29,7 +29,7 @@ export class LanguageSchema {
     return language;
   }
 
-  public static async findOneByCode(codes: {language: string, family: string, user: string}): Promise<Language | null> {
+  public static async findOneByCode(codes: LanguageCodes): Promise<Language | null> {
     let family = await LanguageModel.findOne().where("code.user", codes.user).where("code.family", codes.family).where("code.language", codes.language);
     return family;
   }
@@ -39,3 +39,5 @@ export class LanguageSchema {
 
 export type Language = DocumentType<LanguageSchema>;
 export let LanguageModel = getModelForClass(LanguageSchema);
+
+export type LanguageCodes = {language: string, family: string, user: string};
