@@ -63,7 +63,7 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public renderHead(): ReactNode {
     let codeString = this.props.match!.params.codeString;
-    let codeArray = codeString.split("-");
+    let codeArray = codeString.split("-").map((code) => code || "*");
     let restCodeNodes = codeArray.slice(1).map((code, index) => {
       let restCodeNode = (
         <Fragment key={index}>
