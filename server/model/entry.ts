@@ -86,7 +86,7 @@ export class EntryCreator {
     } else if (clazz === FamilySchema) {
       return await FamilyCreator.create(anyRaw);
     } else {
-      return await UserCreator.create(anyRaw);
+      return UserCreator.create(anyRaw);
     }
   }
 
