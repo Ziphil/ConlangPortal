@@ -49,4 +49,17 @@ export class CodeController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["fetchEntryName"])
+  @before()
+  public async [Symbol()](request: Request<"fetchEntryName">, response: Response<"fetchEntryName">): Promise<void> {
+    let codes = request.body.codes;
+    let entry = await EntryUtil.fetchOneByCodes(codes);
+    if (entry !== null) {
+      let body = entry.name;
+      Controller.respond(response, body);
+    } else {
+      Controller.respond(response, null);
+    }
+  }
+
 }

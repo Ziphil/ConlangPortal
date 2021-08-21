@@ -15,6 +15,7 @@ export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_versio
 export const SERVER_PATHS = {
   addEntry: "/cla/create",
   fetchEntry: "/cla/fetch",
+  fetchEntryName: "/cla/fetch/name",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register",
@@ -33,6 +34,13 @@ type ServerSpecs = {
     request: {codes: any},
     response: {
       success: Entry | null,
+      error: never
+    }
+  },
+  fetchEntryName: {
+    request: {codes: any},
+    response: {
+      success: string | null,
       error: never
     }
   },

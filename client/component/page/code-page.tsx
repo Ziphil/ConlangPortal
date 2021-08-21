@@ -53,7 +53,9 @@ export default class CodePage extends Component<Props, State, Params> {
     let codeArray = this.props.match!.params.codeString.split("-");
     if (codeArray.length === 1 && codeArray[0] === user.code) {
       let node = (
-        <AddEntryForm userCode={codeArray[0]}/>
+        <div styleName="form">
+          <AddEntryForm userCode={codeArray[0]}/>
+        </div>
       );
       return node;
     } else {

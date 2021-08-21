@@ -126,3 +126,8 @@
   padding: 0u 64u 64u 64u;
   text-align: center;
 }
+
+.form {
+  margin: 96u auto;
+  max-width: $page-width * 0.8;
+}

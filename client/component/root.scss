@@ -17,6 +17,7 @@ body {
   padding: 0u;
   font-family: $european-font-family, $japanese-font-family, serif;
   font-feature-settings: "palt" 1, "pkna" 1;
+  color: var(--text-color);
   line-height: 1;
   background-color: var(--background-color);
   overflow-x: auto;

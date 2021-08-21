@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import {
   style
@@ -19,7 +20,11 @@ export default class AddEntryForm extends Component<Props, State> {
     dialectCode: "",
     familyName: "",
     languageName: "",
-    dialectName: ""
+    dialectName: "",
+    familyUnspecified: true,
+    dialectUnspecified: true,
+    familyFetching: false,
+    languageFetching: false
   };
 
   private async handleClick(): Promise<void> {
@@ -41,20 +46,113 @@ export default class AddEntryForm extends Component<Props, State> {
     }
   }
 
+  private async handleFamilyCodeSet(familyCode: string): Promise<void> {
+    this.setState({familyCode, familyFetching: true});
+    this.handleLanguageCodeSet(this.state.languageCode, familyCode);
+    let codes = {user: this.props.userCode, family: familyCode};
+    let response = await this.request("fetchEntryName", {codes});
+    if (response.status === 200) {
+      let familyName = response.data;
+      if (familyName !== null) {
+        this.setState({familyName});
+      } else {
+        this.setState({familyFetching: false});
+      }
+    }
+  }
+
+  private async handleLanguageCodeSet(languageCode: string, familyCode?: string): Promise<void> {
+    this.setState({languageCode, languageFetching: true});
+    let codes = {user: this.props.userCode, family: familyCode ?? this.state.familyCode, language: languageCode};
+    let response = await this.request("fetchEntryName", {codes});
+    if (response.status === 200) {
+      let languageName = response.data;
+      if (languageName !== null) {
+        this.setState({languageName});
+      } else {
+        this.setState({languageFetching: false});
+      }
+    }
+  }
+
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <div>新規コードフォーム</div>
-        family:
-        <input value={this.state.familyCode} onChange={(event) => this.setState({familyCode: event.target.value})}/>
-        <input value={this.state.familyName} onChange={(event) => this.setState({familyName: event.target.value})}/><br/>
-        language:
-        <input value={this.state.languageCode} onChange={(event) => this.setState({languageCode: event.target.value})}/>
-        <input value={this.state.languageName} onChange={(event) => this.setState({languageName: event.target.value})}/><br/>
-        dialect:
-        <input value={this.state.dialectCode} onChange={(event) => this.setState({dialectCode: event.target.value})}/>
-        <input value={this.state.dialectName} onChange={(event) => this.setState({dialectName: event.target.value})}/><br/>
-        <input type="button" onClick={this.handleClick.bind(this)}/>
+        <div styleName="item">
+          <div styleName="head">{this.trans("addEntryForm.family.head")}</div>
+          <div>
+            <div styleName="explanation">{this.trans("addEntryForm.family.explanation")}</div>
+            <div styleName="form">
+              <Input
+                label={this.trans("addEntryForm.family.code")}
+                value={this.state.familyCode}
+                disabled={this.state.familyUnspecified}
+                onSet={this.handleFamilyCodeSet.bind(this)}/>
+              <Input
+                label={this.trans("addEntryForm.family.name")}
+                value={this.state.familyName}
+                disabled={this.state.familyFetching || this.state.familyUnspecified}
+                onSet={(familyName) => this.setState({familyName})}
+              />
+            </div>
+            <div styleName="checkbox">
+              <label>
+                <input type="checkbox" checked={this.state.familyUnspecified} onChange={(event) => this.setState({familyUnspecified: event.target.checked})}/>
+                {this.trans("addEntryForm.family.unspecified")}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div styleName="item">
+          <div styleName="head">{this.trans("addEntryForm.language.head")}</div>
+          <div>
+            <div styleName="explanation">{this.trans("addEntryForm.language.explanation")}</div>
+            <div styleName="form">
+              <Input
+                label={this.trans("addEntryForm.language.code")}
+                value={this.state.languageCode}
+                onSet={this.handleLanguageCodeSet.bind(this)}
+              />
+              <Input
+                label={this.trans("addEntryForm.language.name")}
+                value={this.state.languageName}
+                disabled={this.state.languageFetching}
+                onSet={(languageName) => this.setState({languageName})}
+              />
+            </div>
+          </div>
+        </div>
+        <div styleName="item">
+          <div styleName="head">{this.trans("addEntryForm.dialect.head")}</div>
+          <div>
+            <div styleName="explanation">{this.trans("addEntryForm.dialect.explanation")}</div>
+            <div styleName="form">
+              <Input
+                label={this.trans("addEntryForm.dialect.code")}
+                value={this.state.dialectCode}
+                disabled={this.state.dialectUnspecified}
+                onSet={(dialectCode) => this.setState({dialectCode})}
+              />
+              <Input
+                label={this.trans("addEntryForm.dialect.name")}
+                value={this.state.dialectName}
+                onSet={(dialectName) => this.setState({dialectName})}
+              />
+            </div>
+            <div styleName="checkbox">
+              <label>
+                <input type="checkbox" checked={this.state.dialectUnspecified} onChange={(event) => this.setState({dialectUnspecified: event.target.checked})}/>
+                {this.trans("addEntryForm.dialect.unspecified")}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div styleName="item">
+          <div styleName="button">
+            <input type="button" value={this.trans("addEntryForm.confirm")} onClick={this.handleClick.bind(this)}/>
+          </div>
+          <div styleName="caution">{this.trans("addEntryForm.caution")}</div>
+        </div>
       </form>
     );
     return node;
@@ -72,5 +170,9 @@ type State = {
   dialectCode: string,
   familyName: string,
   languageName: string,
-  dialectName: string
+  dialectName: string,
+  familyUnspecified: boolean,
+  dialectUnspecified: boolean,
+  familyFetching: boolean,
+  languageFetching: boolean
 };
