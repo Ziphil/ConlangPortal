@@ -59,7 +59,10 @@ export default class AddEntryForm extends Component<Props, State> {
   private async handleFamilyCodeSet(familyCode: string): Promise<void> {
     this.setState({familyCode, familyFetching: true});
     this.handleLanguageCodeSet(this.state.languageCode, familyCode);
-    let codes = {user: this.props.userCode, family: familyCode};
+    let codes = {
+      user: this.props.userCode,
+      family: (this.state.familyUnspecified) ? "~" : familyCode
+    };
     let response = await this.request("fetchEntryName", {codes});
     if (response.status === 200) {
       let familyName = response.data;
@@ -73,7 +76,11 @@ export default class AddEntryForm extends Component<Props, State> {
 
   private async handleLanguageCodeSet(languageCode: string, familyCode?: string): Promise<void> {
     this.setState({languageCode, languageFetching: true});
-    let codes = {user: this.props.userCode, family: familyCode ?? this.state.familyCode, language: languageCode};
+    let codes = {
+      user: this.props.userCode,
+      family: (this.state.familyUnspecified) ? "~" : familyCode ?? this.state.familyCode,
+      language: languageCode
+    };
     let response = await this.request("fetchEntryName", {codes});
     if (response.status === 200) {
       let languageName = response.data;
