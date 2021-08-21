@@ -25,7 +25,7 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public state: State = {
     valid: null,
-    found: false,
+    found: null,
     entry: null
   };
 
@@ -36,7 +36,7 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.location!.key !== previousProps.location!.key) {
-      this.setState({valid: null, found: false, entry: null});
+      this.setState({valid: null, found: null, entry: null});
       this.fetchCodes();
       await this.fetchEntry();
     }
@@ -146,7 +146,7 @@ export default class CodePage extends Component<Props, State, Params> {
   public renderMain(): ReactNode {
     let headNode = this.renderHead();
     let addEntryForm = this.renderAddEntryForm();
-    let contentString = (this.state.found) ? this.trans("codePage.dummy") : this.trans("codePage.notFound");
+    let contentString = (this.state.found === null) ? "" : (this.state.found) ? this.trans("codePage.dummy") : this.trans("codePage.notFound");
     let node = (
       <Fragment>
         <div styleName="pane">
@@ -201,7 +201,7 @@ type Props = {
 };
 type State = {
   valid: boolean | null,
-  found: boolean,
+  found: boolean | null,
   entry: Entry | null
 };
 type Params = {
