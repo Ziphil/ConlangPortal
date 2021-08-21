@@ -7,6 +7,9 @@ import {
   Entry
 } from "/client/skeleton/entry";
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   User
 } from "/client/skeleton/user";
 
@@ -26,8 +29,8 @@ type ServerSpecs = {
   addEntry: {
     request: {codes: any, names: any},
     response: {
-      success: true,
-      error: never
+      success: {},
+      error: CustomError<string>
     }
   },
   fetchEntry: {

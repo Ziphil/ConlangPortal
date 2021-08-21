@@ -1,6 +1,9 @@
 //
 
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   before,
   controller,
   post
@@ -32,8 +35,13 @@ export class CodeController extends Controller {
   public async [Symbol()](request: Request<"addEntry">, response: Response<"addEntry">): Promise<void> {
     let codes = request.body.codes;
     let names = request.body.names;
-    await EntryUtil.add(codes, names);
-    Controller.respond(response, true);
+    try {
+      await EntryUtil.add(codes, names);
+      Controller.respond(response, {});
+    } catch (error) {
+      let body = (error.name === "CustomError") ? CustomError.ofType(error.type) : undefined;
+      Controller.respondError(response, body, error);
+    }
   }
 
   @post(SERVER_PATHS["fetchEntry"])

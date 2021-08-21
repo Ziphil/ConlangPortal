@@ -26,12 +26,15 @@ $themes: (
     dimmed-text-color: rgba(hsl(280, 50%, 20%), 0.5),
     caution-text-color: hsl(0, 50%, 50%),
     background-color: hsl(280, 90%, 96%),
+    caution-background-color: hsl(0, 90%, 94%),
     accent-color: hsl(280, 50%, 58%),
     dimmed-accent-color: rgba(hsl(280, 50%, 58%), 0.5),
     accent-start-color: hsl(280, 50%, 65%),
     accent-end-color: hsl(280, 50%, 50%),
     pane-dark-shadow-color: hsla(280, 85%, 70%, 0.2),
-    pane-light-shadow-color: hsla(280, 85%, 100%, 0.7)
+    pane-light-shadow-color: hsla(280, 85%, 100%, 0.7),
+    caution-pane-dark-shadow-color: hsla(0, 85%, 60%, 0.2),
+    caution-pane-light-shadow-color: hsla(0, 85%, 100%, 0.7)
   )
 );
 

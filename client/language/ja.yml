@@ -4,31 +4,42 @@ common:
   dateUndefined: "?"
   numberUndefined: "?"
 
+error:
+  duplicateFamilyCode: >-
+    語族コードが重複しています。
+    別の語族コードを指定してください。
+  duplicateLanguageCode: >-
+    言語コードが重複しています。
+    別の言語コードを指定してください。
+  duplicateDialectCode: >-
+    方言コードが重複しています。
+    別の方言コードを指定してください。
+
 addEntryForm:
   family:
-    head: "語族/マクロランゲージ"
+    head: "語族"
     code: "コード (3 桁)"
     name: "名称"
     unspecified: "指定しない"
-    explanation: |-
+    explanation: >-
       複数の世界観や語族 (マクロランゲージ含む) を作っているか作る予定である場合は、その世界観や語族を特定するためのコードを入力してください。
       世界観や語族を 1 つしか作る予定がない場合は、「指定しない」にチェックを入れてください。
   language:
     head: "言語"
     code: "コード (2 桁)"
     name: "名称"
-    explanation: |-
+    explanation: >-
       その言語を特定するためのコードを入力してください。
   dialect:
     head: "方言"
     code: "コード (2 桁)"
     name: "名称"
     unspecified: "指定しない"
-    explanation: |-
+    explanation: >-
       その該当言語の方言を特定するためのコードを入力してください。
       該当言語に方言の変種が存在しない場合は、「指定しない」にチェックを入れてください。
   confirm: "登録申請"
-  caution: |-
+  caution: >-
     登録申請をした後に、コードの変更や削除を行うことはできません。
     申請内容をしっかりと確認してから申請ボタンを押してください。
     なお、語族や言語などの名称の変更は後から行うことができるようになる予定です (現在未実装です)。
