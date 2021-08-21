@@ -8,6 +8,10 @@ import {
 import {
   LANGUAGES
 } from "/client/language";
+import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/internal/type";
 
 
 export class GlobalStore {
@@ -37,7 +41,8 @@ export class GlobalStore {
 
   @action
   public async fetchUser(): Promise<void> {
-    let response = await axios.post("/", {}, {validateStatus: () => true});
+    let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
+    let response = await axios.post(url, {}, {validateStatus: () => true});
     if (response.status === 200) {
       let user = response.data;
       this.user = user;

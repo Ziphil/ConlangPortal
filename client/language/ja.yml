@@ -3,3 +3,81 @@ common:
   shortDateFormat: "MM/dd"
   dateUndefined: "?"
   numberUndefined: "?"
+
+error:
+  invalidUserCode: >-
+    製作者コードが不正です。
+    ラテン小文字のみから成る 3 文字のコードを入力してください。
+  invalidFamilyCode: >-
+    語族コードが不正です。
+    ラテン小文字のみから成る 3 文字のコードを入力してください。
+  invalidLanguageCode: >-
+    言語コードが不正です。
+    ラテン小文字のみから成る 2 文字のコードを入力してください。
+  invalidDialectCode: >-
+    方言コードが不正です。
+    ラテン小文字のみから成る 2 文字のコードを入力してください。
+  duplicateUserCode: >-
+    製作者コードが重複しています。
+    別の製作者コードを指定してください。
+  duplicateFamilyCode: >-
+    語族コードが重複しています。
+    別の語族コードを指定してください。
+  duplicateLanguageCode: >-
+    言語コードが重複しています。
+    別の言語コードを指定してください。
+  duplicateDialectCode: >-
+    方言コードが重複しています。
+    別の方言コードを指定してください。
+
+addEntryForm:
+  family:
+    head: "語族"
+    code: "コード (小文字 3 桁)"
+    name: "名称"
+    unspecified: "指定しない"
+    explanation: >-
+      複数の世界観や語族 (マクロランゲージ含む) を作っているか作る予定である場合は、その世界観や語族を特定するためのコードを入力してください。
+      世界観や語族を 1 つしか作る予定がない場合は、「指定しない」にチェックを入れてください。
+  language:
+    head: "言語"
+    code: "コード (小文字 2 桁)"
+    name: "名称"
+    explanation: >-
+      その言語を特定するためのコードを入力してください。
+  dialect:
+    head: "方言"
+    code: "コード (小文字 2 桁)"
+    name: "名称"
+    unspecified: "指定しない"
+    explanation: >-
+      その該当言語の方言を特定するためのコードを入力してください。
+      該当言語に方言の変種が存在しない場合は、「指定しない」にチェックを入れてください。
+  confirm: "登録申請"
+  caution: >-
+    登録申請をした後に、コードの変更や削除を行うことはできません。
+    申請内容をしっかりと確認してから申請ボタンを押してください。
+    なお、語族や言語などの名称の変更は後から行うことができるようになる予定です (現在未実装です)。
+loginForm:
+  code: "コード"
+  password: "パスワード"
+  confirm: "ログイン"
+registerForm:
+  code: "コード (小文字 3 桁)"
+  name: "表示名"
+  password: "パスワード"
+  confirm: "登録"
+  explanation: >-
+    グループで言語を制作している場合は、グループごとにユーザーを作成してください。
+    なお、ユーザー登録で使用するコードは、言語コードの一部分になります。
+    一度ユーザー登録すると、コードの変更や削除を行うことはできなくなりますので、注意して決めてください。
+codePage:
+  user: "製作者"
+  family: "語族"
+  language: "言語"
+  dialect: "方言"
+  dummy: "ここに公式サイトや他言語との関係などの情報が載せられるようになる予定です"
+  notFound: "未登録"
+topPage:
+  login: "ログイン"
+  register: "新規登録"

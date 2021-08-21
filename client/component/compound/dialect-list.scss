@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  width: 100%;
+  line-height: $line-height;
+}
+
+.row {
+  padding: 16u 0u;
+  border-bottom: 1px var(--dimmed-accent-color) solid;
+  &:first-child {
+    border-top: 1px var(--dimmed-accent-color) solid;
+  }
+}
+
+.code-cell {
+  margin-bottom: 8u;
+  font-family: $special-font-family;
+  font-size: 120%;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--accent-color);
+}
+
+.code-cell >a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.slash {
+  margin: 0em 0.2em;
+  font-size: 80%;
+  color: var(--dimmed-accent-color);
+  &:before {
+    content: "-";
+  }
+}
+
+.arrow {
+  margin: 0em 0.2em;
+  font-size: 100%;
+  color: var(--dimmed-text-color);
+  &:before {
+    content: "«";
+  }
+}

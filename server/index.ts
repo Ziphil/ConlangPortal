@@ -13,6 +13,10 @@ import fs from "fs";
 import mongoose from "mongoose";
 import multer from "multer";
 import {
+  CodeController,
+  UserController
+} from "/server/controller/internal";
+import {
   MongoUtil
 } from "/server/util/mongo";
 import {
@@ -76,6 +80,8 @@ export class Main {
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
+    CodeController.use(this.application);
+    UserController.use(this.application);
   }
 
   private setupStatic(): void {
@@ -109,6 +115,7 @@ export class Main {
 
   private setupErrorHandler(): void {
     let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
+      console.error(error);
       response.status(500).end();
     };
     this.application.use(handler);

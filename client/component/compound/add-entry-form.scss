@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.item {
+  @include reset-first-margin;
+  margin-top: 48u;
+}
+
+.head {
+  margin-bottom: 16u;
+  font-size: 120%;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.explanation {
+  margin-bottom: 16u;
+  font-size: 90%;
+  text-align: justify;
+  line-height: $line-height;
+}
+
+.checkbox {
+  margin-top: 16u;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: justify;
+}
+
+.form >*:nth-child(1) {
+  flex: 2 0 0u;
+}
+
+.form >*:nth-child(2) {
+  margin-left: 48u;
+  flex: 5 0 0u;
+}
+
+.button {
+  text-align: center;
+}
+
+.caution {
+  margin-top: 16u;
+  font-size: 90%;
+  color: var(--caution-text-color);
+  text-align: justify;
+  line-height: $line-height;
+}
+
+.error {
+  margin-bottom: 48u;
+}

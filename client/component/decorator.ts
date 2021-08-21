@@ -27,7 +27,7 @@ export function style(style: any, options: DecoratorOptions = {}): ClassDecorato
   let nextOptions = Object.assign({}, DEFAULT_DECORATOR_OPTIONS, options);
   let decorator = function <P, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
     if (style !== null && style !== undefined) {
-      component = css(style, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
+      component = css(style.default, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
     }
     if (nextOptions.observer) {
       component = wrappedObserver(component);

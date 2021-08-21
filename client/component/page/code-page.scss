@@ -1,0 +1,139 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.pane {
+  border-radius: 48u;
+  box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
+}
+
+.head {
+  margin-bottom: 80u;
+  border-radius: 48u;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.left {
+  width: 700u;
+  height: 700u;
+  top: -120u;
+  left: -120u;
+  margin-bottom: -120u;
+  margin-right: -120u;
+  padding-top: 80u;
+  padding-right: 50u;
+  padding-left: 120u;
+  font-family: $special-font-family;
+  font-size: 220u;
+  font-weight: 900;
+  font-style: italic;
+  text-align: center;
+  color: var(--background-color);
+  background: linear-gradient(to bottom right, var(--accent-start-color), var(--accent-end-color));
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  position: relative;
+}
+
+.right {
+  flex-grow: 1;
+}
+
+.right-top {
+  height: 150u;
+  margin-top: 64u;
+  margin-left: 16u;
+  margin-right: 80u;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: justify;
+}
+
+.rest-code {
+  font-family: $special-font-family;
+  font-size: 150u;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--accent-color);
+  display: flex;
+  flex-grow: 0;
+  flex-direction: row;
+  align-items: center;
+}
+
+.code >a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.slash {
+  margin: 0em 0.2em;
+  font-size: 80%;
+  color: var(--dimmed-accent-color);
+  &:before {
+    content: "-";
+  }
+}
+
+.separator {
+  margin: 0u 32u 0u 48u;
+  flex-grow: 1;
+  border-top: 12u var(--dimmed-accent-color) dotted;
+}
+
+.kind {
+  font-size: 80u;
+  font-weight: bold;
+  color: var(--accent-color);
+  flex-grow: 0;
+}
+
+.right-bottom {
+  margin-top: 64u;
+  margin-left: 64u;
+  margin-right: 64u;
+  line-height: $line-height;
+}
+
+.main-name {
+  font-size: 96u;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.rest-name {
+  font-size: 64u;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.arrow {
+  margin: 0em 0.2em;
+  font-size: 100%;
+  color: var(--dimmed-accent-color);
+  &:before {
+    content: "«";
+  }
+  &:first-child {
+    margin-left: 0em;
+  }
+}
+
+.content {
+  margin: 0u;
+  padding: 0u 64u 64u 64u;
+  text-align: center;
+}
+
+.form {
+  margin: 96u auto;
+  max-width: $page-width * 0.8;
+}

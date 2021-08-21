@@ -6,16 +6,37 @@
 $root-size: 16px;
 
 $page-width: 2400u;
-$page-top-margin: 180u;
-$page-bottom-margin: 240u;
+$page-top-margin: 150u;
+$page-bottom-margin: 150u;
 $page-horizontal-margin: 96u;
 
-$header-height: 210u;
+$header-height: 200u;
 $footer-height: 150u;
 
-$european-font-family: "EB Garamond", "Times New Roman";
-$japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
+$line-height: 1.3;
+
+$european-font-family: "Nunito";
+$japanese-font-family: "M PLUS Rounded 1c";
+$special-font-family: "Nunito";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
+
+$themes: (
+  light: (
+    text-color: hsl(280, 50%, 20%),
+    dimmed-text-color: rgba(hsl(280, 50%, 20%), 0.5),
+    caution-text-color: hsl(0, 50%, 50%),
+    background-color: hsl(280, 90%, 96%),
+    caution-background-color: hsl(0, 90%, 94%),
+    accent-color: hsl(280, 50%, 58%),
+    dimmed-accent-color: rgba(hsl(280, 50%, 58%), 0.5),
+    accent-start-color: hsl(280, 50%, 65%),
+    accent-end-color: hsl(280, 50%, 50%),
+    pane-dark-shadow-color: hsla(280, 85%, 70%, 0.2),
+    pane-light-shadow-color: hsla(280, 85%, 100%, 0.7),
+    caution-pane-dark-shadow-color: hsla(0, 85%, 60%, 0.2),
+    caution-pane-light-shadow-color: hsla(0, 85%, 100%, 0.7)
+  )
+);
 
 
 @mixin smartphone {

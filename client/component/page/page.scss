@@ -11,7 +11,7 @@
 
 .spacer {
   width: calc(100% - #{$page-horizontal-margin} * 2);
-  margin-top: $page-top-margin;
+  margin-top: $page-top-margin + $header-height;
   margin-bottom: $page-bottom-margin;
   margin-right: $page-horizontal-margin;
   margin-left: $page-horizontal-margin;
