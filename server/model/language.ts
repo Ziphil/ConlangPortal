@@ -35,6 +35,15 @@ export class LanguageSchema {
   @prop({required: true})
   public createdDate!: Date;
 
+  public async fetchNames(): Promise<LanguageNames> {
+    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
+    let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
+    let [userName, familyName] = await Promise.all([userNamePromise, familyNamePromise]);
+    let languageName = this.name;
+    let names = {language: languageName, family: familyName, user: userName};
+    return names;
+  }
+
   public static async add(rawCodes: LanguageCodes, name: string): Promise<Language> {
     let codes = {language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
@@ -44,7 +53,7 @@ export class LanguageSchema {
     return language;
   }
 
-  public static async findOneByCode(codes: LanguageCodes): Promise<Language | null> {
+  public static async fetchOneByCodes(codes: LanguageCodes): Promise<Language | null> {
     let language = await LanguageModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language);
     return language;
   }
@@ -72,13 +81,9 @@ export class LanguageCreator {
   public static async create(raw: Language): Promise<LanguageSkeleton> {
     let id = raw.id;
     let codes = raw.codes;
+    let names = await raw.fetchNames();
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let userNamePromise = UserModel.fetchOneByCode(codes.user).then((user) => user?.name);
-    let familyNamePromise = FamilyModel.findOneByCode(codes).then((family) => family?.name);
-    let [userName, familyName] = await Promise.all([userNamePromise, familyNamePromise]);
-    let languageName = raw.name;
-    let names = {language: languageName, family: familyName, user: userName};
     let skeleton = {id, codes, names, approved, createdDate};
     return skeleton;
   }
@@ -90,3 +95,4 @@ export type Language = DocumentType<LanguageSchema>;
 export let LanguageModel = getModelForClass(LanguageSchema);
 
 export type LanguageCodes = {language: string, family: string, user: string};
+export type LanguageNames = {language: string, family?: string, user?: string};

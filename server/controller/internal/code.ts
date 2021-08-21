@@ -32,7 +32,7 @@ export class CodeController extends Controller {
   public async [Symbol()](request: Request<"addEntry">, response: Response<"addEntry">): Promise<void> {
     let codes = request.body.codes;
     let names = request.body.names;
-    await EntryUtil.create(codes, names);
+    await EntryUtil.add(codes, names);
     Controller.respond(response, true);
   }
 

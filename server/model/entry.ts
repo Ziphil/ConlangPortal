@@ -39,10 +39,10 @@ import {
 
 export class EntryUtil {
 
-  public static async create(codes: DialectCodes, names: DialectNames): Promise<void> {
+  public static async add(codes: DialectCodes, names: DialectNames): Promise<void> {
     let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
-      let family = await FamilyModel.findOneByCode(codes);
+      let family = await FamilyModel.fetchOneByCodes(codes);
       if (family === null) {
         let duplicate = await FamilyModel.checkDuplication(codes);
         if (!duplicate) {
@@ -53,7 +53,7 @@ export class EntryUtil {
       }
     })();
     let languagePromise = (async () => {
-      let language = await LanguageModel.findOneByCode(codes);
+      let language = await LanguageModel.fetchOneByCodes(codes);
       if (language === null) {
         let duplicate = await LanguageModel.checkDuplication(codes);
         if (!duplicate) {
@@ -77,11 +77,11 @@ export class EntryUtil {
 
   public static async fetchOneByCodes(codes: EntryCodes): Promise<Entry | null> {
     if ("dialect" in codes) {
-      return await DialectModel.findOneByCode(codes);
+      return await DialectModel.fetchOneByCodes(codes);
     } else if ("language" in codes) {
-      return await LanguageModel.findOneByCode(codes);
+      return await LanguageModel.fetchOneByCodes(codes);
     } else if ("family" in codes) {
-      return await FamilyModel.findOneByCode(codes);
+      return await FamilyModel.fetchOneByCodes(codes);
     } else {
       return await UserModel.fetchOneByCode(codes.user);
     }

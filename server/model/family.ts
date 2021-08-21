@@ -29,6 +29,14 @@ export class FamilySchema {
   @prop({required: true})
   public createdDate!: Date;
 
+  public async fetchNames(): Promise<FamilyNames> {
+    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
+    let [userName] = await Promise.all([userNamePromise]);
+    let familyName = this.name;
+    let names = {family: familyName, user: userName};
+    return names;
+  }
+
   public static async add(rawCodes: FamilyCodes, name: string): Promise<Family> {
     let codes = {family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
@@ -38,7 +46,7 @@ export class FamilySchema {
     return family;
   }
 
-  public static async findOneByCode(codes: FamilyCodes): Promise<Family | null> {
+  public static async fetchOneByCodes(codes: FamilyCodes): Promise<Family | null> {
     let family = await FamilyModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family);
     return family;
   }
@@ -60,12 +68,9 @@ export class FamilyCreator {
   public static async create(raw: Family): Promise<FamilySkeleton> {
     let id = raw.id;
     let codes = raw.codes;
+    let names = await raw.fetchNames();
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let userNamePromise = UserModel.fetchOneByCode(codes.user).then((user) => user?.name);
-    let [userName] = await Promise.all([userNamePromise]);
-    let familyName = raw.name;
-    let names = {family: familyName, user: userName};
     let skeleton = {id, codes, names, approved, createdDate};
     return skeleton;
   }
@@ -77,3 +82,4 @@ export type Family = DocumentType<FamilySchema>;
 export let FamilyModel = getModelForClass(FamilySchema);
 
 export type FamilyCodes = {family: string, user: string};
+export type FamilyNames = {family: string, user?: string};

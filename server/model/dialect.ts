@@ -35,6 +35,16 @@ export class DialectSchema {
   @prop({required: true})
   public createdDate!: Date;
 
+  public async fetchNames(): Promise<DialectNames> {
+    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
+    let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
+    let languageNamePromise = LanguageModel.fetchOneByCodes(this.codes).then((language) => language?.name);
+    let [userName, familyName, languageName] = await Promise.all([userNamePromise, familyNamePromise, languageNamePromise]);
+    let dialectName = this.name;
+    let names = {dialect: dialectName, language: languageName, family: familyName, user: userName};
+    return names;
+  }
+
   public static async add(rawCodes: DialectCodes, name: string): Promise<Dialect> {
     let codes = {dialect: rawCodes.dialect, language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
@@ -44,7 +54,7 @@ export class DialectSchema {
     return dialect;
   }
 
-  public static async findOneByCode(codes: DialectCodes): Promise<Dialect | null> {
+  public static async fetchOneByCodes(codes: DialectCodes): Promise<Dialect | null> {
     let dialect = await DialectModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect);
     return dialect;
   }
@@ -72,14 +82,9 @@ export class DialectCreator {
   public static async create(raw: Dialect): Promise<DialectSkeleton> {
     let id = raw.id;
     let codes = raw.codes;
+    let names = await raw.fetchNames();
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let userNamePromise = UserModel.fetchOneByCode(codes.user).then((user) => user?.name);
-    let familyNamePromise = FamilyModel.findOneByCode(codes).then((family) => family?.name);
-    let languageNamePromise = LanguageModel.findOneByCode(codes).then((language) => language?.name);
-    let [userName, familyName, languageName] = await Promise.all([userNamePromise, familyNamePromise, languageNamePromise]);
-    let dialectName = raw.name;
-    let names = {dialect: dialectName, language: languageName, family: familyName, user: userName};
     let skeleton = {id, codes, names, approved, createdDate};
     return skeleton;
   }
@@ -91,3 +96,4 @@ export type Dialect = DocumentType<DialectSchema>;
 export let DialectModel = getModelForClass(DialectSchema);
 
 export type DialectCodes = {dialect: string, language: string, family: string, user: string};
+export type DialectNames = {dialect: string, language?: string, family?: string, user?: string};
