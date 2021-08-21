@@ -30,6 +30,14 @@ export default class CodePage extends Component<Props, State, Params> {
     await this.fetchEntry();
   }
 
+  public async componentDidUpdate(previousProps: any): Promise<void> {
+    if (this.props.location!.key !== previousProps.location!.key) {
+      this.setState({codes: null, entry: null});
+      this.fetchCodes();
+      await this.fetchEntry();
+    }
+  }
+
   public fetchCodes(): void {
     let codeString = this.props.match!.params.codeString;
     let codes = CodePage.createCodes(codeString);
