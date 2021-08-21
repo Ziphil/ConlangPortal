@@ -52,12 +52,16 @@ export class FamilySchema {
   }
 
   public static async checkDuplication(codes: FamilyCodes): Promise<boolean> {
-    let family = await FamilyModel.findOne().or([
-      FamilyModel.find().where("codes.user", codes.family).getFilter(),
-      FamilyModel.find().where("codes.family", codes.family).getFilter()
-    ]);
-    let duplicate = family !== null;
-    return duplicate;
+    if (codes.family !== "~") {
+      let family = await FamilyModel.findOne().or([
+        FamilyModel.find().where("codes.user", codes.family).getFilter(),
+        FamilyModel.find().where("codes.family", codes.family).getFilter()
+      ]);
+      let duplicate = family !== null;
+      return duplicate;
+    } else {
+      return false;
+    }
   }
 
 }
