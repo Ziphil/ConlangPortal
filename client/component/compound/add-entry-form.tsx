@@ -32,9 +32,9 @@ export default class AddEntryForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let codes = {
       user: this.props.userCode,
-      family: (this.state.familyUnspecified) ? "*" : this.state.familyCode,
+      family: (this.state.familyUnspecified) ? "~" : this.state.familyCode,
       language: this.state.languageCode,
-      dialect: (this.state.dialectUnspecified) ? "*" : this.state.dialectCode
+      dialect: (this.state.dialectUnspecified) ? "~" : this.state.dialectCode
     };
     let names = {
       family: (this.state.familyUnspecified) ? "" : this.state.familyName,

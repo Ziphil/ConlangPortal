@@ -65,7 +65,7 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public renderHead(): ReactNode {
     let codeString = this.props.match!.params.codeString;
-    let codeArray = codeString.split("-").map((code) => code || "*");
+    let codeArray = codeString.split("-").map((code) => code || "~");
     let restCodeNodes = codeArray.slice(1).map((code, index) => {
       let restCodeNode = (
         <Fragment key={index}>
@@ -148,13 +148,13 @@ export default class CodePage extends Component<Props, State, Params> {
       codes.user = codeArray[0];
     }
     if (codeArray.length >= 2) {
-      codes.family = codeArray[1] || "*";
+      codes.family = codeArray[1] || "~";
     }
     if (codeArray.length >= 3) {
       codes.language = codeArray[2];
     }
     if (codeArray.length >= 4) {
-      codes.dialect = codeArray[3] || "*";
+      codes.dialect = codeArray[3] || "~";
     }
     return codes;
   }

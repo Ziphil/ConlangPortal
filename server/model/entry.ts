@@ -43,13 +43,13 @@ export class EntryUtil {
     if (!codes.user.match(/^[a-z]{3}$/)) {
       throw new CustomError("invalidUserCode");
     }
-    if (codes.family !== "*" && !codes.family.match(/^[a-z]{3}$/)) {
+    if (codes.family !== "~" && !codes.family.match(/^[a-z]{3}$/)) {
       throw new CustomError("invalidFamilyCode");
     }
     if (!codes.language.match(/^[a-z]{2}$/)) {
       throw new CustomError("invalidLanguageCode");
     }
-    if (codes.dialect !== "*" && !codes.dialect.match(/^[a-z]{2}$/)) {
+    if (codes.dialect !== "~" && !codes.dialect.match(/^[a-z]{2}$/)) {
       throw new CustomError("invalidDialectCode");
     }
   }
