@@ -22,6 +22,10 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
+  DialectCreator,
+  DialectModel
+} from "/server/model/dialect";
+import {
   EntryCreator,
   EntryUtil
 } from "/server/model/entry";
@@ -68,6 +72,14 @@ export class CodeController extends Controller {
     } else {
       Controller.respond(response, null);
     }
+  }
+
+  @post(SERVER_PATHS["fetchDialects"])
+  @before()
+  public async [Symbol()](request: Request<"fetchDialects">, response: Response<"fetchDialects">): Promise<void> {
+    let dialects = await DialectModel.find();
+    let body = await Promise.all(dialects.map((dialect) => DialectCreator.create(dialect)));
+    Controller.respond(response, body);
   }
 
 }

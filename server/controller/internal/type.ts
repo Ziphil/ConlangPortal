@@ -4,6 +4,9 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
+  Dialect
+} from "/client/skeleton/dialect";
+import {
   Entry
 } from "/client/skeleton/entry";
 import {
@@ -19,6 +22,7 @@ export const SERVER_PATHS = {
   addEntry: "/cla/create",
   fetchEntry: "/cla/fetch",
   fetchEntryName: "/cla/fetch/name",
+  fetchDialects: "/cla/fetch/list",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register",
@@ -47,6 +51,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  fetchDialects: {
+    request: {},
+    response: {
+      success: Array<Dialect>,
+      error: never
+    }
+  }
   login: {
     request: {code: string, password: string},
     response: {

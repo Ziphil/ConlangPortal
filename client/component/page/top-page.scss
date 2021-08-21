@@ -3,6 +3,12 @@
 @import "/client/component/mixin.scss";
 
 
+.pane {
+  padding: 64u;
+  border-radius: 48u;
+  box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
+}
+
 .form {
   margin: 64u auto;
   max-width: $page-width * 0.6;
