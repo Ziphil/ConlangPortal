@@ -148,6 +148,7 @@ export default class AddEntryForm extends Component<Props, State> {
                 <Input
                   label={this.trans("addEntryForm.dialect.name")}
                   value={this.state.dialectName}
+                  disabled={this.state.dialectUnspecified}
                   onSet={(dialectName) => this.setState({dialectName})}
                 />
               </div>
