@@ -85,7 +85,7 @@ export default class CodePage extends Component<Props, State, Params> {
     let codeArray = codeString.split("-").map((code) => code || "~");
     let kind = ["user", "family", "language", "dialect"][codeArray.length - 1];
     let restCodeNodes = codeArray.slice(1).map((code, index) => {
-      let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).join("-");
+      let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "" : code).join("-");
       let restCodeNode = (
         <Fragment key={index}>
           <div styleName="slash"/>
