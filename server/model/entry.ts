@@ -80,7 +80,7 @@ export class EntryUtil {
     })();
     let dialectPromise = (async () => {
       let duplicate = await DialectModel.checkDuplication(codes);
-      if (!duplicate) {
+      if (!duplicate && codes.dialect !== codes.language) {
         methods.push(() => DialectModel.add(codes, names.dialect));
       } else {
         throw new CustomError("duplicateDialectCode");
