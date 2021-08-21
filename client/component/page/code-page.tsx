@@ -24,7 +24,8 @@ import {
 export default class CodePage extends Component<Props, State, Params> {
 
   public state: State = {
-    codes: null,
+    valid: null,
+    found: false,
     entry: null
   };
 
@@ -35,7 +36,7 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.location!.key !== previousProps.location!.key) {
-      this.setState({codes: null, entry: null});
+      this.setState({valid: null, found: false, entry: null});
       this.fetchCodes();
       await this.fetchEntry();
     }
@@ -43,8 +44,11 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public fetchCodes(): void {
     let codeString = this.props.match!.params.codeString;
-    let codes = CodePage.createCodes(codeString);
-    this.setState({codes});
+    if (codeString.match(/^(([a-z]{2})?\-[a-z]{2}\-([a-z]{3})?\-[a-z]{3}|[a-z]{2}\-([a-z]{3})?\-[a-z]{3}|([a-z]{3})?\-[a-z]{3}|[a-z]{3})$/)) {
+      this.setState({valid: true});
+    } else {
+      this.setState({valid: false});
+    }
   }
 
   public async fetchEntry(): Promise<void> {
@@ -54,7 +58,9 @@ export default class CodePage extends Component<Props, State, Params> {
     let entry = response.data;
     if (response.status === 200) {
       if (entry !== null) {
-        this.setState({entry});
+        this.setState({found: true, entry});
+      } else {
+        this.setState({found: false, entry: null});
       }
     }
   }
@@ -95,14 +101,14 @@ export default class CodePage extends Component<Props, State, Params> {
           let restNameNode = (
             <Fragment key={index}>
               <span styleName="arrow"/>
-              <span styleName="name">{name}</span>
+              <span styleName="name">{(codeArray[index + 1] === "~") ? "—" : name}</span>
             </Fragment>
           );
           return restNameNode;
         });
         let nameNode = (
           <div styleName="right-bottom">
-            <div styleName="main-name">{nameArray[0]}</div>
+            <div styleName="main-name">{(codeArray[0] === "~") ? "—" : nameArray[0]}</div>
             <div styleName="rest-name">
               {restNameNodes}
             </div>
@@ -136,21 +142,37 @@ export default class CodePage extends Component<Props, State, Params> {
     return node;
   }
 
-  public render(): ReactNode {
+  public renderMain(): ReactNode {
     let headNode = this.renderHead();
     let addEntryForm = this.renderAddEntryForm();
+    let contentString = (this.state.found) ? this.trans("codePage.dummy") : this.trans("codePage.notFound");
     let node = (
-      <Page>
+      <Fragment>
         <div styleName="pane">
           {headNode}
           <div styleName="content">
-            (ここに多言語との関係や公式サイトへのリンクなどの情報が載せられる予定)
+            {contentString}
           </div>
         </div>
         {addEntryForm}
-      </Page>
+      </Fragment>
     );
     return node;
+  }
+
+  public render(): ReactNode {
+    let valid = this.state.valid;
+    if (valid !== null) {
+      let innerNode = (valid) ? this.renderMain() : "invalid";
+      let node = (
+        <Page>
+          {innerNode}
+        </Page>
+      );
+      return node;
+    } else {
+      return null;
+    }
   }
 
   public static createCodes(codeString: string): EntryCodes {
@@ -177,7 +199,8 @@ export default class CodePage extends Component<Props, State, Params> {
 type Props = {
 };
 type State = {
-  codes: EntryCodes | null,
+  valid: boolean | null,
+  found: boolean,
   entry: Entry | null
 };
 type Params = {

@@ -48,13 +48,13 @@ export default class DialectList extends Component<Props, State> {
             </Link>
           </div>
           <div styleName="name-cell">
-            <span styleName="name">{dialect.names.dialect || "—"}</span>
+            <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
             <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.language || "—"}</span>
+            <span styleName="name">{dialect.names.language}</span>
             <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.family || "—"}</span>
+            <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family || "—"}</span>
             <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.user || "—"}</span>
+            <span styleName="name">{dialect.names.user}</span>
           </div>
         </div>
       );
