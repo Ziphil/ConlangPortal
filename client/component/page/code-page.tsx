@@ -83,6 +83,7 @@ export default class CodePage extends Component<Props, State, Params> {
   public renderHead(): ReactNode {
     let codeString = this.props.match!.params.codeString;
     let codeArray = codeString.split("-").map((code) => code || "~");
+    let kind = ["user", "family", "language", "dialect"][codeArray.length - 1];
     let restCodeNodes = codeArray.slice(1).map((code, index) => {
       let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).join("-");
       let restCodeNode = (
@@ -125,7 +126,7 @@ export default class CodePage extends Component<Props, State, Params> {
           {restCodeNodes}
         </div>
         <div styleName="separator"/>
-        <div styleName="kind">方言</div>
+        <div styleName="kind">{this.trans(`codePage.${kind}`)}</div>
       </div>
     );
     let node = (
