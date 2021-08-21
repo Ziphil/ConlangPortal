@@ -14,6 +14,9 @@ import {
   DialectSchema
 } from "/server/model/dialect";
 import {
+  CustomError
+} from "/server/model/error";
+import {
   Family,
   FamilyCodes,
   FamilyCreator,
@@ -36,27 +39,40 @@ import {
 
 export class EntryUtil {
 
-  public static async create(codes: DialectCodes, names: DialectNames): Promise<any> {
+  public static async create(codes: DialectCodes, names: DialectNames): Promise<void> {
+    let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.findOneByCode(codes);
       if (family === null) {
-        family = await FamilyModel.add(codes, names.family);
+        let duplicate = FamilyModel.checkDuplication(codes);
+        if (!duplicate) {
+          methods.push(() => FamilyModel.add(codes, names.family));
+        } else {
+          throw new CustomError("duplicateFamilyCode");
+        }
       }
-      return family;
     })();
     let languagePromise = (async () => {
       let language = await LanguageModel.findOneByCode(codes);
       if (language === null) {
-        language = await LanguageModel.add(codes, names.language);
+        let duplicate = LanguageModel.checkDuplication(codes);
+        if (!duplicate) {
+          methods.push(() => LanguageModel.add(codes, names.language));
+        } else {
+          throw new CustomError("duplicateLanguageCode");
+        }
       }
-      return language;
     })();
     let dialectPromise = (async () => {
-      let dialect = await DialectModel.add(codes, names.dialect);
-      return dialect;
+      let duplicate = DialectModel.checkDuplication(codes);
+      if (!duplicate) {
+        methods.push(() => DialectModel.add(codes, names.dialect));
+      } else {
+        throw new CustomError("duplicateDialectCode");
+      }
     })();
-    let [family, language, dialect] = await Promise.all([familyPromise, languagePromise, dialectPromise]);
-    return {family, language, dialect};
+    await Promise.all([familyPromise, languagePromise, dialectPromise]);
+    await Promise.all(methods.map((method) => method()));
   }
 
   public static async fetchOneByCodes(codes: EntryCodes): Promise<Entry | null> {

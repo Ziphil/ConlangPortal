@@ -10,6 +10,9 @@ import {
   Language as LanguageSkeleton
 } from "/client/skeleton/language";
 import {
+  DialectModel
+} from "/server/model/dialect";
+import {
   FamilyModel
 } from "/server/model/family";
 import {
@@ -42,8 +45,26 @@ export class LanguageSchema {
   }
 
   public static async findOneByCode(codes: LanguageCodes): Promise<Language | null> {
-    let family = await LanguageModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language);
-    return family;
+    let language = await LanguageModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language);
+    return language;
+  }
+
+  public static async checkDuplication(codes: LanguageCodes): Promise<boolean> {
+    let languagePromise = LanguageModel.findOne().or([
+      LanguageModel.find().where("codes.user", codes.user).where("codes.language", codes.language).getFilter(),
+      LanguageModel.find().where("codes.user", codes.family).where("codes.language", codes.language).getFilter(),
+      LanguageModel.find().where("codes.family", codes.user).where("codes.language", codes.language).getFilter(),
+      LanguageModel.find().where("codes.family", codes.family).where("codes.language", codes.language).getFilter()
+    ]);
+    let dialectPromise = DialectModel.findOne().or([
+      DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.language).getFilter(),
+      DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.language).getFilter(),
+      DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.language).getFilter(),
+      DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.language).getFilter()
+    ]);
+    let [language, dialect] = await Promise.all([languagePromise, dialectPromise]);
+    let duplicate = language !== null || dialect !== null;
+    return duplicate;
   }
 
 }
