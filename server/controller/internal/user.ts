@@ -1,6 +1,9 @@
 //
 
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   before,
   controller,
   post
@@ -47,13 +50,15 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["registerUser"])
   public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
     let code = request.body.code;
+    let name = request.body.name;
     let password = request.body.password;
     try {
-      let user = await UserModel.register(code, password);
+      let user = await UserModel.register(code, name, password);
       let body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      Controller.respondError(response, error, error);
+      let body = (error.name === "CustomError") ? CustomError.ofType(error.type) : undefined;
+      Controller.respondError(response, body, error);
     }
   }
 

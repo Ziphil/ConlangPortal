@@ -16,6 +16,9 @@ import {
 import {
   CustomError
 } from "/server/model/error";
+import {
+  FamilyModel
+} from "/server/model/family";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
@@ -39,18 +42,21 @@ export class UserSchema {
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
-  public static async register(code: string, password: string): Promise<User> {
-    let formerUser = await UserModel.findOne().where("code", code);
-    if (formerUser) {
-      throw new CustomError("duplicateUserCode");
+  public static async register(code: string, name: string, password: string): Promise<User> {
+    if (!code.match(/^[a-z]{3}$/)) {
+      throw new CustomError("invalidUserCode");
     } else {
-      let approved = false;
-      let createdDate = new Date();
-      let user = new UserModel({code, approved, createdDate});
-      await user.encryptPassword(password);
-      await user.validate();
-      await user.save();
-      return user;
+      let duplicate = await this.checkDuplication(code);
+      if (duplicate) {
+        throw new CustomError("duplicateUserCode");
+      } else {
+        let approved = false;
+        let createdDate = new Date();
+        let user = new UserModel({code, name, approved, createdDate});
+        await user.encryptPassword(password);
+        await user.save();
+        return user;
+      }
     }
   }
 
@@ -79,6 +85,14 @@ export class UserSchema {
 
   private comparePassword(password: string): boolean {
     return compareSync(password, this.hash);
+  }
+
+  public static async checkDuplication(code: string): Promise<boolean> {
+    let userQuery = UserModel.findOne().where("code", code);
+    let familyQuery = FamilyModel.findOne().where("codes.family", code);
+    let [user, family] = await Promise.all([userQuery, familyQuery]);
+    let duplicate = user !== null || family !== null;
+    return duplicate;
   }
 
 }

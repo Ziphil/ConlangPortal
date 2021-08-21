@@ -69,10 +69,10 @@ type ServerSpecs = {
     }
   },
   registerUser: {
-    request: {code: string, password: string},
+    request: {code: string, name: string, password: string},
     response: {
       success: User,
-      error: never
+      error: CustomError<string>
     }
   }
 };

@@ -17,12 +17,21 @@ import Page from "/client/component/page/page";
 export default class TopPage extends Component<Props, State> {
 
   public render(): ReactNode {
-    let node = (
-      <Page>
-        <div styleName="top">
+    let formNode = (this.props.store!.user === null) && (
+      <div styleName="top">
+        <div styleName="form">
+          <div styleName="head">{this.trans("topPage.login")}</div>
           <LoginForm/>
+        </div>
+        <div styleName="form">
+          <div styleName="head">{this.trans("topPage.register")}</div>
           <RegisterForm/>
         </div>
+      </div>
+    );
+    let node = (
+      <Page>
+        {formNode}
       </Page>
     );
     return node;

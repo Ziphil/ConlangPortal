@@ -1,3 +1,16 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.form {
+  margin: 64u auto;
+  max-width: $page-width * 0.6;
+}
+
+.head {
+  margin-bottom: 48u;
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--accent-color);
+}

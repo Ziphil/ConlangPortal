@@ -1,3 +1,19 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.form >* {
+  margin-top: 24u;
+}
+
+.explanation {
+  margin-bottom: 16u;
+  font-size: 90%;
+  text-align: justify;
+  line-height: $line-height;
+}
+
+.error {
+  margin-bottom: 48u;
+}
