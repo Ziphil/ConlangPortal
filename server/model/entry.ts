@@ -44,7 +44,7 @@ export class EntryUtil {
     let familyPromise = (async () => {
       let family = await FamilyModel.findOneByCode(codes);
       if (family === null) {
-        let duplicate = FamilyModel.checkDuplication(codes);
+        let duplicate = await FamilyModel.checkDuplication(codes);
         if (!duplicate) {
           methods.push(() => FamilyModel.add(codes, names.family));
         } else {
@@ -55,7 +55,7 @@ export class EntryUtil {
     let languagePromise = (async () => {
       let language = await LanguageModel.findOneByCode(codes);
       if (language === null) {
-        let duplicate = LanguageModel.checkDuplication(codes);
+        let duplicate = await LanguageModel.checkDuplication(codes);
         if (!duplicate) {
           methods.push(() => LanguageModel.add(codes, names.language));
         } else {
@@ -64,7 +64,7 @@ export class EntryUtil {
       }
     })();
     let dialectPromise = (async () => {
-      let duplicate = DialectModel.checkDuplication(codes);
+      let duplicate = await DialectModel.checkDuplication(codes);
       if (!duplicate) {
         methods.push(() => DialectModel.add(codes, names.dialect));
       } else {

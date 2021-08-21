@@ -44,10 +44,11 @@ export class FamilySchema {
   }
 
   public static async checkDuplication(codes: FamilyCodes): Promise<boolean> {
-    let userPromise = UserModel.findOne().where("code", codes.family);
-    let familyPromise = FamilyModel.findOne().where("codes.family", codes.family);
-    let [user, family] = await Promise.all([userPromise, familyPromise]);
-    let duplicate = user !== null || family !== null;
+    let family = await FamilyModel.findOne().or([
+      FamilyModel.find().where("codes.user", codes.family).getFilter(),
+      FamilyModel.find().where("codes.family", codes.family).getFilter()
+    ]);
+    let duplicate = family !== null;
     return duplicate;
   }
 
