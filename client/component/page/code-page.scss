@@ -68,6 +68,11 @@
   align-items: baseline;
 }
 
+.code >a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
 .slash {
   margin: 0em 0.2em;
   font-size: 80%;

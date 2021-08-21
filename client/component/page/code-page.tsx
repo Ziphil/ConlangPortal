@@ -5,6 +5,9 @@ import {
   Fragment,
   ReactNode
 } from "react";
+import {
+  Link
+} from "react-router-dom";
 import Component from "/client/component/component";
 import AddEntryForm from "/client/component/compound/add-entry-form";
 import {
@@ -75,10 +78,11 @@ export default class CodePage extends Component<Props, State, Params> {
     let codeString = this.props.match!.params.codeString;
     let codeArray = codeString.split("-").map((code) => code || "~");
     let restCodeNodes = codeArray.slice(1).map((code, index) => {
+      let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).join("-");
       let restCodeNode = (
         <Fragment key={index}>
           <div styleName="slash"/>
-          <div styleName="code">{code}</div>
+          <div styleName="code"><Link to={path}>{code}</Link></div>
         </Fragment>
       );
       return restCodeNode;

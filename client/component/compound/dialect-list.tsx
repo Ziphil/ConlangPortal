@@ -4,12 +4,16 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import {
+  Link
+} from "react-router-dom";
 import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
 import {
-  Dialect
+  Dialect,
+  DialectCodes
 } from "/client/skeleton/dialect";
 
 
@@ -29,17 +33,19 @@ export default class DialectList extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let rowNodes = this.state.dialects.map((dialect) => {
+    let rowNodes = this.state.dialects.map((dialect, index) => {
       let rowNode = (
-        <div styleName="row">
+        <div styleName="row" key={index}>
           <div styleName="code-cell">
-            <span styleName="code">{dialect.codes.dialect}</span>
-            <span styleName="slash"/>
-            <span styleName="code">{dialect.codes.language}</span>
-            <span styleName="slash"/>
-            <span styleName="code">{dialect.codes.family}</span>
-            <span styleName="slash"/>
-            <span styleName="code">{dialect.codes.user}</span>
+            <Link to={DialectList.createPath(dialect.codes)}>
+              <span styleName="code">{dialect.codes.dialect}</span>
+              <span styleName="slash"/>
+              <span styleName="code">{dialect.codes.language}</span>
+              <span styleName="slash"/>
+              <span styleName="code">{dialect.codes.family}</span>
+              <span styleName="slash"/>
+              <span styleName="code">{dialect.codes.user}</span>
+            </Link>
           </div>
           <div styleName="name-cell">
             <span styleName="name">{dialect.names.dialect || "—"}</span>
@@ -60,6 +66,15 @@ export default class DialectList extends Component<Props, State> {
       </div>
     );
     return node;
+  }
+
+  public static createPath(codes: DialectCodes): string {
+    let path = "/cla/";
+    path += (codes.dialect === "~") ? "" : codes.dialect + "-";
+    path += codes.language + "-";
+    path += (codes.family === "~") ? "-" : codes.family + "-";
+    path += codes.user;
+    return path;
   }
 
 }
