@@ -5,6 +5,18 @@ common:
   numberUndefined: "?"
 
 error:
+  invalidUserCode: >-
+    製作者コードが不正です。
+    ラテン小文字のみから成る 3 文字のコードを入力してください。
+  invalidFamilyCode: >-
+    語族コードが不正です。
+    ラテン小文字のみから成る 3 文字のコードを入力してください。
+  invalidLanguageCode: >-
+    言語コードが不正です。
+    ラテン小文字のみから成る 2 文字のコードを入力してください。
+  invalidDialectCode: >-
+    方言コードが不正です。
+    ラテン小文字のみから成る 2 文字のコードを入力してください。
   duplicateFamilyCode: >-
     語族コードが重複しています。
     別の語族コードを指定してください。
@@ -18,7 +30,7 @@ error:
 addEntryForm:
   family:
     head: "語族"
-    code: "コード (3 桁)"
+    code: "コード (小文字 3 桁)"
     name: "名称"
     unspecified: "指定しない"
     explanation: >-
@@ -26,13 +38,13 @@ addEntryForm:
       世界観や語族を 1 つしか作る予定がない場合は、「指定しない」にチェックを入れてください。
   language:
     head: "言語"
-    code: "コード (2 桁)"
+    code: "コード (小文字 2 桁)"
     name: "名称"
     explanation: >-
       その言語を特定するためのコードを入力してください。
   dialect:
     head: "方言"
-    code: "コード (2 桁)"
+    code: "コード (小文字 2 桁)"
     name: "名称"
     unspecified: "指定しない"
     explanation: >-

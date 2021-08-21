@@ -39,6 +39,21 @@ import {
 
 export class EntryUtil {
 
+  private static assertCodes(codes: DialectCodes): void {
+    if (!codes.user.match(/^[a-z]{3}$/)) {
+      throw new CustomError("invalidUserCode");
+    }
+    if (codes.family !== "*" && !codes.family.match(/^[a-z]{3}$/)) {
+      throw new CustomError("invalidFamilyCode");
+    }
+    if (!codes.language.match(/^[a-z]{2}$/)) {
+      throw new CustomError("invalidLanguageCode");
+    }
+    if (codes.dialect !== "*" && !codes.dialect.match(/^[a-z]{2}$/)) {
+      throw new CustomError("invalidDialectCode");
+    }
+  }
+
   public static async add(codes: DialectCodes, names: DialectNames): Promise<void> {
     let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
@@ -71,6 +86,7 @@ export class EntryUtil {
         throw new CustomError("duplicateDialectCode");
       }
     })();
+    this.assertCodes(codes);
     await Promise.all([familyPromise, languagePromise, dialectPromise]);
     await Promise.all(methods.map((method) => method()));
   }
