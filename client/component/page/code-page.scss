@@ -3,6 +3,8 @@
 @import "/client/component/mixin.scss";
 
 
+$smartphone-scale-ratio: 0.7;
+
 .pane {
   border-radius: 48u;
   box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
@@ -39,7 +41,20 @@
   align-items: center;
   justify-content: center;
   flex-grow: 0;
+  flex-shrink: 0;
   position: relative;
+  @include smartphone {
+    width: 700u * $smartphone-scale-ratio;
+    height: 700u * $smartphone-scale-ratio;
+    top: -120u * $smartphone-scale-ratio;
+    left: -120u * $smartphone-scale-ratio;
+    margin-bottom: -120u * $smartphone-scale-ratio;
+    margin-right: -120u * $smartphone-scale-ratio;  
+    padding-top: 80u * $smartphone-scale-ratio;
+    padding-right: 50u * $smartphone-scale-ratio;
+    padding-left: 120u * $smartphone-scale-ratio;
+    font-size: 220u * $smartphone-scale-ratio;
+  }
 }
 
 .right {
@@ -49,12 +64,15 @@
 .right-top {
   height: 150u;
   margin-top: 64u;
-  margin-left: 16u;
+  margin-left: 48u;
   margin-right: 80u;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: justify;
+  @include smartphone {
+    margin-top: 32u;
+  }
 }
 
 .rest-code {
@@ -67,6 +85,9 @@
   flex-grow: 0;
   flex-direction: row;
   align-items: center;
+  @include smartphone {
+    font-size: 150u * $smartphone-scale-ratio;
+  }
 }
 
 .code >a {
@@ -81,12 +102,18 @@
   &:before {
     content: "-";
   }
+  &:first-child {
+    margin-left: 0em;
+  }
 }
 
 .separator {
   margin: 0u 32u 0u 48u;
   flex-grow: 1;
   border-top: 12u var(--dimmed-accent-color) dotted;
+  @include smartphone {
+    display: none;
+  }
 }
 
 .kind {
@@ -94,6 +121,9 @@
   font-weight: bold;
   color: var(--accent-color);
   flex-grow: 0;
+  @include smartphone {
+    display: none;
+  }
 }
 
 .right-bottom {
@@ -101,18 +131,27 @@
   margin-left: 64u;
   margin-right: 64u;
   line-height: $line-height;
+  @include smartphone {
+    margin-top: 32u;
+  }
 }
 
 .main-name {
   font-size: 96u;
   font-weight: bold;
   color: var(--accent-color);
+  @include smartphone {
+    font-size: 72u;
+  }
 }
 
 .rest-name {
   font-size: 64u;
   font-weight: bold;
   color: var(--accent-color);
+  @include smartphone {
+    font-size: 48u;
+  }
 }
 
 .arrow {
