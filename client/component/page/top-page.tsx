@@ -32,10 +32,10 @@ export default class TopPage extends Component<Props, State> {
     );
     let node = (
       <Page>
+        {formNode}
         <div styleName="pane">
           <DialectList/>
         </div>
-        {formNode}
       </Page>
     );
     return node;
