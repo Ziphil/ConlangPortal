@@ -49,6 +49,7 @@
 .right-top {
   height: 150u;
   margin-top: 64u;
+  margin-left: 16u;
   margin-right: 80u;
   display: flex;
   flex-direction: row;
@@ -65,7 +66,7 @@
   display: flex;
   flex-grow: 0;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
 }
 
 .code >a {
@@ -78,7 +79,7 @@
   font-size: 80%;
   color: var(--dimmed-accent-color);
   &:before {
-    content: "\\";
+    content: "-";
   }
 }
 
@@ -96,14 +97,14 @@
 }
 
 .right-bottom {
-  margin-top: 48u;
+  margin-top: 64u;
   margin-left: 64u;
   margin-right: 64u;
   line-height: $line-height;
 }
 
 .main-name {
-  font-size: 80u;
+  font-size: 96u;
   font-weight: bold;
   color: var(--accent-color);
 }
