@@ -35,8 +35,7 @@ export default class TopPage extends Component<Props, State> {
         {formNode}
         <div styleName="pane">
           <div styleName="caution">
-            現在は β テストとして稼働中です。
-            正式稼働後に現在のデータは削除されますのでご注意ください。
+            {this.trans("topPage.caution")}
           </div>
           <DialectList/>
         </div>
