@@ -8,7 +8,7 @@ error:
   loginFailed: >-
     Failed to sign in.
   invalidUserCode: >-
-    The creater code is invalid.
+    The creator code is invalid.
     Please enter a three-character code consisting of only lowercase Latin letters.
   invalidFamilyCode: >-
     The language family code is invalid.
@@ -20,7 +20,7 @@ error:
     The dialect code is invalid.
     Please enter a two-character code consisting of only lowercase Latin letters.
   duplicateUserCode: >-
-    This creater code already exists.
+    This creator code already exists.
     Please specify a different producer code.
   duplicateFamilyCode: >-
     This language family code already exists.
@@ -35,21 +35,21 @@ error:
 addEntryForm:
   family:
     head: "Language family"
-    code: "Code (3 lowercase letters)"
+    code: "Code (3 small letters)"
     name: "Name"
     unspecified: "Do not specify"
     explanation: >-
       If you have created or plan to create more than one world or language family (including macrolanguage), please enter a code to identify it.
-      If you areplanning to create only one world or language family, check the “Do not specify” checkbox.
+      If you are planning to create only one world or language family, check the “Do not specify” checkbox.
   language:
     head: "Language"
-    code: "Code (2 lowercase letters)"
+    code: "Code (2 small letters)"
     name: "Name"
     explanation: >-
       Enter a code that identifies the language you are applying for.
   dialect:
     head: "Dialect"
-    code: "Code (2 lowercase letters)"
+    code: "Code (2 small letters)"
     name: "Name"
     unspecified: "Do not specify"
     explanation: >-
@@ -60,12 +60,15 @@ addEntryForm:
     Once you have applied for registration, you cannot change or delete the code.
     Please check the details of your application carefully before clicking the “Submit” button.
     You will be able to change the name of the language family or language later (currently not implemented).
+header:
+  logout: "Sign out"
+  userPage: "User page"
 loginForm:
   code: "Code"
   password: "Password"
   confirm: "Sign in"
 registerForm:
-  code: "Code (3 lowercase letters)"
+  code: "Code (3 small letters)"
   name: "Display name"
   password: "Password"
   confirm: "Sign up"
@@ -83,3 +86,6 @@ codePage:
 topPage:
   login: "Sign in"
   register: "Sign up"
+  caution: >-
+    This site is currently running as a beta test.
+    Please note that all data will be deleted after the official launch.

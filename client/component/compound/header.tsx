@@ -32,8 +32,8 @@ export default class Header extends Component<Props, State> {
     let user = this.props.store!.user;
     let userNameNode = (user !== null) && (
       <div styleName="user">
-        <div styleName="item" onClick={this.performLogout.bind(this)}>ログアウト</div>
-        <div styleName="item" onClick={this.jumpUserPage.bind(this)}>ユーザーページ</div>
+        <div styleName="item" onClick={this.performLogout.bind(this)}>{this.trans("header.logout")}</div>
+        <div styleName="item" onClick={this.jumpUserPage.bind(this)}>{this.trans("header.userPage")}</div>
       </div>
     );
     let node = (
@@ -42,6 +42,11 @@ export default class Header extends Component<Props, State> {
           <div styleName="left">
             <div styleName="title">
               <Link to="/">Conlang Portal</Link>
+            </div>
+            <div styleName="language-list">
+              <span styleName="language" onClick={() => this.props.store!.changeLocale("ja")}>ja</span>
+              {" · "}
+              <span styleName="language" onClick={() => this.props.store!.changeLocale("en")}>en</span>
             </div>
           </div>
           <div styleName="right">
