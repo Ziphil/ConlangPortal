@@ -28,6 +28,11 @@ export default class Header extends Component<Props, State> {
     this.pushPath(`/cla/${user.code}`);
   }
 
+  private async changeLocale(locale: string): Promise<void> {
+    await this.props.store!.changeLocale(locale);
+    window.location.reload();
+  }
+
   public render(): ReactNode {
     let user = this.props.store!.user;
     let userNameNode = (user !== null) && (
@@ -44,9 +49,9 @@ export default class Header extends Component<Props, State> {
               <Link to="/">Conlang Portal</Link>
             </div>
             <div styleName="language-list">
-              <span styleName="language" onClick={() => this.props.store!.changeLocale("ja")}>ja</span>
+              <span styleName="language" onClick={() => this.changeLocale("ja")}>ja</span>
               {" · "}
-              <span styleName="language" onClick={() => this.props.store!.changeLocale("en")}>en</span>
+              <span styleName="language" onClick={() => this.changeLocale("en")}>en</span>
             </div>
           </div>
           <div styleName="right">
