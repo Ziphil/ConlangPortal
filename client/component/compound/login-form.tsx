@@ -29,7 +29,7 @@ export default class LoginForm extends Component<Props, State> {
       console.log("login successful");
       this.replacePath(`/cla/${code}`);
     } else {
-      console.log("login failed");
+      this.setState({errorType: "loginFailed"});
     }
   }
 

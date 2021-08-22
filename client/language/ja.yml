@@ -5,6 +5,8 @@ common:
   numberUndefined: "?"
 
 error:
+  loginFailed: >-
+    ログインに失敗しました。
   invalidUserCode: >-
     製作者コードが不正です。
     ラテン小文字のみから成る 3 文字のコードを入力してください。
