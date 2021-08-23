@@ -84,16 +84,21 @@ export default class CodePage extends Component<Props, State, Params> {
     let codeString = this.props.match!.params.codeString;
     let codeArray = codeString.split("-").map((code) => code || "~");
     let kind = ["user", "family", "language", "dialect"][codeArray.length - 1];
-    let restCodeNodes = codeArray.slice(1).map((code, index) => {
+    let restCodeInnerNodes = codeArray.slice(1).map((code, index) => {
       let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "" : code).join("-");
-      let restCodeNode = (
+      let restCodeInnerNode = (
         <Fragment key={index}>
           <div styleName="slash"/>
           <div styleName="code"><Link to={path}>{code}</Link></div>
         </Fragment>
       );
-      return restCodeNode;
+      return restCodeInnerNode;
     });
+    let restCodeNode = (restCodeInnerNodes.length > 0) && (
+      <div styleName="rest-code">
+        {restCodeInnerNodes}
+      </div>
+    );
     let nameNode = (() => {
       let entry = this.state.entry as any;
       if (entry !== null) {
@@ -122,9 +127,7 @@ export default class CodePage extends Component<Props, State, Params> {
     })();
     let rightTopNode = (
       <div styleName="right-top">
-        <div styleName="rest-code">
-          {restCodeNodes}
-        </div>
+        {restCodeNode}
         <div styleName="separator"/>
         <div styleName="kind">{this.trans(`codePage.${kind}`)}</div>
       </div>

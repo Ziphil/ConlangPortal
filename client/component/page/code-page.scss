@@ -19,6 +19,7 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .left {
+  @include special-font;
   width: 700u;
   height: 700u;
   top: -120u;
@@ -28,13 +29,10 @@ $smartphone-scale-ratio: 0.7;
   padding-top: 80u;
   padding-right: 50u;
   padding-left: 120u;
-  font-family: $special-font-family;
   font-size: 220u;
-  font-weight: 900;
-  font-style: italic;
   text-align: center;
   color: var(--background-color);
-  background: linear-gradient(to bottom right, var(--accent-start-color), var(--accent-end-color));
+  background: three-gradient(-90deg, var(--accent-first-start-color), var(--accent-first-end-color), var(--accent-second-start-color), var(--accent-second-end-color), var(--accent-third-start-color), var(--accent-third-end-color));
   border-radius: 50%;
   box-sizing: border-box;
   display: flex;
@@ -64,7 +62,7 @@ $smartphone-scale-ratio: 0.7;
 .right-top {
   height: 150u;
   margin-top: 64u;
-  margin-left: 48u;
+  margin-left: 64u;
   margin-right: 80u;
   display: flex;
   flex-direction: row;
@@ -75,11 +73,19 @@ $smartphone-scale-ratio: 0.7;
   }
 }
 
+.right-bottom {
+  margin-top: 64u;
+  margin-left: 64u;
+  margin-right: 64u;
+  line-height: $line-height;
+  @include smartphone {
+    margin-top: 32u;
+  }
+}
+
 .rest-code {
-  font-family: $special-font-family;
+  @include special-font;
   font-size: 150u;
-  font-weight: 900;
-  font-style: italic;
   color: var(--accent-color);
   display: flex;
   flex-grow: 0;
@@ -99,7 +105,7 @@ $smartphone-scale-ratio: 0.7;
   margin: 0em 0.2em;
   font-size: 80%;
   color: var(--dimmed-accent-color);
-  &:before {
+  &::before {
     content: "-";
   }
   &:first-child {
@@ -111,8 +117,11 @@ $smartphone-scale-ratio: 0.7;
   margin: 0u 32u 0u 48u;
   flex-grow: 1;
   border-top: 12u var(--dimmed-accent-color) dotted;
+  &:first-child {
+    margin-left: 0u;
+  }
   @include smartphone {
-    display: none;
+    margin-right: 0u;
   }
 }
 
@@ -123,16 +132,6 @@ $smartphone-scale-ratio: 0.7;
   flex-grow: 0;
   @include smartphone {
     display: none;
-  }
-}
-
-.right-bottom {
-  margin-top: 64u;
-  margin-left: 64u;
-  margin-right: 64u;
-  line-height: $line-height;
-  @include smartphone {
-    margin-top: 32u;
   }
 }
 
@@ -158,7 +157,7 @@ $smartphone-scale-ratio: 0.7;
   margin: 0em 0.2em;
   font-size: 100%;
   color: var(--dimmed-accent-color);
-  &:before {
+  &::before {
     content: "«";
   }
   &:first-child {
