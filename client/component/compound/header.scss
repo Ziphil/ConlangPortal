@@ -34,8 +34,9 @@
 }
 
 .title >a {
+  @include special-font;
   font-size: 100u;
-  font-weight: 900;
+  font-style: normal;
   color: var(--accent-color);
   text-decoration: none;
 }

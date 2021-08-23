@@ -43,10 +43,10 @@ $themes: (
 );
 
 
-@function three-gradient($first-start-color, $first-end-color, $second-start-color, $second-end-color, $third-start-color, $third-end-color) {
-  $first-gradient: linear-gradient(-90deg, $first-start-color, $first-end-color 90%);
-  $second-gradient: linear-gradient(120deg, $second-start-color, $second-end-color 80%);
-  $third-gradient: linear-gradient(60deg, $third-start-color, $third-end-color 80%);
+@function three-gradient($direction, $first-start-color, $first-end-color, $second-start-color, $second-end-color, $third-start-color, $third-end-color) {
+  $first-gradient: linear-gradient($direction, $first-start-color, $first-end-color 90%);
+  $second-gradient: linear-gradient($direction - 150deg, $second-start-color, $second-end-color 80%);
+  $third-gradient: linear-gradient($direction + 150deg, $third-start-color, $third-end-color 80%);
   @return $first-gradient, $second-gradient, $third-gradient;
 }
 
@@ -63,4 +63,15 @@ $themes: (
       #{$property-name}: 0u;
     }
   }
+}
+
+@mixin special-font {
+  font-family: $special-font-family;
+  font-weight: 900;
+  font-style: italic;
+}
+
+@mixin icon-font {
+  font-family: $icon-font-family;
+  font-weight: 900;
 }
