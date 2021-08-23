@@ -25,12 +25,16 @@ $themes: (
     text-color: hsl(280, 50%, 20%),
     dimmed-text-color: rgba(hsl(280, 50%, 20%), 0.5),
     caution-text-color: hsl(0, 50%, 50%),
+    accent-color: hsl(280, 60%, 60%),
+    dimmed-accent-color: rgba(hsl(280, 70%, 60%), 0.5),
+    accent-first-start-color: hsla(280, 80%, 60%, 1),
+    accent-first-end-color: hsla(280, 80%, 60%, 0),
+    accent-second-start-color: hsla(330, 80%, 60%, 1),
+    accent-second-end-color: hsla(330, 80%, 60%, 0),
+    accent-third-start-color: hsla(240, 80%, 60%, 1),
+    accent-third-end-color: hsla(240, 80%, 60%, 0),
     background-color: hsl(280, 90%, 96%),
     caution-background-color: hsl(0, 90%, 94%),
-    accent-color: hsl(280, 50%, 58%),
-    dimmed-accent-color: rgba(hsl(280, 50%, 58%), 0.5),
-    accent-start-color: hsl(280, 50%, 65%),
-    accent-end-color: hsl(280, 50%, 50%),
     pane-dark-shadow-color: hsla(280, 85%, 70%, 0.2),
     pane-light-shadow-color: hsla(280, 85%, 100%, 0.7),
     caution-pane-dark-shadow-color: hsla(0, 85%, 60%, 0.2),
@@ -38,6 +42,13 @@ $themes: (
   )
 );
 
+
+@function three-gradient($first-start-color, $first-end-color, $second-start-color, $second-end-color, $third-start-color, $third-end-color) {
+  $first-gradient: linear-gradient(-90deg, $first-start-color, $first-end-color 90%);
+  $second-gradient: linear-gradient(120deg, $second-start-color, $second-end-color 80%);
+  $third-gradient: linear-gradient(60deg, $third-start-color, $third-end-color 80%);
+  @return $first-gradient, $second-gradient, $third-gradient;
+}
 
 @mixin smartphone {
   @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {

@@ -34,7 +34,7 @@ $smartphone-scale-ratio: 0.7;
   font-style: italic;
   text-align: center;
   color: var(--background-color);
-  background: linear-gradient(to bottom right, var(--accent-start-color), var(--accent-end-color));
+  background: three-gradient(var(--accent-first-start-color), var(--accent-first-end-color), var(--accent-second-start-color), var(--accent-second-end-color), var(--accent-third-start-color), var(--accent-third-end-color));
   border-radius: 50%;
   box-sizing: border-box;
   display: flex;
