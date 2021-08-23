@@ -64,12 +64,22 @@ $smartphone-scale-ratio: 0.7;
 .right-top {
   height: 150u;
   margin-top: 64u;
-  margin-left: 48u;
+  margin-left: 64u;
   margin-right: 80u;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: justify;
+  @include smartphone {
+    margin-top: 32u;
+  }
+}
+
+.right-bottom {
+  margin-top: 64u;
+  margin-left: 64u;
+  margin-right: 64u;
+  line-height: $line-height;
   @include smartphone {
     margin-top: 32u;
   }
@@ -111,8 +121,11 @@ $smartphone-scale-ratio: 0.7;
   margin: 0u 32u 0u 48u;
   flex-grow: 1;
   border-top: 12u var(--dimmed-accent-color) dotted;
+  &:first-child {
+    margin-left: 0u;
+  }
   @include smartphone {
-    display: none;
+    margin-right: 0u;
   }
 }
 
@@ -123,16 +136,6 @@ $smartphone-scale-ratio: 0.7;
   flex-grow: 0;
   @include smartphone {
     display: none;
-  }
-}
-
-.right-bottom {
-  margin-top: 64u;
-  margin-left: 64u;
-  margin-right: 64u;
-  line-height: $line-height;
-  @include smartphone {
-    margin-top: 32u;
   }
 }
 
