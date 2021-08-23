@@ -7,6 +7,7 @@
   width: 100%;
   height: $header-height;
   background-color: var(--background-color);
+  border-radius: 0u 0u 48u 48u;
   box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
   top: 0u;
   left: 0u;
