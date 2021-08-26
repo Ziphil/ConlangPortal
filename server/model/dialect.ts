@@ -62,6 +62,16 @@ export class DialectSchema {
     return dialect;
   }
 
+  public static async fetchByCodesLoose(codes: DialectCodes): Promise<Array<Dialect>> {
+    let dialects = await DialectModel.find().or([
+      DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
+    ]);
+    return dialects;
+  }
+
   public static async checkDuplication(codes: DialectCodes): Promise<boolean> {
     if (codes.dialect !== "~") {
       let dialect = await DialectModel.findOne().or([

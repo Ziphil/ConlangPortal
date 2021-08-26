@@ -106,13 +106,13 @@ export class EntryUtil {
 
   public static async fetchByCodesLoose(codes: EntryCodes): Promise<Array<Entry>> {
     if ("dialect" in codes) {
-      return [await DialectModel.fetchOneByCodes(codes)].flatMap((entry) => (entry !== null) ? [entry] : []);
+      return await DialectModel.fetchByCodesLoose(codes);
     } else if ("language" in codes) {
-      return [await LanguageModel.fetchOneByCodes(codes)].flatMap((entry) => (entry !== null) ? [entry] : []);
+      return await LanguageModel.fetchByCodesLoose(codes);
     } else if ("family" in codes) {
       return await FamilyModel.fetchByCodesLoose(codes);
     } else {
-      return [await UserModel.fetchOneByCode(codes.user)].flatMap((entry) => (entry !== null) ? [entry] : []);
+      return [await UserModel.fetchOneByCode(codes.user)].flatMap((user) => (user !== null) ? [user] : []);
     }
   }
 
