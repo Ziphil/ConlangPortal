@@ -26,8 +26,8 @@ export class DialectSchema {
   @prop({required: true})
   public codes!: DialectCodes;
 
-  @prop({required: true})
-  public name!: string;
+  @prop()
+  public name?: string;
 
   @prop({required: true})
   public approved!: boolean;
@@ -103,4 +103,4 @@ export type Dialect = DocumentType<DialectSchema>;
 export let DialectModel = getModelForClass(DialectSchema);
 
 export type DialectCodes = {dialect: string, language: string, family: string, user: string};
-export type DialectNames = {dialect: string, language?: string, family?: string, user?: string};
+export type DialectNames = {dialect?: string, language?: string, family?: string, user?: string};

@@ -68,7 +68,7 @@ export class CodeController extends Controller {
     let entry = await EntryUtil.fetchOneByCodes(codes);
     if (entry !== null) {
       let body = entry.name;
-      Controller.respond(response, body);
+      Controller.respond(response, body ?? null);
     } else {
       Controller.respond(response, null);
     }

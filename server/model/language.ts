@@ -26,8 +26,8 @@ export class LanguageSchema {
   @prop({required: true})
   public codes!: LanguageCodes;
 
-  @prop({required: true})
-  public name!: string;
+  @prop()
+  public name?: string;
 
   @prop({required: true})
   public approved!: boolean;
@@ -98,4 +98,4 @@ export type Language = DocumentType<LanguageSchema>;
 export let LanguageModel = getModelForClass(LanguageSchema);
 
 export type LanguageCodes = {language: string, family: string, user: string};
-export type LanguageNames = {language: string, family?: string, user?: string};
+export type LanguageNames = {language?: string, family?: string, user?: string};

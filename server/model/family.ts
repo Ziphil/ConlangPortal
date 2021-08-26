@@ -20,8 +20,8 @@ export class FamilySchema {
   @prop({required: true})
   public codes!: FamilyCodes;
 
-  @prop({required: true})
-  public name!: string;
+  @prop()
+  public name?: string;
 
   @prop({required: true})
   public approved!: boolean;
@@ -89,4 +89,4 @@ export type Family = DocumentType<FamilySchema>;
 export let FamilyModel = getModelForClass(FamilySchema);
 
 export type FamilyCodes = {family: string, user: string};
-export type FamilyNames = {family: string, user?: string};
+export type FamilyNames = {family?: string, user?: string};
