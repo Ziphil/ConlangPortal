@@ -65,9 +65,9 @@ export class CodeController extends Controller {
   @before()
   public async [Symbol()](request: Request<"fetchEntryName">, response: Response<"fetchEntryName">): Promise<void> {
     let codes = request.body.codes;
-    let entry = await EntryUtil.fetchOneByCodes(codes);
-    if (entry !== null) {
-      let body = entry.name;
+    let entries = await EntryUtil.fetchByCodesLoose(codes);
+    if (entries.length > 0) {
+      let body = entries[0].name;
       Controller.respond(response, body ?? null);
     } else {
       Controller.respond(response, null);

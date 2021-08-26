@@ -40,8 +40,10 @@ export class FamilySchema {
     return names;
   }
 
-  public static async add(rawCodes: FamilyCodes, name: string): Promise<Family> {
+  public static async add(rawCodes: FamilyCodes, rawName: string): Promise<Family> {
+    let syncingFamilies = await this.fetchByCodesLoose(rawCodes);
     let codes = {family: rawCodes.family, user: rawCodes.user};
+    let name = (syncingFamilies[0] !== undefined) ? syncingFamilies[0].name : rawName;
     let createdDate = new Date();
     let approved = false;
     let family = new FamilyModel({codes, name, approved, createdDate});
@@ -54,11 +56,24 @@ export class FamilySchema {
     return family;
   }
 
+  // 与えられたコードの語族データと共通のプロパティをもたなければならない全ての語族データの配列を返します。
+  // すなわち、与えられたコードのプロパティを変更したい場合、このメソッドが返す全ての語族データに対しても同じプロパティで変更する必要があります。
+  // 例えば、引数に xxx/aaa を渡した場合、このメソッドが返す配列には、完全に合致する xxx/aaa はもちろん含まれる他、xxx/bbb のような製作者部分が異なるものも含まれます。
+  public static async fetchByCodesLoose(codes: FamilyCodes): Promise<Array<Family>> {
+    if (codes.family !== "~") {
+      let families = await FamilyModel.find().where("codes.family", codes.family);
+      return families;
+    } else {
+      let families = await FamilyModel.find().where("codes.user", codes.user).where("codes.family", codes.family);
+      return families;
+    }
+  }
+
   public static async checkDuplication(codes: FamilyCodes): Promise<boolean> {
     if (codes.family !== "~") {
       let family = await FamilyModel.findOne().or([
         FamilyModel.find().where("codes.user", codes.family).getFilter(),
-        FamilyModel.find().where("codes.family", codes.family).getFilter()
+        FamilyModel.find().where("codes.user", codes.user).where("codes.family", codes.family).getFilter()
       ]);
       let duplicate = family !== null;
       return duplicate;

@@ -104,6 +104,18 @@ export class EntryUtil {
     }
   }
 
+  public static async fetchByCodesLoose(codes: EntryCodes): Promise<Array<Entry>> {
+    if ("dialect" in codes) {
+      return [await DialectModel.fetchOneByCodes(codes)].flatMap((entry) => (entry !== null) ? [entry] : []);
+    } else if ("language" in codes) {
+      return [await LanguageModel.fetchOneByCodes(codes)].flatMap((entry) => (entry !== null) ? [entry] : []);
+    } else if ("family" in codes) {
+      return await FamilyModel.fetchByCodesLoose(codes);
+    } else {
+      return [await UserModel.fetchOneByCode(codes.user)].flatMap((entry) => (entry !== null) ? [entry] : []);
+    }
+  }
+
 }
 
 
