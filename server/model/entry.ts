@@ -11,6 +11,7 @@ import {
   DialectCodes,
   DialectCreator,
   DialectModel,
+  DialectNames,
   DialectSchema
 } from "/server/model/dialect";
 import {
@@ -54,7 +55,7 @@ export class EntryUtil {
     }
   }
 
-  public static async add(codes: DialectCodes, names: DialectNames): Promise<void> {
+  public static async add(codes: DialectCodes, names: Required<DialectNames>): Promise<void> {
     let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.fetchOneByCodes(codes);
@@ -127,5 +128,3 @@ export class EntryCreator {
 
 export type Entry = Dialect | Language | Family | User;
 export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {user: string};
-
-export type DialectNames = {dialect: string, language: string, family: string, user: string};
