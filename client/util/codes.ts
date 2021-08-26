@@ -38,7 +38,7 @@ export class CodesUtil {
       codes.language = codeArray[2];
     }
     if (codeArray.length >= 4) {
-      codes.dialect = (codeArray[1] === "" || codeArray[1] === "0") ? "~" : codeArray[1];
+      codes.dialect = (codeArray[3] === "" || codeArray[3] === "0") ? "~" : codeArray[3];
     }
     return codes;
   }
