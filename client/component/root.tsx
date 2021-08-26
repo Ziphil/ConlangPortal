@@ -63,7 +63,7 @@ export class Root extends Component<Props, State> {
                 <ScrollTop>
                   <Switch>
                     <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
-                    <Authenticator type="none" exact sensitive path="/cla/:codeString" component={CodePage}/>
+                    <Authenticator type="none" exact sensitive path="/cla/:codePath" component={CodePage}/>
                   </Switch>
                 </ScrollTop>
               </ErrorBoundary>

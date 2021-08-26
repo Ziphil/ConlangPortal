@@ -10,6 +10,9 @@ import ErrorPane from "/client/component/compound/error-pane";
 import {
   style
 } from "/client/component/decorator";
+import {
+  CodesUtil
+} from "/client/util/codes";
 
 
 @style(require("./login-form.scss"))
@@ -27,7 +30,8 @@ export default class LoginForm extends Component<Props, State> {
     let response = await this.login({code, password});
     if (response.status === 200) {
       console.log("login successful");
-      this.replacePath(`/cla/${code}`);
+      let path = "/cla/" + CodesUtil.toCodePath({user: code});
+      this.replacePath(path);
     } else {
       this.setState({errorType: "loginFailed"});
     }

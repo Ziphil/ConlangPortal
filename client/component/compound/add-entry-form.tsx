@@ -12,8 +12,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  DialectCodes
-} from "/client/skeleton/dialect";
+  CodesUtil
+} from "/client/util/codes";
 
 
 @style(require("./add-entry-form.scss"))
@@ -48,7 +48,7 @@ export default class AddEntryForm extends Component<Props, State> {
     let response = await this.request("addEntry", {codes, names});
     if (response.status === 200) {
       console.log("entry added");
-      let path = AddEntryForm.createPath(codes);
+      let path = "/cla/" + CodesUtil.toCodePath(codes);
       this.pushPath(path);
     } else if (response.status === 400 && "error" in response.data) {
       let error = response.data;
@@ -183,15 +183,6 @@ export default class AddEntryForm extends Component<Props, State> {
       </form>
     );
     return node;
-  }
-
-  public static createPath(codes: DialectCodes): string {
-    let path = "/cla/";
-    path += (codes.dialect === "~") ? "" : codes.dialect + "-";
-    path += codes.language + "-";
-    path += (codes.family === "~") ? "-" : codes.family + "-";
-    path += codes.user;
-    return path;
   }
 
 }
