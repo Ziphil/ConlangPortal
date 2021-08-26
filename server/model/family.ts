@@ -29,6 +29,9 @@ export class FamilySchema {
   @prop({required: true})
   public createdDate!: Date;
 
+  @prop()
+  public approvedDate?: Date;
+
   public async fetchNames(): Promise<FamilyNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
     let [userName] = await Promise.all([userNamePromise]);

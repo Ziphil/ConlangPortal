@@ -35,6 +35,9 @@ export class DialectSchema {
   @prop({required: true})
   public createdDate!: Date;
 
+  @prop()
+  public approvedDate?: Date;
+
   public async fetchNames(): Promise<DialectNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
