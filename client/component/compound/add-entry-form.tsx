@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import ErrorPane from "/client/component/compound/error-pane";
@@ -174,7 +175,7 @@ export default class AddEntryForm extends Component<Props, State> {
           </div>
           <div styleName="item">
             <div styleName="button">
-              <input type="button" value={this.trans("addEntryForm.confirm")} onClick={this.handleClick.bind(this)}/>
+              <Button label={this.trans("addEntryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
             </div>
             <div styleName="caution">{this.trans("addEntryForm.caution")}</div>
           </div>

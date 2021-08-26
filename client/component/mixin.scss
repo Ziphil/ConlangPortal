@@ -13,7 +13,7 @@ $page-horizontal-margin: 96u;
 $header-height: 200u;
 $footer-height: 150u;
 
-$line-height: 1.3;
+$line-height: 1.4;
 
 $european-font-family: "Nunito";
 $japanese-font-family: "M PLUS Rounded 1c";
@@ -35,10 +35,10 @@ $themes: (
     accent-third-end-color: hsla(240, 80%, 60%, 0),
     background-color: hsl(280, 90%, 96%),
     caution-background-color: hsl(0, 90%, 94%),
-    pane-dark-shadow-color: hsla(280, 85%, 70%, 0.2),
-    pane-light-shadow-color: hsla(280, 85%, 100%, 0.7),
-    caution-pane-dark-shadow-color: hsla(0, 85%, 60%, 0.2),
-    caution-pane-light-shadow-color: hsla(0, 85%, 100%, 0.7)
+    pane-dark-shadow-color: hsla(280, 85%, 70%, 0.3),
+    pane-light-shadow-color: hsla(280, 85%, 100%, 0.8),
+    caution-pane-dark-shadow-color: hsla(0, 85%, 70%, 0.3),
+    caution-pane-light-shadow-color: hsla(0, 85%, 100%, 0.8)
   )
 );
 
