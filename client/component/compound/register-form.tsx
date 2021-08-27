@@ -10,6 +10,9 @@ import ErrorPane from "/client/component/compound/error-pane";
 import {
   style
 } from "/client/component/decorator";
+import {
+  CodesUtil
+} from "/client/util/codes";
 
 
 @style(require("./register-form.scss"))
@@ -30,8 +33,8 @@ export default class RegisterForm extends Component<Props, State> {
     if (response.status === 200) {
       let loginResponse = await this.login({code, password});
       if (loginResponse.status === 200) {
-        console.log("login successful");
-        this.replacePath(`/cla/${code}`);
+        let path = "/cla/" + CodesUtil.toCodePath({user: code});
+        this.replacePath(path);
       } else {
         console.log("login failed");
       }

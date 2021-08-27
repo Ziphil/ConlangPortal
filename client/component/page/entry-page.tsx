@@ -15,13 +15,15 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
-  Entry,
-  EntryCodes
+  Entry
 } from "/client/skeleton/entry";
+import {
+  CodesUtil
+} from "/client/util/codes";
 
 
-@style(require("./code-page.scss"))
-export default class CodePage extends Component<Props, State, Params> {
+@style(require("./entry-page.scss"))
+export default class EntryPage extends Component<Props, State, Params> {
 
   public state: State = {
     valid: null,
@@ -43,8 +45,8 @@ export default class CodePage extends Component<Props, State, Params> {
   }
 
   public fetchCodes(): void {
-    let codeString = this.props.match!.params.codeString;
-    if (codeString.match(/^(([a-z]{2})?\-[a-z]{2}\-([a-z]{3})?\-[a-z]{3}|[a-z]{2}\-([a-z]{3})?\-[a-z]{3}|([a-z]{3})?\-[a-z]{3}|[a-z]{3})$/)) {
+    let codePath = this.props.match!.params.codePath;
+    if (CodesUtil.isValidCodePath(codePath)) {
       this.setState({valid: true});
     } else {
       this.setState({valid: false});
@@ -52,8 +54,8 @@ export default class CodePage extends Component<Props, State, Params> {
   }
 
   public async fetchEntry(): Promise<void> {
-    let codeString = this.props.match!.params.codeString;
-    let codes = CodePage.createCodes(codeString);
+    let codePath = this.props.match!.params.codePath;
+    let codes = CodesUtil.fromCodePath(codePath);
     let response = await this.request("fetchEntry", {codes});
     let entry = response.data;
     if (response.status === 200) {
@@ -67,7 +69,7 @@ export default class CodePage extends Component<Props, State, Params> {
 
   public renderAddEntryForm(): ReactNode {
     let user = this.props.store!.user;
-    let codeArray = this.props.match!.params.codeString.split("-");
+    let codeArray = this.props.match!.params.codePath.split("-");
     if (codeArray.length === 1 && codeArray[0] === user?.code) {
       let node = (
         <div styleName="form">
@@ -81,11 +83,11 @@ export default class CodePage extends Component<Props, State, Params> {
   }
 
   public renderHead(): ReactNode {
-    let codeString = this.props.match!.params.codeString;
-    let codeArray = codeString.split("-").map((code) => code || "~");
+    let codePath = this.props.match!.params.codePath;
+    let codeArray = codePath.split("-").map((code) => (code === "" || code === "0") ? "~" : code);
     let kind = ["user", "family", "language", "dialect"][codeArray.length - 1];
     let restCodeInnerNodes = codeArray.slice(1).map((code, index) => {
-      let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "" : code).join("-");
+      let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "0" : code).join("-");
       let restCodeInnerNode = (
         <Fragment key={index}>
           <div styleName="slash"/>
@@ -179,24 +181,6 @@ export default class CodePage extends Component<Props, State, Params> {
     }
   }
 
-  public static createCodes(codeString: string): EntryCodes {
-    let codeArray = codeString.split("-").reverse();
-    let codes = {} as any;
-    if (codeArray.length >= 1) {
-      codes.user = codeArray[0];
-    }
-    if (codeArray.length >= 2) {
-      codes.family = codeArray[1] || "~";
-    }
-    if (codeArray.length >= 3) {
-      codes.language = codeArray[2];
-    }
-    if (codeArray.length >= 4) {
-      codes.dialect = codeArray[3] || "~";
-    }
-    return codes;
-  }
-
 }
 
 
@@ -208,5 +192,5 @@ type State = {
   entry: Entry | null
 };
 type Params = {
-  codeString: string
+  codePath: string
 };

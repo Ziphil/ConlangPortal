@@ -39,6 +39,9 @@ export class UserSchema {
   @prop({required: true})
   public createdDate!: Date;
 
+  @prop()
+  public approvedDate?: Date;
+
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。

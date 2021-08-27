@@ -26,14 +26,17 @@ export class DialectSchema {
   @prop({required: true})
   public codes!: DialectCodes;
 
-  @prop({required: true})
-  public name!: string;
+  @prop()
+  public name?: string;
 
   @prop({required: true})
   public approved!: boolean;
 
   @prop({required: true})
   public createdDate!: Date;
+
+  @prop()
+  public approvedDate?: Date;
 
   public async fetchNames(): Promise<DialectNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
@@ -57,6 +60,16 @@ export class DialectSchema {
   public static async fetchOneByCodes(codes: DialectCodes): Promise<Dialect | null> {
     let dialect = await DialectModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect);
     return dialect;
+  }
+
+  public static async fetchByCodesLoose(codes: DialectCodes): Promise<Array<Dialect>> {
+    let dialects = await DialectModel.find().or([
+      DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
+    ]);
+    return dialects;
   }
 
   public static async checkDuplication(codes: DialectCodes): Promise<boolean> {
@@ -100,4 +113,4 @@ export type Dialect = DocumentType<DialectSchema>;
 export let DialectModel = getModelForClass(DialectSchema);
 
 export type DialectCodes = {dialect: string, language: string, family: string, user: string};
-export type DialectNames = {dialect: string, language?: string, family?: string, user?: string};
+export type DialectNames = {dialect?: string, language?: string, family?: string, user?: string};

@@ -12,9 +12,11 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dialect,
-  DialectCodes
+  Dialect
 } from "/client/skeleton/dialect";
+import {
+  CodesUtil
+} from "/client/util/codes";
 
 
 @style(require("./dialect-list.scss"))
@@ -34,10 +36,11 @@ export default class DialectList extends Component<Props, State> {
 
   public render(): ReactNode {
     let rowNodes = this.state.dialects.map((dialect, index) => {
+      let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
       let rowNode = (
         <div styleName="row" key={index}>
           <div styleName="code-cell">
-            <Link to={DialectList.createPath(dialect.codes)}>
+            <Link to={path}>
               <span styleName="code">{dialect.codes.dialect}</span>
               <span styleName="slash"/>
               <span styleName="code">{dialect.codes.language}</span>
@@ -66,15 +69,6 @@ export default class DialectList extends Component<Props, State> {
       </div>
     );
     return node;
-  }
-
-  public static createPath(codes: DialectCodes): string {
-    let path = "/cla/";
-    path += (codes.dialect === "~") ? "" : codes.dialect + "-";
-    path += codes.language + "-";
-    path += (codes.family === "~") ? "-" : codes.family + "-";
-    path += codes.user;
-    return path;
   }
 
 }

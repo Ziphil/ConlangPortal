@@ -13,7 +13,7 @@ import fs from "fs";
 import mongoose from "mongoose";
 import multer from "multer";
 import {
-  CodeController,
+  EntryController,
   UserController
 } from "/server/controller/internal";
 import {
@@ -80,7 +80,7 @@ export class Main {
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
-    CodeController.use(this.application);
+    EntryController.use(this.application);
     UserController.use(this.application);
   }
 

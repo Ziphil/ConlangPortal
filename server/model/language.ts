@@ -26,14 +26,17 @@ export class LanguageSchema {
   @prop({required: true})
   public codes!: LanguageCodes;
 
-  @prop({required: true})
-  public name!: string;
+  @prop()
+  public name?: string;
 
   @prop({required: true})
   public approved!: boolean;
 
   @prop({required: true})
   public createdDate!: Date;
+
+  @prop()
+  public approvedDate?: Date;
 
   public async fetchNames(): Promise<LanguageNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
@@ -56,6 +59,16 @@ export class LanguageSchema {
   public static async fetchOneByCodes(codes: LanguageCodes): Promise<Language | null> {
     let language = await LanguageModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language);
     return language;
+  }
+
+  public static async fetchByCodesLoose(codes: LanguageCodes): Promise<Array<Language>> {
+    let languages = await LanguageModel.find().or([
+      LanguageModel.find().where("codes.user", codes.user).where("codes.language", codes.language).getFilter(),
+      LanguageModel.find().where("codes.user", codes.family).where("codes.language", codes.language).getFilter(),
+      LanguageModel.find().where("codes.family", codes.user).where("codes.language", codes.language).getFilter(),
+      LanguageModel.find().where("codes.family", codes.family).where("codes.language", codes.language).getFilter()
+    ]);
+    return languages;
   }
 
   public static async checkDuplication(codes: LanguageCodes): Promise<boolean> {
@@ -95,4 +108,4 @@ export type Language = DocumentType<LanguageSchema>;
 export let LanguageModel = getModelForClass(LanguageSchema);
 
 export type LanguageCodes = {language: string, family: string, user: string};
-export type LanguageNames = {language: string, family?: string, user?: string};
+export type LanguageNames = {language?: string, family?: string, user?: string};
