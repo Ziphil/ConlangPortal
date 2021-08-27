@@ -1,4 +1,4 @@
 //
 
-export * from "./code";
+export * from "./entry";
 export * from "./user";

@@ -22,8 +22,8 @@ import {
 } from "/client/util/codes";
 
 
-@style(require("./code-page.scss"))
-export default class CodePage extends Component<Props, State, Params> {
+@style(require("./entry-page.scss"))
+export default class EntryPage extends Component<Props, State, Params> {
 
   public state: State = {
     valid: null,

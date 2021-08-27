@@ -32,7 +32,7 @@ import {
 
 
 @controller(SERVER_PATH_PREFIX)
-export class CodeController extends Controller {
+export class EntryController extends Controller {
 
   @post(SERVER_PATHS["addEntry"])
   @before(verifyUser(), verifyCode())
