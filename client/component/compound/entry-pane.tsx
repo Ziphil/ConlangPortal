@@ -91,7 +91,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     return node;
   }
 
-  private renderPropertyList(): ReactNode {
+  private renderInformationList(): ReactNode {
     let entry = this.props.entry;
     if (entry !== null) {
       if (EntryUtil.is(entry, "language")) {
@@ -104,11 +104,11 @@ export default class EntryPane extends Component<Props, State, Params> {
 
   public render(): ReactNode {
     let headNode = this.renderHead();
-    let propertyList = (this.props.found === null) ? "" : (this.props.found) ? this.renderPropertyList() : this.trans("codePage.notFound");
+    let informationList = (this.props.found === null) ? "" : (this.props.found) ? this.renderInformationList() : this.trans("codePage.notFound");
     let node = (
       <div styleName="root">
         {headNode}
-        {propertyList}
+        {informationList}
       </div>
     );
     return node;
