@@ -44,6 +44,17 @@ export class LanguageSchema {
   @prop()
   public approvedDate?: Date;
 
+  public async changeInformations(this: Language, informations: any): Promise<Language> {
+    let anyThis = this as any;
+    for (let [key, value] of Object.entries(informations)) {
+      if (value !== undefined) {
+        anyThis[key] = value;
+      }
+    }
+    await this.save();
+    return this;
+  }
+
   public async fetchNames(): Promise<LanguageNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);

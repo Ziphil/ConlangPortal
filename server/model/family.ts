@@ -32,6 +32,17 @@ export class FamilySchema {
   @prop()
   public approvedDate?: Date;
 
+  public async changeInformations(this: Family, informations: any): Promise<Family> {
+    let anyThis = this as any;
+    for (let [key, value] of Object.entries(informations)) {
+      if (value !== undefined) {
+        anyThis[key] = value;
+      }
+    }
+    await this.save();
+    return this;
+  }
+
   public async fetchNames(): Promise<FamilyNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
     let [userName] = await Promise.all([userNamePromise]);

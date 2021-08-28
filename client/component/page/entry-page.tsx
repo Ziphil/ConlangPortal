@@ -27,21 +27,16 @@ import {
 export default class EntryPage extends Component<Props, State, Params> {
 
   public state: State = {
-    valid: null,
-    found: null,
-    entry: null
+    valid: null
   };
 
   public async componentDidMount(): Promise<void> {
     this.checkValid();
-    await this.fetchEntry();
   }
 
   public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.location!.key !== previousProps.location!.key) {
-      this.setState({valid: null, found: null, entry: null});
       this.checkValid();
-      await this.fetchEntry();
     }
   }
 
@@ -51,20 +46,6 @@ export default class EntryPage extends Component<Props, State, Params> {
       this.setState({valid: true});
     } else {
       this.setState({valid: false});
-    }
-  }
-
-  public async fetchEntry(): Promise<void> {
-    let codePath = this.props.match!.params.codePath;
-    let codes = CodesUtil.fromCodePath(codePath);
-    let response = await this.request("fetchEntry", {codes});
-    let entry = response.data;
-    if (response.status === 200) {
-      if (entry !== null) {
-        this.setState({found: true, entry});
-      } else {
-        this.setState({found: false, entry: null});
-      }
     }
   }
 
@@ -91,7 +72,7 @@ export default class EntryPage extends Component<Props, State, Params> {
       let addEntryForm = this.renderAddEntryForm();
       let node = (
         <Page>
-          <EntryPane entry={this.state.entry} codes={codes} found={this.state.found}/>
+          <EntryPane codes={codes}/>
           {addEntryForm}
         </Page>
       );
@@ -114,9 +95,7 @@ export default class EntryPage extends Component<Props, State, Params> {
 type Props = {
 };
 type State = {
-  entry: Entry | null,
-  valid: boolean | null,
-  found: boolean | null
+  valid: boolean | null
 };
 type Params = {
   codePath: string

@@ -26,6 +26,48 @@ import {
 @style(require("./entry-pane.scss"))
 export default class EntryPane extends Component<Props, State, Params> {
 
+  public state: State = {
+    entry: null,
+    found: null
+  };
+
+  public async componentDidMount(): Promise<void> {
+    await this.fetchEntry();
+  }
+
+  public async componentDidUpdate(previousProps: any): Promise<void> {
+    if (this.props.codes !== previousProps.codes) {
+      this.setState({found: null, entry: null});
+      await this.fetchEntry();
+    }
+  }
+
+  private async fetchEntry(): Promise<void> {
+    let codes = this.props.codes;
+    let response = await this.request("fetchEntry", {codes});
+    let entry = response.data;
+    if (response.status === 200) {
+      if (entry !== null) {
+        this.setState({found: true, entry});
+      } else {
+        this.setState({found: false, entry: null});
+      }
+    }
+  }
+
+  private async changeInformations(key: string, value: any): Promise<void> {
+    let entry = this.state.entry as any;
+    if (entry !== null) {
+      let codes = ("code" in entry) ? {user: entry.code} : entry.codes;
+      let informations = {[key]: value};
+      let response = await this.request("changeEntryInformations", {codes, informations});
+      if (response.status === 200) {
+        entry[key] = value;
+        this.setState({entry});
+      }
+    }
+  }
+
   private renderHead(): ReactNode {
     let codes = this.props.codes as any;
     let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
@@ -45,7 +87,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       </div>
     );
     let nameNode = (() => {
-      let entry = this.props.entry as any;
+      let entry = this.state.entry as any;
       if (entry !== null) {
         let nameArray = ("name" in entry) ? [entry.name] : [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
         let restNameNodes = nameArray.slice(1).map((name, index) => {
@@ -92,10 +134,10 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   private renderInformationList(): ReactNode {
-    let entry = this.props.entry;
+    let entry = this.state.entry;
     if (entry !== null) {
       if (EntryUtil.is(entry, "language")) {
-        return <LanguageInformationList entry={entry}/>;
+        return <LanguageInformationList entry={entry} onSet={this.changeInformations.bind(this)}/>;
       } else {
         return this.trans("codePage.dummy");
       }
@@ -104,7 +146,7 @@ export default class EntryPane extends Component<Props, State, Params> {
 
   public render(): ReactNode {
     let headNode = this.renderHead();
-    let informationList = (this.props.found === null) ? "" : (this.props.found) ? this.renderInformationList() : this.trans("codePage.notFound");
+    let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("codePage.notFound");
     let node = (
       <div styleName="root">
         {headNode}
@@ -118,11 +160,11 @@ export default class EntryPane extends Component<Props, State, Params> {
 
 
 type Props = {
-  entry: Entry | null,
-  codes: EntryCodes,
-  found: boolean | null
+  codes: EntryCodes
 };
 type State = {
+  entry: Entry | null,
+  found: boolean | null
 };
 type Params = {
 };

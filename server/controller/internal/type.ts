@@ -20,6 +20,7 @@ import {
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 export const SERVER_PATHS = {
   addEntry: "/cla/create",
+  changeEntryInformations: "/cla/edit",
   fetchEntry: "/cla/fetch",
   fetchEntryName: "/cla/fetch/name",
   fetchDialects: "/cla/fetch/list",
@@ -35,6 +36,13 @@ type ServerSpecs = {
     response: {
       success: {},
       error: CustomError<string>
+    }
+  },
+  changeEntryInformations: {
+    request: {codes: any, informations: any},
+    response: {
+      success: {},
+      error: CustomError<"noSuchCodes">
     }
   },
   fetchEntry: {
