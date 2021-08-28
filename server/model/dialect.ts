@@ -39,13 +39,16 @@ export class DialectSchema {
   public approvedDate?: Date;
 
   public async changeInformations(this: Dialect, informations: any): Promise<Dialect> {
-    let anyThis = this as any;
-    for (let [key, value] of Object.entries(informations)) {
-      if (value !== undefined) {
-        anyThis[key] = value;
+    let dialects = await DialectModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let promises = dialects.map(async (dialect) => {
+      for (let [key, value] of Object.entries(informations)) {
+        if (value !== undefined) {
+          dialect[key] = value;
+        }
       }
-    }
-    await this.save();
+      await dialect.save();
+    });
+    await Promise.all(promises);
     return this;
   }
 

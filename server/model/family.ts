@@ -33,13 +33,16 @@ export class FamilySchema {
   public approvedDate?: Date;
 
   public async changeInformations(this: Family, informations: any): Promise<Family> {
-    let anyThis = this as any;
-    for (let [key, value] of Object.entries(informations)) {
-      if (value !== undefined) {
-        anyThis[key] = value;
+    let families = await FamilyModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let promises = families.map(async (family) => {
+      for (let [key, value] of Object.entries(informations)) {
+        if (value !== undefined) {
+          family[key] = value;
+        }
       }
-    }
-    await this.save();
+      await family.save();
+    });
+    await Promise.all(promises);
     return this;
   }
 

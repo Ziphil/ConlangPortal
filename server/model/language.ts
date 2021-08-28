@@ -45,13 +45,16 @@ export class LanguageSchema {
   public approvedDate?: Date;
 
   public async changeInformations(this: Language, informations: any): Promise<Language> {
-    let anyThis = this as any;
-    for (let [key, value] of Object.entries(informations)) {
-      if (value !== undefined) {
-        anyThis[key] = value;
+    let languages = await LanguageModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let promises = languages.map(async (language) => {
+      for (let [key, value] of Object.entries(informations)) {
+        if (value !== undefined) {
+          language[key] = value;
+        }
       }
-    }
-    await this.save();
+      await language.save();
+    });
+    await Promise.all(promises);
     return this;
   }
 
