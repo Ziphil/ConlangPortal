@@ -58,7 +58,7 @@ export default class EntryPane extends Component<Props, State, Params> {
   private async changeInformations(key: string, value: any): Promise<void> {
     let entry = this.state.entry as any;
     if (entry !== null) {
-      let codes = ("code" in entry) ? {user: entry.code} : entry.codes;
+      let codes = entry.codes;
       let informations = {[key]: value};
       let response = await this.request("changeEntryInformations", {codes, informations});
       if (response.status === 200) {
@@ -89,7 +89,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     let nameNode = (() => {
       let entry = this.state.entry as any;
       if (entry !== null) {
-        let nameArray = ("name" in entry) ? [entry.name] : [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
+        let nameArray = [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
         let restNameNodes = nameArray.slice(1).map((name, index) => {
           let restNameNode = (
             <Fragment key={index}>
@@ -136,8 +136,9 @@ export default class EntryPane extends Component<Props, State, Params> {
   private renderInformationList(): ReactNode {
     let entry = this.state.entry;
     if (entry !== null) {
+      let editable = this.props.store!.user?.code === entry.codes.user;
       if (EntryUtil.is(entry, "language")) {
-        return <LanguageInformationList entry={entry} onSet={this.changeInformations.bind(this)}/>;
+        return <LanguageInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else {
         return this.trans("codePage.dummy");
       }

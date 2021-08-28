@@ -41,6 +41,7 @@ export default class LanguageInformationList extends Component<Props, State, Par
         <InformationPane label="名前">
           <EditableText
             value={this.state.entry.name ?? ""}
+            editable={this.props.editable}
             onSet={this.setEntry((name) => this.state.entry.name = name)}
             onConfirm={() => this.props.onSet("name", this.state.entry.name)}
             onCancel={this.setEntry(() => this.state.entry.name = this.props.entry.name)}
@@ -49,6 +50,7 @@ export default class LanguageInformationList extends Component<Props, State, Par
         <InformationPane label="ホームページ URL">
           <EditableText
             value={this.state.entry.homepageUrl ?? ""}
+            editable={this.props.editable}
             onSet={this.setEntry((homepageUrl) => this.state.entry.homepageUrl = homepageUrl)}
             onConfirm={() => this.props.onSet("homepageUrl", this.state.entry.homepageUrl)}
             onCancel={this.setEntry(() => this.state.entry.homepageUrl = this.props.entry.homepageUrl)}
@@ -57,6 +59,7 @@ export default class LanguageInformationList extends Component<Props, State, Par
         <InformationPane label="辞書 URL">
           <EditableText
             value={this.state.entry.dictionaryUrl ?? ""}
+            editable={this.props.editable}
             onSet={this.setEntry((dictionaryUrl) => this.state.entry.dictionaryUrl = dictionaryUrl)}
             onConfirm={() => this.props.onSet("dictionaryUrl", this.state.entry.dictionaryUrl)}
             onCancel={this.setEntry(() => this.state.entry.dictionaryUrl = this.props.entry.dictionaryUrl)}
@@ -72,6 +75,7 @@ export default class LanguageInformationList extends Component<Props, State, Par
 
 type Props = {
   entry: Language,
+  editable: boolean,
   onSet: (key: string, value: any) => void
 };
 type State = {

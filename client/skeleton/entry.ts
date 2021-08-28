@@ -13,14 +13,15 @@ import {
   LanguageCodes
 } from "/client/skeleton/language";
 import {
-  User
+  User,
+  UserCodes
 } from "/client/skeleton/user";
 
 
 export class EntryUtil {
 
   public static is<K extends EntryKind>(entry: Entry, kind: K): entry is Entries[K] {
-    let codes = ("codes" in entry) ? entry.codes : {user: entry.code};
+    let codes = entry.codes;
     if (kind === "dialect") {
       return "dialect" in codes;
     } else if (kind === "language") {
@@ -36,7 +37,7 @@ export class EntryUtil {
 
 
 export type Entry = Dialect | Language | Family | User;
-export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {user: string};
+export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | UserCodes;
 
 export const ENTRY_KINDS = ["dialect", "language", "family", "user"] as const;
 export type EntryKind = (typeof ENTRY_KINDS)[number];

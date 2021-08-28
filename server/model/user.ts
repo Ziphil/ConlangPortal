@@ -116,9 +116,11 @@ export class UserCreator {
 
   public static create(raw: User): UserSkeleton {
     let id = raw.id;
+    let codes = {user: raw.code};
     let code = raw.code;
+    let names = {user: raw.name};
     let name = raw.name;
-    let skeleton = {id, code, name};
+    let skeleton = {id, codes, code, names, name};
     return skeleton;
   }
 

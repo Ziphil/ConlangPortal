@@ -74,16 +74,25 @@ export default class EditableText extends Component<Props, State> {
 
   public render(): ReactNode {
     let inputNode = this.renderInput();
-    let node = (
-      <div styleName="root" className={this.props.className}>
-        {inputNode}
-        <div styleName="button">
-          <Button iconLabel="&#xF00D;" onClick={this.handleCancel.bind(this)}/>
-          <Button iconLabel="&#xF00C;" onClick={this.handleConfirm.bind(this)}/>
+    if (this.props.editable) {
+      let node = (
+        <div styleName="root" className={this.props.className}>
+          {inputNode}
+          <div styleName="button">
+            <Button iconLabel="&#xF00D;" onClick={this.handleCancel.bind(this)}/>
+            <Button iconLabel="&#xF00C;" onClick={this.handleConfirm.bind(this)}/>
+          </div>
         </div>
-      </div>
-    );
-    return node;
+      );
+      return node;
+    } else {
+      let node = (
+        <div styleName="root-uneditable" className={this.props.className}>
+          {this.props.value}&#x200B;
+        </div>
+      );
+      return node;
+    }
   }
 
 }
@@ -92,6 +101,7 @@ export default class EditableText extends Component<Props, State> {
 type Props = {
   value: string,
   single: boolean,
+  editable: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
   onSet?: (value: string) => void,
   onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
