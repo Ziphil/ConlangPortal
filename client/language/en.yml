@@ -65,6 +65,10 @@ entryPane:
 header:
   logout: "Sign out"
   userPage: "User page"
+informationList:
+  name: "Name"
+  homepageUrl: "Homepage URL"
+  dictionaryUrl: "Dictionary URL"
 loginForm:
   code: "Code"
   password: "Password"

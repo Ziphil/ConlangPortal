@@ -65,6 +65,10 @@ entryPane:
 header:
   logout: "ログアウト"
   userPage: "ユーザーページ"
+informationList:
+  name: "名前"
+  homepageUrl: "ホームページ URL"
+  dictionaryUrl: "辞書 URL"
 loginForm:
   code: "コード"
   password: "パスワード"
