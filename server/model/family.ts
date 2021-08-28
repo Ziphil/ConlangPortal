@@ -32,6 +32,20 @@ export class FamilySchema {
   @prop()
   public approvedDate?: Date;
 
+  public async changeInformations(this: Family, informations: any): Promise<Family> {
+    let families = await FamilyModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let promises = families.map(async (family) => {
+      for (let [key, value] of Object.entries(informations)) {
+        if (value !== undefined) {
+          family[key] = value;
+        }
+      }
+      await family.save();
+    });
+    await Promise.all(promises);
+    return this;
+  }
+
   public async fetchNames(): Promise<FamilyNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
     let [userName] = await Promise.all([userNamePromise]);
@@ -91,9 +105,10 @@ export class FamilyCreator {
     let id = raw.id;
     let codes = raw.codes;
     let names = await raw.fetchNames();
+    let name = raw.name;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, approved, createdDate};
+    let skeleton = {id, codes, names, name, approved, createdDate};
     return skeleton;
   }
 

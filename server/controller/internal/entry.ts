@@ -48,6 +48,21 @@ export class EntryController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["changeEntryInformations"])
+  @before(verifyUser(), verifyCode())
+  public async [Symbol()](request: Request<"changeEntryInformations">, response: Response<"changeEntryInformations">): Promise<void> {
+    let codes = request.body.codes;
+    let informations = request.body.informations;
+    let entry = await EntryUtil.fetchOneByCodes(codes) as any;
+    if (entry !== null) {
+      await entry.changeInformations(informations);
+      Controller.respond(response, {});
+    } else {
+      let body = CustomError.ofType("noSuchCodes");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["fetchEntry"])
   @before()
   public async [Symbol()](request: Request<"fetchEntry">, response: Response<"fetchEntry">): Promise<void> {

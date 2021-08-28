@@ -32,6 +32,10 @@ error:
     方言コードが重複しています。
     別の方言コードを指定してください。
 
+informationList:
+  name: "名前"
+  homepageUrl: "ホームページ URL"
+  dictionaryUrl: "辞書 URL"
 addEntryForm:
   family:
     head: "語族"
@@ -60,6 +64,13 @@ addEntryForm:
     登録申請をした後に、コードの変更や削除を行うことはできません。
     申請内容をしっかりと確認してから申請ボタンを押してください。
     なお、語族や言語などの名称の変更は後から行うことができるようになる予定です (現在未実装です)。
+entryPane:
+  user: "製作者"
+  family: "語族"
+  language: "言語"
+  dialect: "方言"
+  notFound: "未登録"
+  guide: "各項目はクリックで編集できます"
 header:
   logout: "ログアウト"
   userPage: "ユーザーページ"
@@ -76,13 +87,6 @@ registerForm:
     グループで言語を制作している場合は、グループごとにアカウントを作成してください。
     なお、ユーザー登録で使用するコードは、CLA コードの一部分になります。
     一度ユーザー登録すると、コードの変更や削除を行うことはできなくなりますので、注意して決めてください。
-codePage:
-  user: "製作者"
-  family: "語族"
-  language: "言語"
-  dialect: "方言"
-  dummy: "ここに公式サイトや他言語との関係などの情報が載せられるようになる予定です"
-  notFound: "未登録"
 topPage:
   login: "ログイン"
   register: "新規登録"

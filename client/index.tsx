@@ -12,7 +12,16 @@ import {
 export class Main {
 
   public main(): void {
+    this.appendIconElement();
     this.render();
+  }
+
+  private appendIconElement(): void {
+    let element = document.createElement("link");
+    element.href = "https://kit-free.fontawesome.com/releases/latest/css/free.min.css";
+    element.rel = "stylesheet";
+    element.media = "all";
+    document.head.appendChild(element);
   }
 
   private render(): void {

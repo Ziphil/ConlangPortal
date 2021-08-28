@@ -32,6 +32,10 @@ error:
     This dialect code already exists.
     Please specify a different producer code.
 
+informationList:
+  name: "Name"
+  homepageUrl: "Homepage URL"
+  dictionaryUrl: "Dictionary URL"
 addEntryForm:
   family:
     head: "Language family"
@@ -60,6 +64,13 @@ addEntryForm:
     Once you have applied for registration, you cannot change or delete the code.
     Please check the details of your application carefully before clicking the “Submit” button.
     You will be able to change the name of the language family or language later (currently not implemented).
+entryPane:
+  user: "Creator"
+  family: "Family"
+  language: "Language"
+  dialect: "Dialect"
+  notFound: "Unregistered"
+  guide: "Click on each item to edit it"
 header:
   logout: "Sign out"
   userPage: "User page"
@@ -76,13 +87,6 @@ registerForm:
     If you are working on a group, please create an account for each group.
     Note that the code used for user registration will be a part of the CLA code.
     Once a user is registered, you cannot change or delete the code, so please decide carefully.
-codePage:
-  user: "Creator"
-  family: "Family"
-  language: "Language"
-  dialect: "Dialect"
-  dummy: "You will be able to post information about the language later"
-  notFound: "Unregistered"
 topPage:
   login: "Sign in"
   register: "Sign up"

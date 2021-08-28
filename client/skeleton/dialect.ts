@@ -5,6 +5,7 @@ export class Dialect {
 
   public codes!: DialectCodes;
   public names!: DialectNames;
+  public name?: string;
   public approved!: boolean;
   public createdDate!: string;
 

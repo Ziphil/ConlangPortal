@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  margin: -0.3em -0.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.input {
+  min-width: 0u;
+  padding: 0.3em 0.5em;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: $line-height;
+  border-radius: 24u;
+  flex-grow: 1;
+  position: relative;
+}
+
+.input.active {
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+}
+
+.input-inner {
+  margin: 0u;
+  padding: 0.3em 0.5em;
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  text-align: justify;
+  background: none;
+  border: none;
+  outline: none;
+  resize: none;
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-grow: 1;
+  top: 0u;
+  left: 0u;
+}
+
+.input-dummy {
+  text-align: justify;
+  overflow: hidden;
+  visibility: hidden;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  visibility: hidden;
+}
+
+.button {
+  min-width: 0u;
+  margin-left: 32u;
+  display: none;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.input.active +.button {
+  display: block;
+}
+
+.button >* {
+  @include reset-first-margin;
+  margin-left: 32u;
+}

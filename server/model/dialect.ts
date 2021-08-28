@@ -38,6 +38,20 @@ export class DialectSchema {
   @prop()
   public approvedDate?: Date;
 
+  public async changeInformations(this: Dialect, informations: any): Promise<Dialect> {
+    let dialects = await DialectModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let promises = dialects.map(async (dialect) => {
+      for (let [key, value] of Object.entries(informations)) {
+        if (value !== undefined) {
+          dialect[key] = value;
+        }
+      }
+      await dialect.save();
+    });
+    await Promise.all(promises);
+    return this;
+  }
+
   public async fetchNames(): Promise<DialectNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
@@ -100,9 +114,10 @@ export class DialectCreator {
     let id = raw.id;
     let codes = raw.codes;
     let names = await raw.fetchNames();
+    let name = raw.name;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, approved, createdDate};
+    let skeleton = {id, codes, names, name, approved, createdDate};
     return skeleton;
   }
 

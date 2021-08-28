@@ -42,6 +42,17 @@ export class UserSchema {
   @prop()
   public approvedDate?: Date;
 
+  public async changeInformations(this: User, informations: any): Promise<User> {
+    let anyThis = this as any;
+    for (let [key, value] of Object.entries(informations)) {
+      if (value !== undefined) {
+        anyThis[key] = value;
+      }
+    }
+    await this.save();
+    return this;
+  }
+
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
@@ -105,9 +116,11 @@ export class UserCreator {
 
   public static create(raw: User): UserSkeleton {
     let id = raw.id;
+    let codes = {user: raw.code};
     let code = raw.code;
+    let names = {user: raw.name};
     let name = raw.name;
-    let skeleton = {id, code, name};
+    let skeleton = {id, codes, code, names, name};
     return skeleton;
   }
 

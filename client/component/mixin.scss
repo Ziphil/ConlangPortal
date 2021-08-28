@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 @import "/client/component/function.scss";
+@import "/client/component/theme/light.scss";
 
 
 $root-size: 16px;
@@ -21,25 +22,7 @@ $special-font-family: "Nunito";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
 
 $themes: (
-  light: (
-    text-color: hsl(280, 50%, 20%),
-    dimmed-text-color: rgba(hsl(280, 50%, 20%), 0.5),
-    caution-text-color: hsl(0, 50%, 50%),
-    accent-color: hsl(280, 60%, 60%),
-    dimmed-accent-color: rgba(hsl(280, 70%, 60%), 0.5),
-    accent-first-start-color: hsla(280, 80%, 60%, 1),
-    accent-first-end-color: hsla(280, 80%, 60%, 0),
-    accent-second-start-color: hsla(330, 80%, 60%, 1),
-    accent-second-end-color: hsla(330, 80%, 60%, 0),
-    accent-third-start-color: hsla(240, 80%, 60%, 1),
-    accent-third-end-color: hsla(240, 80%, 60%, 0),
-    background-color: hsl(280, 90%, 96%),
-    caution-background-color: hsl(0, 90%, 94%),
-    pane-dark-shadow-color: hsla(280, 85%, 70%, 0.3),
-    pane-light-shadow-color: hsla(280, 85%, 100%, 0.8),
-    caution-pane-dark-shadow-color: hsla(0, 85%, 70%, 0.3),
-    caution-pane-light-shadow-color: hsla(0, 85%, 100%, 0.8)
-  )
+  light: $light-theme
 );
 
 

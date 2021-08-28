@@ -29,6 +29,12 @@ export class LanguageSchema {
   @prop()
   public name?: string;
 
+  @prop()
+  public homepageUrl?: string;
+
+  @prop()
+  public dictionaryUrl?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -37,6 +43,20 @@ export class LanguageSchema {
 
   @prop()
   public approvedDate?: Date;
+
+  public async changeInformations(this: Language, informations: any): Promise<Language> {
+    let languages = await LanguageModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let promises = languages.map(async (language) => {
+      for (let [key, value] of Object.entries(informations)) {
+        if (value !== undefined) {
+          language[key] = value;
+        }
+      }
+      await language.save();
+    });
+    await Promise.all(promises);
+    return this;
+  }
 
   public async fetchNames(): Promise<LanguageNames> {
     let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
@@ -95,9 +115,12 @@ export class LanguageCreator {
     let id = raw.id;
     let codes = raw.codes;
     let names = await raw.fetchNames();
+    let name = raw.name;
+    let homepageUrl = raw.homepageUrl;
+    let dictionaryUrl = raw.dictionaryUrl;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, approved, createdDate};
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate};
     return skeleton;
   }
 
