@@ -32,6 +32,10 @@ error:
     This dialect code already exists.
     Please specify a different producer code.
 
+informationList:
+  name: "Name"
+  homepageUrl: "Homepage URL"
+  dictionaryUrl: "Dictionary URL"
 addEntryForm:
   family:
     head: "Language family"
@@ -65,10 +69,6 @@ entryPane:
 header:
   logout: "Sign out"
   userPage: "User page"
-informationList:
-  name: "Name"
-  homepageUrl: "Homepage URL"
-  dictionaryUrl: "Dictionary URL"
 loginForm:
   code: "Code"
   password: "Password"

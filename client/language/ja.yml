@@ -32,6 +32,10 @@ error:
     方言コードが重複しています。
     別の方言コードを指定してください。
 
+informationList:
+  name: "名前"
+  homepageUrl: "ホームページ URL"
+  dictionaryUrl: "辞書 URL"
 addEntryForm:
   family:
     head: "語族"
@@ -65,10 +69,6 @@ entryPane:
 header:
   logout: "ログアウト"
   userPage: "ユーザーページ"
-informationList:
-  name: "名前"
-  homepageUrl: "ホームページ URL"
-  dictionaryUrl: "辞書 URL"
 loginForm:
   code: "コード"
   password: "パスワード"

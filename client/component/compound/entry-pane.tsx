@@ -9,7 +9,10 @@ import {
   Link
 } from "react-router-dom";
 import Component from "/client/component/component";
-import LanguageInformationList from "/client/component/compound/language-information-list";
+import DialectInformationList from "/client/component/compound/information-list/dialect-information-list";
+import FamilyInformationList from "/client/component/compound/information-list/family-information-list";
+import LanguageInformationList from "/client/component/compound/information-list/language-information-list";
+import UserInformationList from "/client/component/compound/information-list/user-information-list";
 import {
   style
 } from "/client/component/decorator";
@@ -63,6 +66,10 @@ export default class EntryPane extends Component<Props, State, Params> {
       let response = await this.request("changeEntryInformations", {codes, informations});
       if (response.status === 200) {
         entry[key] = value;
+        if (key === "name") {
+          let kind = CodesUtil.getKind(codes);
+          entry.names[kind] = value;
+        }
         this.setState({entry});
       }
     }
@@ -137,10 +144,14 @@ export default class EntryPane extends Component<Props, State, Params> {
     let entry = this.state.entry;
     if (entry !== null) {
       let editable = this.props.store!.user?.code === entry.codes.user;
-      if (EntryUtil.is(entry, "language")) {
+      if (EntryUtil.is(entry, "dialect")) {
+        return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+      } else if (EntryUtil.is(entry, "language")) {
         return <LanguageInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+      } else if (EntryUtil.is(entry, "family")) {
+        return <FamilyInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else {
-        return this.trans("codePage.dummy");
+        return <UserInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       }
     }
   }

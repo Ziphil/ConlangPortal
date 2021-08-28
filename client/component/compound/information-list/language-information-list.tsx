@@ -5,7 +5,7 @@ import {
   ReactNode
 } from "react";
 import EditableText from "/client/component/atom/editable-text";
-import InformationList from "/client/component/compound/information-list";
+import InformationList from "/client/component/compound/information-list/information-list";
 import InformationPane from "/client/component/compound/information-pane";
 import {
   style
@@ -15,7 +15,7 @@ import {
 } from "/client/skeleton/language";
 
 
-@style(require("./language-information-list.scss"))
+@style(require("./information-list.scss"))
 export default class LanguageInformationList extends InformationList<Language> {
 
   public render(): ReactNode {
