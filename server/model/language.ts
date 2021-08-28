@@ -29,6 +29,12 @@ export class LanguageSchema {
   @prop()
   public name?: string;
 
+  @prop()
+  public homepageUrl?: string;
+
+  @prop()
+  public dictionaryUrl?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -95,9 +101,11 @@ export class LanguageCreator {
     let id = raw.id;
     let codes = raw.codes;
     let names = await raw.fetchNames();
+    let homepageUrl = raw.homepageUrl;
+    let dictionaryUrl = raw.dictionaryUrl;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, approved, createdDate};
+    let skeleton = {id, codes, names, homepageUrl, dictionaryUrl, approved, createdDate};
     return skeleton;
   }
 
