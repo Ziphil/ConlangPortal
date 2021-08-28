@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+@import "/client/component/function.scss";
+
+
+$text-color: hsl(280, 50%, 20%);
+$accent-color: hsl(280, 60%, 60%);
+$accent-first-color: hsl(280, 80%, 60%);
+$caution-text-color: hsl(0, 50%, 50%);
+$background-color: hsl(280, 60%, 96%);
+$caution-background-color: hsl(0, 60%, 94%);
+$pane-dark-shadow-color: hsla(280, 60%, 70%, 0.3);
+$pane-light-shadow-color: hsla(280, 60%, 100%, 0.8);
+$caution-pane-dark-shadow-color: hsla(0, 60%, 70%, 0.3);
+$caution-pane-light-shadow-color: hsla(0, 60%, 100%, 0.8);
+
+$light-theme: (
+  text-color: $text-color,
+  dimmed-text-color: rgba($text-color, 0.5),
+  accent-color: $accent-color,
+  dimmed-accent-color: rgba($accent-color, 0.5),
+  accent-first-start-color: $accent-first-color,
+  accent-first-end-color: rgba($accent-first-color, 0),
+  accent-second-start-color: adjust-hue($accent-first-color, 50),
+  accent-second-end-color: rgba(adjust-hue($accent-first-color, 50), 0),
+  accent-third-start-color: adjust-hue($accent-first-color, -50),
+  accent-third-end-color: rgba(adjust-hue($accent-first-color, -50), 0),
+  caution-text-color: $caution-text-color,
+  border-color: rgba($accent-color, 0.2),
+  background-color: $background-color,
+  caution-background-color: $caution-background-color,
+  pane-dark-shadow-color: $pane-dark-shadow-color,
+  pane-light-shadow-color: $pane-light-shadow-color,
+  caution-pane-dark-shadow-color: $caution-pane-dark-shadow-color,
+  caution-pane-light-shadow-color: $caution-pane-light-shadow-color
+);
