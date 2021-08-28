@@ -123,7 +123,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       <div styleName="right-top">
         {restCodeNode}
         <div styleName="separator"/>
-        <div styleName="kind">{this.trans(`codePage.${CodesUtil.getKind(codes)}`)}</div>
+        <div styleName="kind">{this.trans(`entryPane.${CodesUtil.getKind(codes)}`)}</div>
       </div>
     );
     let node = (
@@ -159,7 +159,7 @@ export default class EntryPane extends Component<Props, State, Params> {
   public render(): ReactNode {
     let editable = this.state.entry !== null && this.props.store!.user?.code === this.state.entry.codes.user;
     let headNode = this.renderHead();
-    let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("codePage.notFound");
+    let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("entryPane.notFound");
     let guideNode = (editable) && (
       <div styleName="guide">{this.trans("entryPane.guide")}</div>
     );
