@@ -19,12 +19,18 @@ import {
 @style(require("./editable-text.scss"))
 export default class EditableText extends Component<Props, State> {
 
+  public static defaultProps: DefaultProps = {
+    single: true
+  };
   public state: State = {
     active: false
   };
 
-  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
+  private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
     let value = event.target.value;
+    if (this.props.single) {
+      value = value.replace(/\n|\r/g, "");
+    }
     if (this.props.onChange) {
       this.props.onChange(event);
     }
@@ -54,9 +60,9 @@ export default class EditableText extends Component<Props, State> {
     );
     let node = (
       <div styleName={styleName}>
-        <input
+        <div styleName="input-dummy">{this.props.value}&#x200B;</div>
+        <textarea
           styleName="input-inner"
-          type="input"
           value={this.props.value}
           onFocus={() => this.setState({active: true})}
           onChange={this.handleChange.bind(this)}
@@ -85,11 +91,15 @@ export default class EditableText extends Component<Props, State> {
 
 type Props = {
   value: string,
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+  single: boolean,
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
   onSet?: (value: string) => void,
   onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
   onCancel?: (event: MouseEvent<HTMLButtonElement>) => void,
   className?: string
+};
+type DefaultProps = {
+  single: boolean
 };
 type State = {
   active: boolean
