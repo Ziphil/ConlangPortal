@@ -101,11 +101,12 @@ export class LanguageCreator {
     let id = raw.id;
     let codes = raw.codes;
     let names = await raw.fetchNames();
+    let name = raw.name;
     let homepageUrl = raw.homepageUrl;
     let dictionaryUrl = raw.dictionaryUrl;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, homepageUrl, dictionaryUrl, approved, createdDate};
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate};
     return skeleton;
   }
 

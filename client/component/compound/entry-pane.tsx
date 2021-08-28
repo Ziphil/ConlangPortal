@@ -9,13 +9,18 @@ import {
   Link
 } from "react-router-dom";
 import Component from "/client/component/component";
+import LanguageInformationList from "/client/component/compound/language-information-list";
 import {
   style
 } from "/client/component/decorator";
 import {
   Entry,
-  EntryCodes
+  EntryCodes,
+  EntryUtil
 } from "/client/skeleton/entry";
+import {
+  CodesUtil
+} from "/client/util/codes";
 
 
 @style(require("./entry-pane.scss"))
@@ -24,7 +29,6 @@ export default class EntryPane extends Component<Props, State, Params> {
   private renderHead(): ReactNode {
     let codes = this.props.codes as any;
     let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
-    let kind = ["user", "family", "language", "dialect"][codeArray.length - 1];
     let restCodeInnerNodes = codeArray.slice(1).map((code, index) => {
       let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "0" : code).join("-");
       let restCodeInnerNode = (
@@ -70,7 +74,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       <div styleName="right-top">
         {restCodeNode}
         <div styleName="separator"/>
-        <div styleName="kind">{this.trans(`codePage.${kind}`)}</div>
+        <div styleName="kind">{this.trans(`codePage.${CodesUtil.getKind(codes)}`)}</div>
       </div>
     );
     let node = (
@@ -87,15 +91,24 @@ export default class EntryPane extends Component<Props, State, Params> {
     return node;
   }
 
+  private renderPropertyList(): ReactNode {
+    let entry = this.props.entry;
+    if (entry !== null) {
+      if (EntryUtil.is(entry, "language")) {
+        return <LanguageInformationList entry={entry}/>;
+      } else {
+        return this.trans("codePage.dummy");
+      }
+    }
+  }
+
   public render(): ReactNode {
     let headNode = this.renderHead();
-    let contentString = (this.props.found === null) ? "" : (this.props.found) ? this.trans("codePage.dummy") : this.trans("codePage.notFound");
+    let propertyList = (this.props.found === null) ? "" : (this.props.found) ? this.renderPropertyList() : this.trans("codePage.notFound");
     let node = (
       <div styleName="root">
         {headNode}
-        <div styleName="content">
-          {contentString}
-        </div>
+        {propertyList}
       </div>
     );
     return node;

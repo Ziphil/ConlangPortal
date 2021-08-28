@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  margin: -0.3em -0.5em;
+  display: flex;
+  flex-direction: row;
+}
+
+.input {
+  padding: 0.3em 0.5em;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: $line-height;
+  border-radius: 24u;
+  flex-grow: 1;
+}
+
+.input.active {
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+}
+
+.input-inner {
+  width: 100%;
+  margin: 0u;
+  padding: 0u;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  background: none;
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.button {
+  margin-left: 32u;
+  display: none;
+}
+
+.input.active +.button {
+  display: block;
+}
+
+.button >* {
+  @include reset-first-margin;
+  margin-left: 32u;
+}

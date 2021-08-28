@@ -5,6 +5,7 @@ export class Language {
 
   public codes!: LanguageCodes;
   public names!: LanguageNames;
+  public name?: string;
   public homepageUrl?: string;
   public dictionaryUrl?: string;
   public approved!: boolean;

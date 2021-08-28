@@ -91,9 +91,10 @@ export class FamilyCreator {
     let id = raw.id;
     let codes = raw.codes;
     let names = await raw.fetchNames();
+    let name = raw.name;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, approved, createdDate};
+    let skeleton = {id, codes, names, name, approved, createdDate};
     return skeleton;
   }
 

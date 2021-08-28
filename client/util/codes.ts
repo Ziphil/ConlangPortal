@@ -1,7 +1,8 @@
 //
 
 import {
-  EntryCodes
+  EntryCodes,
+  EntryKind
 } from "/client/skeleton/entry";
 
 
@@ -46,6 +47,18 @@ export class CodesUtil {
   public static isValidCodePath(codePath: string): boolean {
     let valid = codePath.match(/^(([a-z]{2}|0|)\-([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3}))$/);
     return !!valid;
+  }
+
+  public static getKind(codes: EntryCodes): EntryKind {
+    if ("dialect" in codes) {
+      return "dialect";
+    } else if ("language" in codes) {
+      return "language";
+    } else if ("family" in codes) {
+      return "family";
+    } else {
+      return "user";
+    }
   }
 
 }
