@@ -175,3 +175,10 @@ $smartphone-scale-ratio: 0.7;
   margin: 96u auto;
   max-width: $page-width * 0.8;
 }
+
+.guide {
+  margin-bottom: 16u;
+  font-size: 80%;
+  color: var(--dimmed-accent-color);
+  text-align: center;
+}

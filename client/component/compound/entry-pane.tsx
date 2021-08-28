@@ -146,11 +146,16 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   public render(): ReactNode {
+    let editable = this.state.entry !== null && this.props.store!.user?.code === this.state.entry.codes.user;
     let headNode = this.renderHead();
     let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("codePage.notFound");
+    let guideNode = (editable) && (
+      <div styleName="guide">{this.trans("entryPane.guide")}</div>
+    );
     let node = (
       <div styleName="root">
         {headNode}
+        {guideNode}
         {informationList}
       </div>
     );
