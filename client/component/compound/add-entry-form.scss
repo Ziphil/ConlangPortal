@@ -38,6 +38,9 @@
 
 .form >*:nth-child(1) {
   flex: 2 0 0u;
+  @include smartphone {
+    flex: 3 0 0u;
+  }
 }
 
 .form >*:nth-child(2) {

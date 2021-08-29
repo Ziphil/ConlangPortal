@@ -54,17 +54,17 @@ $smartphone-scale-ratio: 0.7;
 
 .main-code {
   @include special-font;
-  font-size: 220u;
+  font-size: 450%;
   text-align: center;
   color: var(--background-color);
   @include smartphone {
-    font-size: 220u * $smartphone-scale-ratio;
+    font-size: 450% * $smartphone-scale-ratio;
   }
 }
 
 .mark {
   @include icon-font;
-  font-size: 80u;
+  font-size: 150%;
   color: var(--background-color);
   position: absolute;
   top: 64u;
@@ -73,7 +73,7 @@ $smartphone-scale-ratio: 0.7;
     content: "\F005";
   }
   @include smartphone {
-    font-size: 80u * $smartphone-scale-ratio;
+    font-size: 150% * $smartphone-scale-ratio;
     top: 64u * $smartphone-scale-ratio;
     left: 64u * $smartphone-scale-ratio;
   }
@@ -109,14 +109,14 @@ $smartphone-scale-ratio: 0.7;
 
 .rest-code {
   @include special-font;
-  font-size: 150u;
+  font-size: 300%;
   color: var(--accent-color);
   display: flex;
   flex-grow: 0;
   flex-direction: row;
   align-items: center;
   @include smartphone {
-    font-size: 150u * $smartphone-scale-ratio;
+    font-size: 300% * $smartphone-scale-ratio;
   }
 }
 
@@ -145,7 +145,7 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .kind {
-  font-size: 80u;
+  font-size: 150%;
   font-weight: bold;
   color: var(--accent-color);
   flex-grow: 0;
@@ -155,20 +155,20 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .main-name {
-  font-size: 96u;
+  font-size: 200%;
   font-weight: bold;
   color: var(--accent-color);
   @include smartphone {
-    font-size: 72u;
+    font-size: 150%;
   }
 }
 
 .rest-name {
-  font-size: 64u;
+  font-size: 130%;
   font-weight: bold;
   color: var(--accent-color);
   @include smartphone {
-    font-size: 48u;
+    font-size: 100%;
   }
 }
 
