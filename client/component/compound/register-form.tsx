@@ -4,8 +4,10 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
+import CommonPane from "/client/component/compound/common-pane";
 import ErrorPane from "/client/component/compound/error-pane";
 import {
   style
@@ -53,16 +55,20 @@ export default class RegisterForm extends Component<Props, State> {
     );
     let node = (
       <form styleName="root">
-        {errorPane}
-        <div styleName="form-container">
-          <div styleName="explanation">{this.trans("registerForm.explanation")}</div>
-          <div styleName="form">
-            <Input label={this.trans("registerForm.code")} value={this.state.code} onSet={(code) => this.setState({code})}/>
-            <Input label={this.trans("registerForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-            <Input type="password" label={this.trans("registerForm.password")} value={this.state.password} onSet={(password) => this.setState({password})}/>
-            <input type="button" value={this.trans("registerForm.confirm")} onClick={this.performRegister.bind(this)}/>
+        <CommonPane title={this.trans("registerForm.title")}>
+          <div styleName="spacer">
+            {errorPane}
+            <div styleName="form-container">
+              <div styleName="explanation">{this.trans("registerForm.explanation")}</div>
+              <div styleName="form">
+                <Input label={this.trans("registerForm.code")} value={this.state.code} onSet={(code) => this.setState({code})}/>
+                <Input label={this.trans("registerForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+                <Input type="password" label={this.trans("registerForm.password")} value={this.state.password} onSet={(password) => this.setState({password})}/>
+                <Button label={this.trans("registerForm.confirm")} reactive={true} onClick={this.performRegister.bind(this)}/>
+              </div>
+            </div>
           </div>
-        </div>
+        </CommonPane>
       </form>
     );
     return node;

@@ -20,7 +20,7 @@ export default class Authenticator extends Component<RouteProps & Props, State> 
 
   public render(): ReactNode {
     let type = this.props.type;
-    let redirect = this.props.redirect;
+    let redirect = this.props.redirect?.replace(/:userCode/g, this.props.store!.user?.code ?? "");
     if (type === "private" && redirect !== undefined) {
       let node = (this.props.store!.user) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
       return node;

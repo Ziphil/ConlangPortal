@@ -83,10 +83,12 @@ header:
   logout: "ログアウト"
   userPage: "ユーザーページ"
 loginForm:
+  title: "ログイン"
   code: "コード"
   password: "パスワード"
   confirm: "ログイン"
 registerForm:
+  title: "製作者登録"
   code: "コード (小文字 3 桁)"
   name: "表示名"
   password: "パスワード"

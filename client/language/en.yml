@@ -83,10 +83,12 @@ header:
   logout: "Sign out"
   userPage: "User page"
 loginForm:
+  title: "Sign in"
   code: "Code"
   password: "Password"
   confirm: "Sign in"
 registerForm:
+  title: "Sign up"
   code: "Code (3 small letters)"
   name: "Display name"
   password: "Password"
