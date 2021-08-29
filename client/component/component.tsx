@@ -25,6 +25,9 @@ import {
   GlobalStore
 } from "/client/component/store";
 import {
+  DateUtil
+} from "/client/util/date";
+import {
   ProcessName,
   RequestData,
   ResponseData,
@@ -58,6 +61,26 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
       return this.props.intl!.formatNumber(number, options);
     } else {
       return this.props.intl!.formatMessage({id: "common.numberUndefined"});
+    }
+  }
+
+  protected transDate(date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      let format =  this.props.intl!.formatMessage({id: "common.dateFormat"});
+      let locale = this.props.intl!.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.dateUndefined"});
+    }
+  }
+
+  protected transShortDate(date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      let format =  this.props.intl!.formatMessage({id: "common.shortDateFormat"});
+      let locale = this.props.intl!.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.dateUndefined"});
     }
   }
 

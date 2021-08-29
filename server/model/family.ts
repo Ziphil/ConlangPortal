@@ -108,7 +108,8 @@ export class FamilyCreator {
     let name = raw.name;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, name, approved, createdDate};
+    let approvedDate = raw.approvedDate?.toISOString();
+    let skeleton = {id, codes, names, name, approved, createdDate, approvedDate};
     return skeleton;
   }
 

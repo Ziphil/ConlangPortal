@@ -10,6 +10,8 @@ export class User {
   public name!: string;
   public approved!: boolean;
   public administrator?: boolean;
+  public createdDate!: string;
+  public approvedDate?: string;
 
 }
 

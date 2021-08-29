@@ -120,7 +120,8 @@ export class LanguageCreator {
     let dictionaryUrl = raw.dictionaryUrl;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate};
+    let approvedDate = raw.approvedDate?.toISOString();
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate, approvedDate};
     return skeleton;
   }
 

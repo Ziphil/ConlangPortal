@@ -48,6 +48,9 @@ export default class LanguageInformationList extends InformationList<Language> {
             onCancel={this.setEntry(() => this.state.entry.dictionaryUrl = this.props.entry.dictionaryUrl)}
           />
         </InformationPane>
+        {this.renderFullCodeString()}
+        {this.renderBcpString()}
+        {this.renderApproval()}
       </div>
     );
     return node;

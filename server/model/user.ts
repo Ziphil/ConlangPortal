@@ -125,7 +125,9 @@ export class UserCreator {
     let name = raw.name;
     let approved = raw.approved;
     let administrator = raw.administrator;
-    let skeleton = {id, codes, code, names, name, approved, administrator};
+    let createdDate = raw.createdDate.toISOString();
+    let approvedDate = raw.approvedDate?.toISOString();
+    let skeleton = {id, codes, code, names, name, approved, administrator, createdDate, approvedDate};
     return skeleton;
   }
 

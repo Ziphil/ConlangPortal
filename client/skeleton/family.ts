@@ -3,11 +3,13 @@
 
 export class Family {
 
+  public id!: string;
   public codes!: FamilyCodes;
   public names!: FamilyNames;
   public name?: string;
   public approved!: boolean;
   public createdDate!: string;
+  public approvedDate?: string;
 
 }
 

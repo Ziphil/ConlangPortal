@@ -1,6 +1,6 @@
 common:
-  dateFormat: "yyyy/MM/dd HH:mm"
-  shortDateFormat: "MM/dd"
+  dateFormat: "dd/LLL/yyyy HH:mm"
+  shortDateFormat: "dd/LLL"
   dateUndefined: "?"
   numberUndefined: "?"
 
@@ -36,6 +36,11 @@ informationList:
   name: "Name"
   homepageUrl: "Homepage URL"
   dictionaryUrl: "Dictionary URL"
+  fullCodeString: "CLA normalised form (provisional)"
+  bcpString: "IETF BCP 47 compatibility notation (provisional)"
+  approval: "Approval status"
+  approved: "Approved ({dateString})"
+  unapproved: "Not yet approved"
 addEntryForm:
   family:
     head: "Language family"

@@ -24,7 +24,7 @@ export default class Header extends Component<Props, State> {
   }
 
   private async jumpUserPage(): Promise<void> {
-    let user = this.props.store!.user;
+    let user = this.props.store!.user!;
     this.pushPath(`/cla/${user.code}`);
   }
 

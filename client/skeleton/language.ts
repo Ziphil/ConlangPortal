@@ -3,6 +3,7 @@
 
 export class Language {
 
+  public id!: string;
   public codes!: LanguageCodes;
   public names!: LanguageNames;
   public name?: string;
@@ -10,6 +11,7 @@ export class Language {
   public dictionaryUrl?: string;
   public approved!: boolean;
   public createdDate!: string;
+  public approvedDate?: string;
 
 }
 

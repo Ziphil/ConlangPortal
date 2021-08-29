@@ -3,11 +3,13 @@
 
 export class Dialect {
 
+  public id!: string;
   public codes!: DialectCodes;
   public names!: DialectNames;
   public name?: string;
   public approved!: boolean;
   public createdDate!: string;
+  public approvedDate?: string;
 
 }
 
