@@ -6,9 +6,16 @@
 .item {
   padding: 48u 96u;
   border-top: 3u var(--border-color) solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   :first-child >& {
     border: none;
   }
+}
+
+.item-inner {
+  flex-grow: 1;
 }
 
 .code-container {
@@ -43,4 +50,10 @@
   &::before {
     content: "«";
   }
+}
+
+.button {
+  margin-left: 64u;
+  flex-grow: 0;
+  flex-shrink: 0;
 }

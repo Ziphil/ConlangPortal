@@ -48,6 +48,20 @@ export class EntryController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["approveDialect"])
+  @before(verifyUser())
+  public async [Symbol()](request: Request<"approveDialect">, response: Response<"approveDialect">): Promise<void> {
+    let codes = request.body.codes;
+    let entry = await DialectModel.fetchOneByCodes(codes);
+    if (entry !== null) {
+      await entry.approve();
+      Controller.respond(response, {});
+    } else {
+      let body = CustomError.ofType("noSuchCodes");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["changeEntryInformations"])
   @before(verifyUser(), verifyCode())
   public async [Symbol()](request: Request<"changeEntryInformations">, response: Response<"changeEntryInformations">): Promise<void> {

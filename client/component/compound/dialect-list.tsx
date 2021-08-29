@@ -7,6 +7,7 @@ import {
 import {
   Link
 } from "react-router-dom";
+import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import CommonPane from "/client/component/compound/common-pane";
 import {
@@ -36,30 +37,46 @@ export default class DialectList extends Component<Props, State> {
     }
   }
 
+  private async approveDialect(dialect: Dialect): Promise<void> {
+    let codes = dialect.codes;
+    let response = await this.request("approveDialect", {codes});
+    if (response.status === 200) {
+      console.log("approved");
+    }
+  }
+
   public render(): ReactNode {
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
+      let buttonNode = (!this.props.approved && true) && (
+        <div styleName="button">
+          <Button iconLabel="&#xF164;" onClick={() => this.approveDialect(dialect)}/>
+        </div>
+      );
       let rowNode = (
-        <Link to={path}>
-          <div styleName="item" key={index}>
-            <div styleName="code-container">
-              <span styleName="code">{dialect.codes.dialect}</span>
-              <span styleName="slash"/>
-              <span styleName="code">{dialect.codes.language}</span>
-              <span styleName="slash"/>
-              <span styleName="code">{dialect.codes.family}</span>
-              <span styleName="slash"/>
-              <span styleName="code">{dialect.codes.user}</span>
+        <Link to={path} key={index}>
+          <div styleName="item">
+            <div styleName="item-inner">
+              <div styleName="code-container">
+                <span styleName="code">{dialect.codes.dialect}</span>
+                <span styleName="slash"/>
+                <span styleName="code">{dialect.codes.language}</span>
+                <span styleName="slash"/>
+                <span styleName="code">{dialect.codes.family}</span>
+                <span styleName="slash"/>
+                <span styleName="code">{dialect.codes.user}</span>
+              </div>
+              <div styleName="name-container">
+                <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
+                <span styleName="arrow"/>
+                <span styleName="name">{dialect.names.language}</span>
+                <span styleName="arrow"/>
+                <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family}</span>
+                <span styleName="arrow"/>
+                <span styleName="name">{dialect.names.user}</span>
+              </div>
             </div>
-            <div styleName="name-container">
-              <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
-              <span styleName="arrow"/>
-              <span styleName="name">{dialect.names.language}</span>
-              <span styleName="arrow"/>
-              <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family}</span>
-              <span styleName="arrow"/>
-              <span styleName="name">{dialect.names.user}</span>
-            </div>
+            {buttonNode}
           </div>
         </Link>
       );

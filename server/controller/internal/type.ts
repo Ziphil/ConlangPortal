@@ -20,6 +20,7 @@ import {
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 export const SERVER_PATHS = {
   addEntry: "/cla/create",
+  approveDialect: "/cla/approve",
   changeEntryInformations: "/cla/edit",
   fetchEntry: "/cla/fetch",
   fetchEntryName: "/cla/fetch/name",
@@ -38,6 +39,13 @@ type ServerSpecs = {
       error: CustomError<string>
     }
   },
+  approveDialect: {
+    request: {codes: any, informations: any},
+    response: {
+      success: {},
+      error: CustomError<"noSuchCodes">
+    }
+  }
   changeEntryInformations: {
     request: {codes: any, informations: any},
     response: {
