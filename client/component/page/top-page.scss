@@ -7,3 +7,41 @@
   @include reset-first-margin;
   margin: 96u auto 0u auto;
 }
+
+.circle-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.circle-list >a {
+  @include reset-first-margin;
+  margin-left: 64u;
+  border-radius: 50%;
+}
+
+.circle {
+  width: 300u;
+  height: 300u;
+  color: var(--accent-color);
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color), 8u 8u 12u var(--pane-dark-shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.circle:hover {
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+}
+
+.icon {
+  font-size: 250%;
+  @include icon-font;
+}
+
+.label {
+  margin-top: 24u;
+  font-weight: bold;
+}

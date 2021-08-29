@@ -98,8 +98,6 @@ registerForm:
     Note that the code used for user registration will be a part of the CLA code.
     Once a user is registered, you cannot change or delete the code, so please decide carefully.
 topPage:
+  about: "About"
+  userPage: "User"
   login: "Sign in"
-  register: "Sign up"
-  caution: >-
-    This site is currently running as a beta test.
-    Please note that all data will be deleted after the official launch, which is scheduled for 1st September.
