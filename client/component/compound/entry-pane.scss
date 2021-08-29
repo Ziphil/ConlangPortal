@@ -36,7 +36,6 @@ $smartphone-scale-ratio: 0.7;
     margin-right: -120u * $smartphone-scale-ratio;  
     padding-top: 120u * $smartphone-scale-ratio;
     padding-left: 120u * $smartphone-scale-ratio;
-    font-size: 220u * $smartphone-scale-ratio;
   }
 }
 
@@ -58,6 +57,9 @@ $smartphone-scale-ratio: 0.7;
   font-size: 220u;
   text-align: center;
   color: var(--background-color);
+  @include smartphone {
+    font-size: 220u * $smartphone-scale-ratio;
+  }
 }
 
 .mark {
@@ -69,6 +71,11 @@ $smartphone-scale-ratio: 0.7;
   left: 64u;
   &::before {
     content: "\F005";
+  }
+  @include smartphone {
+    font-size: 80u * $smartphone-scale-ratio;
+    top: 64u * $smartphone-scale-ratio;
+    left: 64u * $smartphone-scale-ratio;
   }
 }
 
