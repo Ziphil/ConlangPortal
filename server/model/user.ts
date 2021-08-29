@@ -120,7 +120,8 @@ export class UserCreator {
     let code = raw.code;
     let names = {user: raw.name};
     let name = raw.name;
-    let skeleton = {id, codes, code, names, name};
+    let approved = raw.approved;
+    let skeleton = {id, codes, code, names, name, approved};
     return skeleton;
   }
 

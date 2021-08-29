@@ -8,6 +8,7 @@ export class User {
   public code!: string;
   public names!: UserNames;
   public name!: string;
+  public approved!: boolean;
 
 }
 

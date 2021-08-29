@@ -127,11 +127,13 @@ export default class EntryPane extends Component<Props, State, Params> {
         <div styleName="kind">{this.trans(`entryPane.${CodesUtil.getKind(codes)}`)}</div>
       </div>
     );
+    let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
     let node = (
       <div styleName="head">
         <div styleName="left">
           <div styleName="left-inner">
             <div styleName="main-code">{codeArray[0]}</div>
+            {markNode}
           </div>
         </div>
         <div styleName="right">

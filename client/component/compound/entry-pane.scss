@@ -13,7 +13,6 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .left {
-  @include special-font;
   width: 700u;
   height: 700u;
   top: -120u;
@@ -22,9 +21,6 @@ $smartphone-scale-ratio: 0.7;
   margin-right: -120u;
   padding-top: 120u;
   padding-left: 120u;
-  font-size: 220u;
-  text-align: center;
-  color: var(--background-color);
   border-radius: 50%;
   box-sizing: border-box;
   flex-grow: 0;
@@ -48,12 +44,32 @@ $smartphone-scale-ratio: 0.7;
   width: 100%;
   height: 100%;
   padding-right: 60u;
-  padding-bottom: 20u;
+  padding-top: 0u;
   background: four-gradient(90deg, var(--accent-first-start-color), var(--accent-first-end-color), var(--accent-second-start-color), var(--accent-second-end-color), var(--accent-third-start-color), var(--accent-third-end-color), var(--accent-fourth-start-color), var(--accent-fourth-end-color));
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.main-code {
+  @include special-font;
+  font-size: 220u;
+  text-align: center;
+  color: var(--background-color);
+}
+
+.mark {
+  @include icon-font;
+  font-size: 80u;
+  color: var(--background-color);
+  position: absolute;
+  top: 64u;
+  left: 64u;
+  &::before {
+    content: "\F005";
+  }
 }
 
 .right {
@@ -95,11 +111,6 @@ $smartphone-scale-ratio: 0.7;
   @include smartphone {
     font-size: 150u * $smartphone-scale-ratio;
   }
-}
-
-.code >a {
-  color: var(--accent-color);
-  text-decoration: none;
 }
 
 .slash {
