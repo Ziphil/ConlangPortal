@@ -95,7 +95,11 @@ export class FamilySchema {
       let duplicate = family !== null;
       return duplicate;
     } else {
-      return false;
+      let family = await FamilyModel.findOne().or([
+        FamilyModel.find().where("codes.user", codes.user).where("codes.family", codes.family).getFilter()
+      ]);
+      let duplicate = family !== null;
+      return duplicate;
     }
   }
 

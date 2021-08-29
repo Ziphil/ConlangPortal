@@ -24,13 +24,13 @@ error:
     Please specify a different producer code.
   duplicateFamilyCode: >-
     This language family code already exists.
-    Please specify a different producer code.
+    Please specify a different language family code.
   duplicateLanguageCode: >-
     This language code already exists.
-    Please specify a different producer code.
+    Please specify a different language code.
   duplicateDialectCode: >-
     This dialect code already exists.
-    Please specify a different producer code.
+    Please specify a different dialect code.
 
 informationList:
   name: "Name"
