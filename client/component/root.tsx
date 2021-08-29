@@ -34,6 +34,7 @@ import ErrorBoundary from "/client/component/util/error-boundary";
 import ScrollTop from "/client/component/util/scroll-top";
 
 
+let AboutPage = lazy(() => import("/client/component/page/about-page"));
 let EntryPage = lazy(() => import("/client/component/page/entry-page"));
 let LoginPage = lazy(() => import("/client/component/page/login-page"));
 let TopPage = lazy(() => import("/client/component/page/top-page"));
@@ -65,6 +66,7 @@ export class Root extends Component<Props, State> {
                   <Switch>
                     <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
                     <Authenticator type="guest" exact sensitive path="/login" redirect="/cla/:userCode" component={LoginPage}/>
+                    <Authenticator type="none" exact sensitive path="/about" component={AboutPage}/>
                     <Authenticator type="none" exact sensitive path="/cla/:codePath" component={EntryPage}/>
                   </Switch>
                 </ScrollTop>
