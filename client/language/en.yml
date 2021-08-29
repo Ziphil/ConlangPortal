@@ -42,6 +42,7 @@ informationList:
   approved: "Approved ({dateString})"
   unapproved: "Not yet approved"
 addEntryForm:
+  title: "Apply for new code"
   family:
     head: "Language family"
     code: "Code (3 small letters)"

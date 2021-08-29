@@ -3,6 +3,10 @@
 @import "/client/component/mixin.scss";
 
 
+.spacer {
+  padding: 48u 96u;
+}
+
 .item {
   @include reset-first-margin;
   margin-top: 48u;
@@ -39,10 +43,6 @@
 .form >*:nth-child(2) {
   margin-left: 48u;
   flex: 5 0 0u;
-}
-
-.button {
-  text-align: center;
 }
 
 .caution {

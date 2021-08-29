@@ -42,6 +42,7 @@ informationList:
   approved: "承認済み ({dateString})"
   unapproved: "未承認"
 addEntryForm:
+  title: "新規コード申請"
   family:
     head: "語族"
     code: "コード (小文字 3 桁)"
