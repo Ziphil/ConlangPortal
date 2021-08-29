@@ -26,11 +26,12 @@ $themes: (
 );
 
 
-@function three-gradient($direction, $first-start-color, $first-end-color, $second-start-color, $second-end-color, $third-start-color, $third-end-color) {
-  $first-gradient: linear-gradient($direction, $first-start-color, $first-end-color 90%);
-  $second-gradient: linear-gradient($direction - 150deg, $second-start-color, $second-end-color 80%);
-  $third-gradient: linear-gradient($direction + 150deg, $third-start-color, $third-end-color 80%);
-  @return $first-gradient, $second-gradient, $third-gradient;
+@function four-gradient($direction, $first-start-color, $first-end-color, $second-start-color, $second-end-color, $third-start-color, $third-end-color, $fourth-start-color, $fourth-end-color) {
+  $first-gradient: linear-gradient($direction, $first-start-color, $first-end-color 80%);
+  $second-gradient: linear-gradient($direction + 180deg, $second-start-color, $second-end-color 80%);
+  $third-gradient: linear-gradient($direction + 120deg, $third-start-color, $third-end-color 80%);
+  $fourth-gradient: linear-gradient($direction - 60deg, $fourth-start-color, $fourth-end-color 80%);
+  @return $first-gradient, $second-gradient, $third-gradient, $fourth-gradient;
 }
 
 @mixin smartphone {

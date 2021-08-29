@@ -9,6 +9,9 @@ import {
   LANGUAGES
 } from "/client/language";
 import {
+  User
+} from "/client/skeleton/user";
+import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
@@ -23,7 +26,7 @@ export class GlobalStore {
   public messages: Record<string, string> = {};
 
   @observable
-  public user: any | null = null;
+  public user: User | null = null;
 
   @action
   public async changeLocale(locale: string): Promise<void> {

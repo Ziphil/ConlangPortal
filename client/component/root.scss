@@ -31,3 +31,8 @@ body {
     --#{$key}: #{$color};
   }
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

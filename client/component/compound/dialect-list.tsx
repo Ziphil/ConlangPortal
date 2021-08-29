@@ -7,7 +7,9 @@ import {
 import {
   Link
 } from "react-router-dom";
+import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
+import CommonPane from "/client/component/compound/common-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -27,45 +29,65 @@ export default class DialectList extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.request("fetchDialects", {});
+    let includeOptions = {approved: this.props.approved, unapproved: !this.props.approved};
+    let response = await this.request("fetchDialects", {includeOptions});
     if (response.status === 200) {
       let dialects = response.data;
       this.setState({dialects});
     }
   }
 
+  private async approveDialect(dialect: Dialect): Promise<void> {
+    let codes = dialect.codes;
+    let response = await this.request("approveDialect", {codes});
+    if (response.status === 200) {
+      console.log("approved");
+    }
+  }
+
   public render(): ReactNode {
+    let user = this.props.store!.user;
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
-      let rowNode = (
-        <div styleName="row" key={index}>
-          <div styleName="code-cell">
-            <Link to={path}>
-              <span styleName="code">{dialect.codes.dialect}</span>
-              <span styleName="slash"/>
-              <span styleName="code">{dialect.codes.language}</span>
-              <span styleName="slash"/>
-              <span styleName="code">{dialect.codes.family}</span>
-              <span styleName="slash"/>
-              <span styleName="code">{dialect.codes.user}</span>
-            </Link>
-          </div>
-          <div styleName="name-cell">
-            <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
-            <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.language}</span>
-            <span styleName="arrow"/>
-            <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family || "—"}</span>
-            <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.user}</span>
-          </div>
+      let buttonNode = (!this.props.approved && user?.administrator) && (
+        <div styleName="button">
+          <Button iconLabel="&#xF164;" onClick={() => this.approveDialect(dialect)}/>
         </div>
+      );
+      let rowNode = (
+        <Link to={path} key={index}>
+          <div styleName="item">
+            <div styleName="item-inner">
+              <div styleName="code-container">
+                <span styleName="code">{dialect.codes.dialect}</span>
+                <span styleName="slash"/>
+                <span styleName="code">{dialect.codes.language}</span>
+                <span styleName="slash"/>
+                <span styleName="code">{dialect.codes.family}</span>
+                <span styleName="slash"/>
+                <span styleName="code">{dialect.codes.user}</span>
+              </div>
+              <div styleName="name-container">
+                <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
+                <span styleName="arrow"/>
+                <span styleName="name">{dialect.names.language}</span>
+                <span styleName="arrow"/>
+                <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family}</span>
+                <span styleName="arrow"/>
+                <span styleName="name">{dialect.names.user}</span>
+              </div>
+            </div>
+            {buttonNode}
+          </div>
+        </Link>
       );
       return rowNode;
     });
     let node = (
       <div styleName="root">
-        {rowNodes}
+        <CommonPane title={this.trans(`dialectList.${(this.props.approved) ? "approved" : "unapproved"}`)}>
+          {rowNodes}
+        </CommonPane>
       </div>
     );
     return node;
@@ -75,6 +97,7 @@ export default class DialectList extends Component<Props, State> {
 
 
 type Props = {
+  approved: boolean
 };
 type State = {
   dialects: Array<Dialect>

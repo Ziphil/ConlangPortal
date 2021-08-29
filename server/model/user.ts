@@ -36,6 +36,9 @@ export class UserSchema {
   @prop({required: true})
   public approved!: boolean;
 
+  @prop()
+  public administrator?: boolean;
+
   @prop({required: true})
   public createdDate!: Date;
 
@@ -120,7 +123,11 @@ export class UserCreator {
     let code = raw.code;
     let names = {user: raw.name};
     let name = raw.name;
-    let skeleton = {id, codes, code, names, name};
+    let approved = raw.approved;
+    let administrator = raw.administrator;
+    let createdDate = raw.createdDate.toISOString();
+    let approvedDate = raw.approvedDate?.toISOString();
+    let skeleton = {id, codes, code, names, name, approved, administrator, createdDate, approvedDate};
     return skeleton;
   }
 

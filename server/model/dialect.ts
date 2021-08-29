@@ -38,6 +38,43 @@ export class DialectSchema {
   @prop()
   public approvedDate?: Date;
 
+  public async approve(this: Dialect): Promise<Dialect> {
+    let userPromise = UserModel.fetchOneByCode(this.codes.user).then((user) => {
+      if (user !== null && !user.approved) {
+        user.approved = true;
+        user.approvedDate = new Date();
+        return user.save();
+      } else {
+        return null;
+      }
+    });
+    let familyPromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => {
+      if (family !== null && !family.approved) {
+        family.approved = true;
+        family.approvedDate = new Date();
+        return family.save();
+      } else {
+        return null;
+      }
+    });
+    let languagePromise = LanguageModel.fetchOneByCodes(this.codes).then((language) => {
+      if (language !== null && !language.approved) {
+        language.approved = true;
+        language.approvedDate = new Date();
+        return language.save();
+      } else {
+        return null;
+      }
+    });
+    let dialectPromise = (async () => {
+      this.approved = true;
+      this.approvedDate = new Date();
+      await this.save();
+    })();
+    let [user, family, language] = await Promise.all([userPromise, familyPromise, languagePromise, dialectPromise]);
+    return this;
+  }
+
   public async changeInformations(this: Dialect, informations: any): Promise<Dialect> {
     let dialects = await DialectModel.fetchByCodesLoose(this.codes) as Array<any>;
     let promises = dialects.map(async (dialect) => {
@@ -69,6 +106,27 @@ export class DialectSchema {
     let dialect = new DialectModel({codes, name, approved, createdDate});
     await dialect.save();
     return dialect;
+  }
+
+  public static async fetch(includeOptions?: {approved: boolean, unapproved: boolean}): Promise<Array<Dialect>> {
+    let query = (() => {
+      if (includeOptions !== undefined) {
+        if (includeOptions.approved && includeOptions.unapproved) {
+          return DialectModel.find();
+        } else if (includeOptions.approved && !includeOptions.unapproved) {
+          return DialectModel.find().where("approved", true);
+        } else if (!includeOptions.approved && includeOptions.unapproved) {
+          return DialectModel.find().where("approved", false);
+        } else {
+          return DialectModel.find().where("dummy", "dummy");
+        }
+      } else {
+        return DialectModel.find();
+      }
+    })();
+    query = query.sort("-approvedDate -createdDate");
+    let dialects = await query;
+    return dialects;
   }
 
   public static async fetchOneByCodes(codes: DialectCodes): Promise<Dialect | null> {
@@ -117,7 +175,8 @@ export class DialectCreator {
     let name = raw.name;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, codes, names, name, approved, createdDate};
+    let approvedDate = raw.approvedDate?.toISOString();
+    let skeleton = {id, codes, names, name, approved, createdDate, approvedDate};
     return skeleton;
   }
 

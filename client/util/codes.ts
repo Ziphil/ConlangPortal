@@ -49,6 +49,37 @@ export class CodesUtil {
     return !!valid;
   }
 
+  public static toFullCodeString(codes: EntryCodes): string {
+    let codeArray = [];
+    if ("dialect" in codes) {
+      codeArray.push(codes.dialect);
+    }
+    if ("language" in codes) {
+      codeArray.push(codes.language);
+    }
+    if ("family" in codes) {
+      codeArray.push(codes.family);
+    }
+    codeArray.push(codes.user);
+    let string = "{cla3}" + codeArray.join("_");
+    return string;
+  }
+
+  public static toBcpString(codes: EntryCodes): string {
+    let string = "x-cla3-";
+    string += codes.user;
+    if ("family" in codes) {
+      string += (codes.family === "~") ? "0" : codes.family;
+    }
+    if ("language" in codes) {
+      string += codes.language;
+    }
+    if ("dialect" in codes) {
+      string += "-" + ((codes.dialect === "~") ? "0" : codes.dialect);
+    }
+    return string;
+  }
+
   public static getKind(codes: EntryCodes): EntryKind {
     if ("dialect" in codes) {
       return "dialect";

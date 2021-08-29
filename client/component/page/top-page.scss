@@ -5,12 +5,16 @@
 
 .pane {
   padding: 64u;
-  border-radius: 48u;
-  box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
 }
 
 .form-list {
-  margin-bottom: 96u;
+  @include reset-first-margin;
+  margin-top: 96u;
+}
+
+.list {
+  @include reset-first-margin;
+  margin-top: 96u;
 }
 
 .form {

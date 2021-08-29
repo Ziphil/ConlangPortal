@@ -14,6 +14,7 @@ import {
   Response
 } from "/server/controller/internal/controller";
 import {
+  verifyAdministrator,
   verifyCode,
   verifyUser
 } from "/server/controller/internal/middle";
@@ -45,6 +46,20 @@ export class EntryController extends Controller {
     } catch (error) {
       let body = (error.name === "CustomError") ? CustomError.ofType(error.type) : undefined;
       Controller.respondError(response, body, error);
+    }
+  }
+
+  @post(SERVER_PATHS["approveDialect"])
+  @before(verifyUser(), verifyAdministrator())
+  public async [Symbol()](request: Request<"approveDialect">, response: Response<"approveDialect">): Promise<void> {
+    let codes = request.body.codes;
+    let entry = await DialectModel.fetchOneByCodes(codes);
+    if (entry !== null) {
+      await entry.approve();
+      Controller.respond(response, {});
+    } else {
+      let body = CustomError.ofType("noSuchCodes");
+      Controller.respondError(response, body);
     }
   }
 
@@ -92,7 +107,8 @@ export class EntryController extends Controller {
   @post(SERVER_PATHS["fetchDialects"])
   @before()
   public async [Symbol()](request: Request<"fetchDialects">, response: Response<"fetchDialects">): Promise<void> {
-    let dialects = await DialectModel.find();
+    let includeOptions = request.body.includeOptions;
+    let dialects = await DialectModel.fetch(includeOptions);
     let body = await Promise.all(dialects.map((dialect) => DialectCreator.create(dialect)));
     Controller.respond(response, body);
   }

@@ -9,6 +9,7 @@ import {
   Link
 } from "react-router-dom";
 import Component from "/client/component/component";
+import CommonPane from "/client/component/compound/common-pane";
 import DialectInformationList from "/client/component/compound/information-list/dialect-information-list";
 import FamilyInformationList from "/client/component/compound/information-list/family-information-list";
 import LanguageInformationList from "/client/component/compound/information-list/language-information-list";
@@ -126,10 +127,14 @@ export default class EntryPane extends Component<Props, State, Params> {
         <div styleName="kind">{this.trans(`entryPane.${CodesUtil.getKind(codes)}`)}</div>
       </div>
     );
+    let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
     let node = (
       <div styleName="head">
         <div styleName="left">
-          <div styleName="main-code">{codeArray[0]}</div>
+          <div styleName="left-inner">
+            <div styleName="main-code">{codeArray[0]}</div>
+            {markNode}
+          </div>
         </div>
         <div styleName="right">
           {rightTopNode}
@@ -165,9 +170,11 @@ export default class EntryPane extends Component<Props, State, Params> {
     );
     let node = (
       <div styleName="root">
-        {headNode}
-        {guideNode}
-        {informationList}
+        <CommonPane>
+          {headNode}
+          {guideNode}
+          {informationList}
+        </CommonPane>
       </div>
     );
     return node;

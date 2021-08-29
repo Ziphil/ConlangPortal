@@ -36,6 +36,18 @@ export function verifyUser(): RequestHandler {
   return handler;
 }
 
+export function verifyAdministrator(): RequestHandler {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    let user = request.user!;
+    if (user.administrator) {
+      next();
+    } else {
+      response.status(403).end();
+    }
+  };
+  return handler;
+}
+
 export function verifyCode(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
@@ -43,8 +55,7 @@ export function verifyCode(): RequestHandler {
     if (user.code === userCode) {
       next();
     } else {
-      let body = null;
-      response.status(403).send(body).end();
+      response.status(403).end();
     }
   };
   return handler;

@@ -30,6 +30,8 @@ export default class DialectInformationList extends InformationList<User> {
             onCancel={this.setEntry(() => this.state.entry.name = this.props.entry.name)}
           />
         </InformationPane>
+        {this.renderFullCodeString()}
+        {this.renderApproval()}
       </div>
     );
     return node;

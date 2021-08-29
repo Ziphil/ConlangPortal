@@ -33,11 +33,11 @@ export default class TopPage extends Component<Props, State> {
     let node = (
       <Page>
         {formNode}
-        <div styleName="pane">
-          <div styleName="caution">
-            {this.trans("topPage.caution")}
-          </div>
-          <DialectList/>
+        <div styleName="list">
+          <DialectList approved={true}/>
+        </div>
+        <div styleName="list">
+          <DialectList approved={false}/>
         </div>
       </Page>
     );
