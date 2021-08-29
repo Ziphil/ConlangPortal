@@ -46,9 +46,10 @@ export default class DialectList extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let user = this.props.store!.user;
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
-      let buttonNode = (!this.props.approved && true) && (
+      let buttonNode = (!this.props.approved && user?.administrator) && (
         <div styleName="button">
           <Button iconLabel="&#xF164;" onClick={() => this.approveDialect(dialect)}/>
         </div>

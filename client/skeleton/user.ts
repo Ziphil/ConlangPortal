@@ -9,6 +9,7 @@ export class User {
   public names!: UserNames;
   public name!: string;
   public approved!: boolean;
+  public administrator?: boolean;
 
 }
 
