@@ -5,7 +5,7 @@
 
 .list {
   @include reset-first-margin;
-  margin: 96u auto 0u auto;
+  margin: 120u auto 0u auto;
 }
 
 .circle-list {
@@ -16,7 +16,7 @@
 
 .circle-list >a {
   @include reset-first-margin;
-  margin-left: 64u;
+  margin-left: 96u;
   border-radius: 50%;
 }
 
