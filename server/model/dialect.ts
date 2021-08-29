@@ -71,6 +71,26 @@ export class DialectSchema {
     return dialect;
   }
 
+  public static async fetch(includeOptions?: {approved: boolean, unapproved: boolean}): Promise<Array<Dialect>> {
+    if (includeOptions !== undefined) {
+      if (includeOptions.approved && includeOptions.unapproved) {
+        let dialects = await DialectModel.find();
+        return dialects;
+      } else if (includeOptions.approved && !includeOptions.unapproved) {
+        let dialects = await DialectModel.find().where("approved", true);
+        return dialects;
+      } else if (!includeOptions.approved && includeOptions.unapproved) {
+        let dialects = await DialectModel.find().where("approved", false);
+        return dialects;
+      } else {
+        return [];
+      }
+    } else {
+      let dialects = await DialectModel.find();
+      return dialects;
+    }
+  }
+
   public static async fetchOneByCodes(codes: DialectCodes): Promise<Dialect | null> {
     let dialect = await DialectModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect);
     return dialect;

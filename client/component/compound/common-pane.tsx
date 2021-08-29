@@ -14,9 +14,15 @@ import {
 export default class CommonPane extends Component<Props, State> {
 
   public render(): ReactNode {
+    let titleNode = (this.props.title !== undefined) && (
+      <div styleName="title">{this.props.title}</div>
+    );
     let node = (
       <div styleName="root">
-        {this.props.children}
+        {titleNode}
+        <div>
+          {this.props.children}
+        </div>
       </div>
     );
     return node;
@@ -26,6 +32,7 @@ export default class CommonPane extends Component<Props, State> {
 
 
 type Props = {
+  title?: string
 };
 type State = {
 };

@@ -5,7 +5,6 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
-import CommonPane from "/client/component/compound/common-pane";
 import DialectList from "/client/component/compound/dialect-list";
 import LoginForm from "/client/component/compound/login-form";
 import RegisterForm from "/client/component/compound/register-form";
@@ -34,14 +33,12 @@ export default class TopPage extends Component<Props, State> {
     let node = (
       <Page>
         {formNode}
-        <CommonPane>
-          <div styleName="pane">
-            <div styleName="caution">
-              {this.trans("topPage.caution")}
-            </div>
-            <DialectList/>
-          </div>
-        </CommonPane>
+        <div styleName="list">
+          <DialectList approved={true}/>
+        </div>
+        <div styleName="list">
+          <DialectList approved={false}/>
+        </div>
       </Page>
     );
     return node;

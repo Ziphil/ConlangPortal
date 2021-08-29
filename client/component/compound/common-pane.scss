@@ -6,4 +6,15 @@
 .root {
   border-radius: 48u;
   box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
+  overflow: hidden;
+}
+
+.title {
+  padding: 48u 0u;
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--background-color);
+  text-align: center;
+  border-radius: 48u 48u 0u 0u;
+  background: four-gradient(90deg, var(--accent-first-start-color), var(--accent-first-end-color), var(--accent-second-start-color), var(--accent-second-end-color), var(--accent-third-start-color), var(--accent-third-end-color), var(--accent-fourth-start-color), var(--accent-fourth-end-color));
 }

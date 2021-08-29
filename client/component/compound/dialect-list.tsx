@@ -8,6 +8,7 @@ import {
   Link
 } from "react-router-dom";
 import Component from "/client/component/component";
+import CommonPane from "/client/component/compound/common-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -27,7 +28,8 @@ export default class DialectList extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.request("fetchDialects", {});
+    let includeOptions = {approved: this.props.approved, unapproved: !this.props.approved};
+    let response = await this.request("fetchDialects", {includeOptions});
     if (response.status === 200) {
       let dialects = response.data;
       this.setState({dialects});
@@ -38,9 +40,9 @@ export default class DialectList extends Component<Props, State> {
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
       let rowNode = (
-        <div styleName="row" key={index}>
-          <div styleName="code-cell">
-            <Link to={path}>
+        <Link to={path}>
+          <div styleName="item" key={index}>
+            <div styleName="code-container">
               <span styleName="code">{dialect.codes.dialect}</span>
               <span styleName="slash"/>
               <span styleName="code">{dialect.codes.language}</span>
@@ -48,24 +50,26 @@ export default class DialectList extends Component<Props, State> {
               <span styleName="code">{dialect.codes.family}</span>
               <span styleName="slash"/>
               <span styleName="code">{dialect.codes.user}</span>
-            </Link>
+            </div>
+            <div styleName="name-container">
+              <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
+              <span styleName="arrow"/>
+              <span styleName="name">{dialect.names.language}</span>
+              <span styleName="arrow"/>
+              <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family}</span>
+              <span styleName="arrow"/>
+              <span styleName="name">{dialect.names.user}</span>
+            </div>
           </div>
-          <div styleName="name-cell">
-            <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
-            <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.language}</span>
-            <span styleName="arrow"/>
-            <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family || "—"}</span>
-            <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.user}</span>
-          </div>
-        </div>
+        </Link>
       );
       return rowNode;
     });
     let node = (
       <div styleName="root">
-        {rowNodes}
+        <CommonPane title={this.trans(`dialectList.${(this.props.approved) ? "approved" : "unapproved"}`)}>
+          {rowNodes}
+        </CommonPane>
       </div>
     );
     return node;
@@ -75,6 +79,7 @@ export default class DialectList extends Component<Props, State> {
 
 
 type Props = {
+  approved: boolean
 };
 type State = {
   dialects: Array<Dialect>

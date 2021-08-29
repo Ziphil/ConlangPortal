@@ -60,7 +60,7 @@ type ServerSpecs = {
     }
   },
   fetchDialects: {
-    request: {},
+    request: {includeOptions?: {approved: boolean, unapproved: boolean}},
     response: {
       success: Array<Dialect>,
       error: never

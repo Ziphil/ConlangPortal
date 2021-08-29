@@ -10,7 +10,6 @@ $smartphone-scale-ratio: 0.7;
   border-radius: 48u;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
 }
 
 .left {
@@ -21,21 +20,17 @@ $smartphone-scale-ratio: 0.7;
   left: -120u;
   margin-bottom: -120u;
   margin-right: -120u;
-  padding-top: 80u;
-  padding-right: 50u;
+  padding-top: 120u;
   padding-left: 120u;
   font-size: 220u;
   text-align: center;
   color: var(--background-color);
-  background: three-gradient(-90deg, var(--accent-first-start-color), var(--accent-first-end-color), var(--accent-second-start-color), var(--accent-second-end-color), var(--accent-third-start-color), var(--accent-third-end-color));
   border-radius: 50%;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-grow: 0;
   flex-shrink: 0;
   position: relative;
+  overflow: hidden;
   @include smartphone {
     width: 700u * $smartphone-scale-ratio;
     height: 700u * $smartphone-scale-ratio;
@@ -43,11 +38,22 @@ $smartphone-scale-ratio: 0.7;
     left: -120u * $smartphone-scale-ratio;
     margin-bottom: -120u * $smartphone-scale-ratio;
     margin-right: -120u * $smartphone-scale-ratio;  
-    padding-top: 80u * $smartphone-scale-ratio;
-    padding-right: 50u * $smartphone-scale-ratio;
+    padding-top: 120u * $smartphone-scale-ratio;
     padding-left: 120u * $smartphone-scale-ratio;
     font-size: 220u * $smartphone-scale-ratio;
   }
+}
+
+.left-inner {
+  width: 100%;
+  height: 100%;
+  padding-right: 60u;
+  padding-bottom: 20u;
+  background: four-gradient(90deg, var(--accent-first-start-color), var(--accent-first-end-color), var(--accent-second-start-color), var(--accent-second-end-color), var(--accent-third-start-color), var(--accent-third-end-color), var(--accent-fourth-start-color), var(--accent-fourth-end-color));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .right {

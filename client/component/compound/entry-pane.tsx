@@ -130,7 +130,9 @@ export default class EntryPane extends Component<Props, State, Params> {
     let node = (
       <div styleName="head">
         <div styleName="left">
-          <div styleName="main-code">{codeArray[0]}</div>
+          <div styleName="left-inner">
+            <div styleName="main-code">{codeArray[0]}</div>
+          </div>
         </div>
         <div styleName="right">
           {rightTopNode}

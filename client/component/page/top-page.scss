@@ -8,7 +8,13 @@
 }
 
 .form-list {
-  margin-bottom: 96u;
+  @include reset-first-margin;
+  margin-top: 96u;
+}
+
+.list {
+  @include reset-first-margin;
+  margin-top: 96u;
 }
 
 .form {
