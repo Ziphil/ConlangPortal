@@ -165,7 +165,14 @@ export class DialectSchema {
       let duplicate = dialect !== null;
       return duplicate;
     } else {
-      return false;
+      let dialect = await DialectModel.findOne().or([
+        DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
+      ]);
+      let duplicate = dialect !== null;
+      return duplicate;
     }
   }
 
