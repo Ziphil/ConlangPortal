@@ -15,7 +15,7 @@ import Page from "/client/component/page/page";
 export default class AboutPage extends Component<Props, State> {
 
   private renderString(string: string): ReactNode {
-    let node = string.split(/\s*---\s*/).map((string) => <div styleName="paragraph">{string}</div>);
+    let node = string.split(/\s*---\s*/).map((string, index) => <div styleName="paragraph" key={index}>{string}</div>);
     return node;
   }
 
