@@ -79,7 +79,7 @@ entryPane:
   language: "Language"
   dialect: "Dialect"
   notFound: "Unregistered"
-  guide: "Click on each item to edit it"
+  guide: "Click on each item below to edit it"
 header:
   logout: "Sign out"
   userPage: "User page"
