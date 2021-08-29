@@ -8,6 +8,7 @@ export class User {
   public code!: string;
   public names!: UserNames;
   public name!: string;
+  public homepageUrl?: string;
   public approved!: boolean;
   public administrator?: boolean;
   public createdDate!: string;

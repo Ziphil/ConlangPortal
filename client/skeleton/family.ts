@@ -7,6 +7,7 @@ export class Family {
   public codes!: FamilyCodes;
   public names!: FamilyNames;
   public name?: string;
+  public homepageUrl?: string;
   public approved!: boolean;
   public createdDate!: string;
   public approvedDate?: string;
