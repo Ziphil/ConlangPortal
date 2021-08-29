@@ -3,6 +3,10 @@
 @import "/client/component/mixin.scss";
 
 
+.spacer {
+  padding: 48u 96u;
+}
+
 .form >* {
   margin-top: 24u;
 }

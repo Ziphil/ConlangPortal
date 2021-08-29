@@ -4,10 +4,11 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import {
+  Link
+} from "react-router-dom";
 import Component from "/client/component/component";
 import DialectList from "/client/component/compound/dialect-list";
-import LoginForm from "/client/component/compound/login-form";
-import RegisterForm from "/client/component/compound/register-form";
 import {
   style
 } from "/client/component/decorator";
@@ -18,21 +19,33 @@ import Page from "/client/component/page/page";
 export default class TopPage extends Component<Props, State> {
 
   public render(): ReactNode {
-    let formNode = (this.props.store!.user === null) && (
-      <div styleName="form-list">
-        <div styleName="form">
-          <div styleName="head">{this.trans("topPage.login")}</div>
-          <LoginForm/>
+    let userPageNode = (
+      <Link to={`/cla/${this.props.store!.user?.code}`}>
+        <div styleName="circle">
+          <div styleName="icon">&#xF007;</div>
+          <div styleName="label">{this.trans("topPage.userPage")}</div>
         </div>
-        <div styleName="form">
-          <div styleName="head">{this.trans("topPage.register")}</div>
-          <RegisterForm/>
+      </Link>
+    );
+    let loginNode = (
+      <Link to="/login">
+        <div styleName="circle">
+          <div styleName="icon">&#xF2F6;</div>
+          <div styleName="label">{this.trans("topPage.login")}</div>
         </div>
-      </div>
+      </Link>
     );
     let node = (
       <Page>
-        {formNode}
+        <div styleName="circle-list">
+          <Link to="/about">
+            <div styleName="circle">
+              <div styleName="icon">&#xF128;</div>
+              <div styleName="label">{this.trans("topPage.about")}</div>
+            </div>
+          </Link>
+          {(this.props.store!.user !== null) ? userPageNode : loginNode}
+        </div>
         <div styleName="list">
           <DialectList approved={true}/>
         </div>

@@ -29,6 +29,12 @@ export class DialectSchema {
   @prop()
   public name?: string;
 
+  @prop()
+  public homepageUrl?: string;
+
+  @prop()
+  public dictionaryUrl?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -173,10 +179,12 @@ export class DialectCreator {
     let codes = raw.codes;
     let names = await raw.fetchNames();
     let name = raw.name;
+    let homepageUrl = raw.homepageUrl;
+    let dictionaryUrl = raw.dictionaryUrl;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, approved, createdDate, approvedDate};
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate, approvedDate};
     return skeleton;
   }
 

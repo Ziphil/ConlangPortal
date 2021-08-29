@@ -30,6 +30,24 @@ export default class DialectInformationList extends InformationList<Dialect> {
             onCancel={this.setEntry(() => this.state.entry.name = this.props.entry.name)}
           />
         </InformationPane>
+        <InformationPane label={this.trans("informationList.homepageUrl")}>
+          <EditableText
+            value={this.state.entry.homepageUrl ?? ""}
+            editable={this.props.editable}
+            onSet={this.setEntry((homepageUrl) => this.state.entry.homepageUrl = homepageUrl)}
+            onConfirm={() => this.props.onSet("homepageUrl", this.state.entry.homepageUrl)}
+            onCancel={this.setEntry(() => this.state.entry.homepageUrl = this.props.entry.homepageUrl)}
+          />
+        </InformationPane>
+        <InformationPane label={this.trans("informationList.dictionaryUrl")}>
+          <EditableText
+            value={this.state.entry.dictionaryUrl ?? ""}
+            editable={this.props.editable}
+            onSet={this.setEntry((dictionaryUrl) => this.state.entry.dictionaryUrl = dictionaryUrl)}
+            onConfirm={() => this.props.onSet("dictionaryUrl", this.state.entry.dictionaryUrl)}
+            onCancel={this.setEntry(() => this.state.entry.dictionaryUrl = this.props.entry.dictionaryUrl)}
+          />
+        </InformationPane>
         {this.renderFullCodeString()}
         {this.renderBcpString()}
         {this.renderApproval()}

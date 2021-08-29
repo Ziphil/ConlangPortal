@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.head {
+  margin-top: 48u;
+  margin-bottom: 32u;
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.paragraph {
+  margin-top: 16u;
+  margin-bottom: 16u;
+  line-height: $line-height;
+  text-align: justify;
+}

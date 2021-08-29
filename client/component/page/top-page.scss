@@ -3,35 +3,45 @@
 @import "/client/component/mixin.scss";
 
 
-.pane {
-  padding: 64u;
-}
-
-.form-list {
-  @include reset-first-margin;
-  margin-top: 96u;
-}
-
 .list {
   @include reset-first-margin;
-  margin-top: 96u;
+  margin: 120u auto 0u auto;
 }
 
-.form {
-  @include reset-first-margin(top);
-  margin: 64u auto 0u auto;
-  max-width: $page-width * 0.6;
+.circle-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.head {
-  margin-bottom: 48u;
-  font-size: 150%;
-  font-weight: bold;
+.circle-list >a {
+  @include reset-first-margin;
+  margin-left: 96u;
+  border-radius: 50%;
+}
+
+.circle {
+  width: 300u;
+  height: 300u;
   color: var(--accent-color);
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color), 8u 8u 12u var(--pane-dark-shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.caution {
-  margin-bottom: 48u;
-  line-height: $line-height;
-  text-align: justify;
+.circle:hover {
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+}
+
+.icon {
+  font-size: 250%;
+  @include icon-font;
+}
+
+.label {
+  margin-top: 24u;
+  font-weight: bold;
 }

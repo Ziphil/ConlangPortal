@@ -42,6 +42,7 @@ informationList:
   approved: "Approved ({dateString})"
   unapproved: "Not yet approved"
 addEntryForm:
+  title: "Apply for new code"
   family:
     head: "Language family"
     code: "Code (3 small letters)"
@@ -78,15 +79,17 @@ entryPane:
   language: "Language"
   dialect: "Dialect"
   notFound: "Unregistered"
-  guide: "Click on each item to edit it"
+  guide: "Click on each item below to edit it"
 header:
   logout: "Sign out"
   userPage: "User page"
 loginForm:
+  title: "Sign in"
   code: "Code"
   password: "Password"
   confirm: "Sign in"
 registerForm:
+  title: "Sign up"
   code: "Code (3 small letters)"
   name: "Display name"
   password: "Password"
@@ -95,9 +98,32 @@ registerForm:
     If you are working on a group, please create an account for each group.
     Note that the code used for user registration will be a part of the CLA code.
     Once a user is registered, you cannot change or delete the code, so please decide carefully.
+aboutPage:
+  aboutSite:
+    head: "About this site"
+    content: >-
+      The purpose of this site is to serve as a web portal of constructed languages by collecting information about them through the issuance and maintenance of unique codes (CLA codes) that identify artificial languages around the world.
+      Conlang creators can submit a request to obtain a code from this site, and can post various information about their languages along with the code.
+  aboutCode:
+    head: "About CLA codes"
+    content: >-
+      CLA codes are designed to be uniquely assigned to constructed languages around the world.
+      You can think of it as a conlang version of ISO 639, which assigns a unique code to every natural language in the world, as defined by the International Organization for Standardization.
+      ---
+      CLA codes have a four-level hierarchy: creator, language family, language and dialect.
+      The following is a brief explanation of the role of each hierarchy.
+      ---
+      The creator code consists of three lowercase Latin letters, and indicates the creator or creation group of the language.
+      ---
+      The language family code consists of three lowercase Latin letters, and is used to group languages created by the same creator or creation group.
+      For example, if you have several languages designed to be spoken in the same fictional world, that fictional world is the language family here.
+      If you do not need a specific grouping, you can choose not to specify a language family code.
+      ---
+      The language code consists of two lowercase Latin letters, representing each constructed language.
+      ---
+      The dialect code consists of two lowercase Latin letters, and is used to identify each dialect if the language has more than one dialect setting.
+      If your language does not have a dialect, you can choose not to specify a dialect code.
 topPage:
+  about: "About"
+  userPage: "User"
   login: "Sign in"
-  register: "Sign up"
-  caution: >-
-    This site is currently running as a beta test.
-    Please note that all data will be deleted after the official launch, which is scheduled for 1st September.
