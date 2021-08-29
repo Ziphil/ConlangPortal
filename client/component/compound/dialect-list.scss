@@ -30,7 +30,7 @@
 }
 
 .name-container {
-  line-height: $line-height;
+  @include line-height;
   text-align: justify;
 }
 

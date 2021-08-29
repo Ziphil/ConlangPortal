@@ -12,8 +12,8 @@
 }
 
 .paragraph {
+  @include line-height;
   margin-top: 16u;
   margin-bottom: 16u;
-  line-height: $line-height;
   text-align: justify;
 }

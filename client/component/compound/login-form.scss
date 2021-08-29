@@ -12,10 +12,10 @@
 }
 
 .explanation {
+  @include line-height;
   margin-bottom: 16u;
   font-size: 90%;
   text-align: justify;
-  line-height: $line-height;
 }
 
 .error {

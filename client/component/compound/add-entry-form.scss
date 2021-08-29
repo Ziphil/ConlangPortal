@@ -20,10 +20,10 @@
 }
 
 .explanation {
+  @include line-height;
   margin-bottom: 16u;
   font-size: 90%;
   text-align: justify;
-  line-height: $line-height;
 }
 
 .checkbox {
@@ -49,11 +49,11 @@
 }
 
 .caution {
+  @include line-height;
   margin-top: 16u;
   font-size: 90%;
   color: var(--caution-text-color);
   text-align: justify;
-  line-height: $line-height;
 }
 
 .error {
