@@ -9,6 +9,7 @@ import {
   Link
 } from "react-router-dom";
 import Component from "/client/component/component";
+import CommonPane from "/client/component/compound/common-pane";
 import DialectInformationList from "/client/component/compound/information-list/dialect-information-list";
 import FamilyInformationList from "/client/component/compound/information-list/family-information-list";
 import LanguageInformationList from "/client/component/compound/information-list/language-information-list";
@@ -165,9 +166,11 @@ export default class EntryPane extends Component<Props, State, Params> {
     );
     let node = (
       <div styleName="root">
-        {headNode}
-        {guideNode}
-        {informationList}
+        <CommonPane>
+          {headNode}
+          {guideNode}
+          {informationList}
+        </CommonPane>
       </div>
     );
     return node;

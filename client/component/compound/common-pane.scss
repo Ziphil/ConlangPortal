@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  border-radius: 48u;
+  box-shadow: -12u -12u 18u var(--pane-light-shadow-color), 12u 12u 18u var(--pane-dark-shadow-color);
+}
