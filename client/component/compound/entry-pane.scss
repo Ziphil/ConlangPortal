@@ -54,11 +54,11 @@ $smartphone-scale-ratio: 0.7;
 
 .main-code {
   @include special-font;
-  font-size: 450%;
+  font-size: 400%;
   text-align: center;
   color: var(--background-color);
   @include smartphone {
-    font-size: 450% * $smartphone-scale-ratio;
+    font-size: 400% * $smartphone-scale-ratio;
   }
 }
 
