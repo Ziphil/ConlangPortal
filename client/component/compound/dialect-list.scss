@@ -20,12 +20,8 @@
 
 .code-container {
   @include special-font;
-  margin-bottom: 16u;
+  margin-bottom: 32u;
   font-size: 120%;
-  color: var(--accent-color);
-}
-
-.code-container >a {
   color: var(--accent-color);
 }
 

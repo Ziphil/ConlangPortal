@@ -6,8 +6,7 @@
 $smartphone-scale-ratio: 0.7;
 
 .head {
-  margin-bottom: 80u;
-  border-radius: 48u;
+  margin-bottom: 96u;
   display: flex;
   flex-direction: row;
 }
@@ -50,6 +49,9 @@ $smartphone-scale-ratio: 0.7;
   align-items: center;
   justify-content: center;
   position: relative;
+  @include smartphone {
+    padding-right: 60u * $smartphone-scale-ratio;
+  }
 }
 
 .main-code {
@@ -80,28 +82,24 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .right {
-  flex-grow: 1;
-}
-
-.right-top {
-  height: 150u;
   margin-top: 64u;
   margin-left: 64u;
-  margin-right: 80u;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: justify;
+  margin-right: 96u;
+  flex-grow: 1;
   @include smartphone {
     margin-top: 32u;
   }
 }
 
+.right-top {
+  height: 150u;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .right-bottom {
-  @include line-height;
   margin-top: 64u;
-  margin-left: 64u;
-  margin-right: 64u;
   @include smartphone {
     margin-top: 32u;
   }
@@ -133,9 +131,10 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .separator {
-  margin: 0u 32u 0u 48u;
-  flex-grow: 1;
+  margin-left: 48u;
+  margin-right: 32u;
   border-top: 12u var(--dimmed-accent-color) dotted;
+  flex-grow: 1;
   &:first-child {
     margin-left: 0u;
   }
@@ -155,6 +154,7 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .main-name {
+  @include line-height;
   font-size: 200%;
   font-weight: bold;
   color: var(--accent-color);
@@ -164,6 +164,8 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .rest-name {
+  @include line-height;
+  margin-top: 24u;
   font-size: 130%;
   font-weight: bold;
   color: var(--accent-color);
@@ -182,17 +184,6 @@ $smartphone-scale-ratio: 0.7;
   &:first-child {
     margin-left: 0em;
   }
-}
-
-.content {
-  margin: 0u;
-  padding: 0u 64u 64u 64u;
-  text-align: center;
-}
-
-.form {
-  margin: 96u auto;
-  max-width: $page-width * 0.8;
 }
 
 .guide {
