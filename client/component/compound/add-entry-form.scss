@@ -22,6 +22,14 @@
   text-align: justify;
 }
 
+.category-caution {
+  @include line-height;
+  margin-top: 24u;
+  font-size: 90%;
+  color: var(--caution-text-color);
+  text-align: justify;
+}
+
 .checkbox {
   margin-top: 24u;
 }

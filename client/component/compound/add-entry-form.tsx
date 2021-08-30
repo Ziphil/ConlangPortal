@@ -31,6 +31,7 @@ export default class AddEntryForm extends Component<Props, State> {
     dialectUnspecified: true,
     familyFetching: false,
     languageFetching: false,
+    familyCautionType: null,
     errorType: null
   };
 
@@ -67,11 +68,12 @@ export default class AddEntryForm extends Component<Props, State> {
     };
     let response = await this.request("fetchEntryName", {codes});
     if (response.status === 200) {
-      let familyName = response.data;
+      let familyName = response.data.name;
+      let familyCautionType = response.data.cautionType;
       if (familyName !== null) {
-        this.setState({familyName});
+        this.setState({familyName, familyCautionType});
       } else {
-        this.setState({familyFetching: false});
+        this.setState({familyFetching: false, familyCautionType: null});
       }
     }
   }
@@ -85,7 +87,7 @@ export default class AddEntryForm extends Component<Props, State> {
     };
     let response = await this.request("fetchEntryName", {codes});
     if (response.status === 200) {
-      let languageName = response.data;
+      let languageName = response.data.name;
       if (languageName !== null) {
         this.setState({languageName});
       } else {
@@ -95,6 +97,11 @@ export default class AddEntryForm extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let familyCautionPane = (this.state.familyCautionType !== null) && (
+      <div styleName="category-caution">
+        {this.trans(`error.${this.state.familyCautionType}`)}
+      </div>
+    );
     let errorPane = (this.state.errorType !== null) && (
       <div styleName="error">
         <ErrorPane type={this.state.errorType}/>
@@ -128,6 +135,7 @@ export default class AddEntryForm extends Component<Props, State> {
                     {this.trans("addEntryForm.family.unspecified")}
                   </label>
                 </div>
+                {familyCautionPane}
               </div>
               <div styleName="head">{this.trans("addEntryForm.language.head")}</div>
               <div>
@@ -199,5 +207,6 @@ type State = {
   dialectUnspecified: boolean,
   familyFetching: boolean,
   languageFetching: boolean,
+  familyCautionType: string | null,
   errorType: string | null
 };

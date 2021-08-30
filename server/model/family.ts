@@ -58,9 +58,9 @@ export class FamilySchema {
   }
 
   public static async add(rawCodes: FamilyCodes, rawName: string): Promise<Family> {
-    let syncingFamilies = await this.fetchByCodesLoose(rawCodes);
+    let syncedFamilies = await this.fetchByCodesLoose(rawCodes);
     let codes = {family: rawCodes.family, user: rawCodes.user};
-    let name = (syncingFamilies[0] !== undefined) ? syncingFamilies[0].name : rawName;
+    let name = (syncedFamilies[0] !== undefined) ? syncedFamilies[0].name : rawName;
     let createdDate = new Date();
     let approved = false;
     let family = new FamilyModel({codes, name, approved, createdDate});

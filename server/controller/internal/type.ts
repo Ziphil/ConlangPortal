@@ -63,7 +63,7 @@ type ServerSpecs = {
   fetchEntryName: {
     request: {codes: any},
     response: {
-      success: string | null,
+      success: {name: string | null, cautionType: string | null}
       error: never
     }
   },

@@ -5,6 +5,10 @@ common:
   numberUndefined: "?"
 
 error:
+  hasSyncedFamily: >-
+    There are duplicate language family codes.
+    You can proceed with the application, but the language family you are applying for must be identical with those with the same code that already exist.
+    If you are not sure, please change the language family code to another one.
   loginFailed: >-
     Failed to sign in.
   invalidUserCode: >-

@@ -5,6 +5,10 @@ common:
   numberUndefined: "?"
 
 error:
+  hasSyncedFamily: >-
+    語族コードが重複しています。
+    このまま申請を進めることはできますが、申請しようとしている語族が既に存在している同じコードの語族と同一のものである必要があります。
+    心当たりがなければ、語族コードを別のものに変更してください。
   loginFailed: >-
     ログインに失敗しました。
   invalidUserCode: >-
