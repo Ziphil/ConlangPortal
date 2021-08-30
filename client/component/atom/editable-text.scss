@@ -22,7 +22,8 @@
   position: relative;
 }
 
-.input.active {
+.input.active,
+.input:hover {
   box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
 }
 
