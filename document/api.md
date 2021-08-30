@@ -15,6 +15,7 @@ https://conlang-portal.herokuapp.com/api/cla/list?onlyApproved=1
 |:-----|:---|:-----|
 | `entries` | object list | コードとそれに紐付けられた各種情報を格納したオブジェクトの配列 |
 | ├ `normalizedCode` | string | CLA v3 正規形 |
+| ├ `bcp47` | string | IETF BCP 47 互換表記 |
 | ├ `codes` | object | 階層ごとのコード文字列 |
 | │├ `dialect` | string | 方言コード (2 桁) |
 | │├ `language` | string | 言語コード (2 桁) |
@@ -35,6 +36,7 @@ https://conlang-portal.herokuapp.com/api/cla/list?onlyApproved=1
   "entries": [
     {
       "normalizedCode": "~_xl_~_zph",
+      "bcp47": "x-v3-zph0xl-0",
       "codes": {
         "dialect": "~",
         "language": "xl",
@@ -53,6 +55,7 @@ https://conlang-portal.herokuapp.com/api/cla/list?onlyApproved=1
     },
     {
       "normalizedCode": "uk_en_ine_nat",
+      "bcp47": "x-v3-natineen-uk",
       "codes": {
         "dialect": "uk",
         "language": "en",

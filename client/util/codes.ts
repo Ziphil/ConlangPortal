@@ -1,6 +1,6 @@
 //
 
-import {
+import type {
   EntryCodes,
   EntryKind
 } from "/client/skeleton/entry";

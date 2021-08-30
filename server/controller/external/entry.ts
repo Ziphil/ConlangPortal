@@ -5,6 +5,9 @@ import {
   Response
 } from "express";
 import {
+  CodesUtil
+} from "/client/util/codes";
+import {
   before,
   controller,
   get,
@@ -29,7 +32,8 @@ export class EntryExternalController extends Controller {
     let dialectsJsonPromise = dialects.map(async (dialect) => {
       let names = await dialect.fetchNames();
       let dialectJson = {} as any;
-      dialectJson["normalizedCode"] = `${dialect.codes.dialect}_${dialect.codes.language}_${dialect.codes.family}_${dialect.codes.user}`;
+      dialectJson["normalizedCode"] = CodesUtil.toFullCodeString(dialect.codes);
+      dialectJson["bcp47"] = CodesUtil.toBcpString(dialect.codes);
       dialectJson["codes"] = dialect.codes;
       dialectJson["names"] = names;
       dialectJson["approved"] = dialect.approved;
