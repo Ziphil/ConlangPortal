@@ -40,8 +40,9 @@ export class EntryController extends Controller {
   public async [Symbol()](request: Request<"addEntry">, response: Response<"addEntry">): Promise<void> {
     let codes = request.body.codes;
     let names = request.body.names;
+    let evidence = request.body.evidence;
     try {
-      await EntryUtil.add(codes, names);
+      await EntryUtil.add(codes, names, evidence);
       Controller.respond(response, {});
     } catch (error) {
       let body = (error.name === "CustomError") ? CustomError.ofType(error.type) : undefined;

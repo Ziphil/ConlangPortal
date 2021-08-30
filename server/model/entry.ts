@@ -55,7 +55,7 @@ export class EntryUtil {
     }
   }
 
-  public static async add(codes: DialectCodes, names: Required<DialectNames>): Promise<void> {
+  public static async add(codes: DialectCodes, names: Required<DialectNames>, evidence: string): Promise<void> {
     let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.fetchOneByCodes(codes);
@@ -82,7 +82,7 @@ export class EntryUtil {
     let dialectPromise = (async () => {
       let duplicate = await DialectModel.checkDuplication(codes);
       if (!duplicate && codes.dialect !== codes.language) {
-        methods.push(() => DialectModel.add(codes, names.dialect));
+        methods.push(() => DialectModel.add(codes, names.dialect, evidence));
       } else {
         throw new CustomError("duplicateDialectCode");
       }

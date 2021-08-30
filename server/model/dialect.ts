@@ -35,6 +35,9 @@ export class DialectSchema {
   @prop()
   public dictionaryUrl?: string;
 
+  @prop()
+  public evidence?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -105,11 +108,11 @@ export class DialectSchema {
     return names;
   }
 
-  public static async add(rawCodes: DialectCodes, name: string): Promise<Dialect> {
+  public static async add(rawCodes: DialectCodes, name: string, evidence: string): Promise<Dialect> {
     let codes = {dialect: rawCodes.dialect, language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
     let approved = false;
-    let dialect = new DialectModel({codes, name, approved, createdDate});
+    let dialect = new DialectModel({codes, name, evidence, approved, createdDate});
     await dialect.save();
     return dialect;
   }

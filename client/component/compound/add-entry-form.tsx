@@ -6,6 +6,7 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
+import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import CommonPane from "/client/component/compound/common-pane";
 import ErrorPane from "/client/component/compound/error-pane";
@@ -27,6 +28,7 @@ export default class AddEntryForm extends Component<Props, State> {
     familyName: "",
     languageName: "",
     dialectName: "",
+    evidence: "",
     familyUnspecified: true,
     dialectUnspecified: true,
     familyFetching: false,
@@ -47,9 +49,9 @@ export default class AddEntryForm extends Component<Props, State> {
       language: this.state.languageName,
       dialect: (this.state.dialectUnspecified) ? "" : this.state.dialectName
     };
-    let response = await this.request("addEntry", {codes, names});
+    let evidence = this.state.evidence;
+    let response = await this.request("addEntry", {codes, names, evidence});
     if (response.status === 200) {
-      console.log("entry added");
       let path = "/cla/" + CodesUtil.toCodePath(codes);
       this.pushPath(path);
     } else if (response.status === 400 && "error" in response.data) {
@@ -178,6 +180,16 @@ export default class AddEntryForm extends Component<Props, State> {
                   </label>
                 </div>
               </div>
+              <div styleName="head">{this.trans("addEntryForm.evidence.head")}</div>
+              <div>
+                <div styleName="explanation">{this.trans("addEntryForm.evidence.explanation")}</div>
+                <div styleName="textarea-form">
+                  <TextArea
+                    value={this.state.evidence}
+                    onSet={(evidence) => this.setState({evidence})}
+                  />
+                </div>
+              </div>
               <div styleName="button">
                 <Button label={this.trans("addEntryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
               </div>
@@ -203,6 +215,7 @@ type State = {
   familyName: string,
   languageName: string,
   dialectName: string,
+  evidence: string,
   familyUnspecified: boolean,
   dialectUnspecified: boolean,
   familyFetching: boolean,

@@ -33,7 +33,7 @@ export const SERVER_PATHS = {
 
 type ServerSpecs = {
   addEntry: {
-    request: {codes: any, names: any},
+    request: {codes: any, names: any, evidence: string},
     response: {
       success: {},
       error: CustomError<string>

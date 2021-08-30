@@ -34,7 +34,8 @@
   margin-top: 24u;
 }
 
-.form {
+.form,
+.textarea-form {
   margin-top: 24u;
   display: flex;
   flex-direction: row;
@@ -51,6 +52,11 @@
 .form >*:nth-child(2) {
   margin-left: 48u;
   flex: 5 0 0u;
+}
+
+.textarea-form >* {
+  height: 250u;
+  flex-grow: 1;
 }
 
 .button {

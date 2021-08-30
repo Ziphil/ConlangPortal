@@ -71,6 +71,12 @@ addEntryForm:
     explanation: >-
       Enter a code that identifies the dialect of the language you are applying for.
       If there are no dialect variants for the language, check the “Do not specify” checkbox.
+  evidence:
+    head: "Evidential information"
+    explanation: >-
+      Enter information indicating that you are actually creating the language or dialect you are applying for.
+      This information will only be used in the approval process.
+      You may leave this field blank, but in this case it may take longer for approval.
   confirm: "Submit"
   caution: >-
     Once you have applied for registration, you cannot change or delete the code.
