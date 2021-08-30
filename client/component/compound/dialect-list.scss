@@ -30,6 +30,14 @@
   text-align: justify;
 }
 
+.evidence {
+  @include line-height;
+  margin-top: 32u;
+  font-size: 90%;
+  text-align: justify;
+  white-space: pre;
+}
+
 .slash {
   margin: 0em 0.2em;
   font-size: 80%;

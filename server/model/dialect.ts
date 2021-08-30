@@ -191,10 +191,11 @@ export class DialectCreator {
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
     let dictionaryUrl = raw.dictionaryUrl;
+    let evidence = raw.evidence;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate, approvedDate};
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, evidence, approved, createdDate, approvedDate};
     return skeleton;
   }
 

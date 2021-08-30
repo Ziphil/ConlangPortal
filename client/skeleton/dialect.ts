@@ -9,6 +9,7 @@ export class Dialect {
   public name?: string;
   public homepageUrl?: string;
   public dictionaryUrl?: string;
+  public evidence?: string;
   public approved!: boolean;
   public createdDate!: string;
   public approvedDate?: string;
