@@ -45,7 +45,7 @@ export class CodesUtil {
   }
 
   public static isValidCodePath(codePath: string): boolean {
-    let valid = codePath.match(/^(([a-z]{2}|0|)\-([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3}))$/);
+    let valid = codePath.match(/^(([a-z]{2})\-([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3})\-([a-z]{3})|([a-z]{3}))$/);
     return !!valid;
   }
 
