@@ -29,7 +29,7 @@ export class EntryExternalController extends Controller {
     let dialectsJsonPromise = dialects.map(async (dialect) => {
       let names = await dialect.fetchNames();
       let dialectJson = {} as any;
-      dialectJson["normalizedCode"] = `{cla3}${dialect.codes.dialect}_${dialect.codes.language}_${dialect.codes.family}_${dialect.codes.user}`;
+      dialectJson["normalizedCode"] = `${dialect.codes.dialect}_${dialect.codes.language}_${dialect.codes.family}_${dialect.codes.user}`;
       dialectJson["codes"] = dialect.codes;
       dialectJson["names"] = names;
       dialectJson["approved"] = dialect.approved;

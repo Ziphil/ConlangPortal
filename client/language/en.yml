@@ -40,7 +40,7 @@ informationList:
   name: "Name"
   homepageUrl: "Homepage URL"
   dictionaryUrl: "Dictionary URL"
-  fullCodeString: "CLA normalised form (provisional)"
+  fullCodeString: "CLA v3 normalised form (provisional)"
   bcpString: "IETF BCP 47 compatibility notation (provisional)"
   approval: "Approval status"
   approved: "Approved ({dateString})"
