@@ -4,16 +4,12 @@
 
 
 .spacer {
-  padding: 48u 96u;
-}
-
-.item {
-  @include reset-first-margin;
-  margin-top: 48u;
+  padding: 64u 96u;
 }
 
 .head {
-  margin-bottom: 16u;
+  @include reset-first-margin;
+  margin-top: 48u;
   font-size: 120%;
   font-weight: bold;
   color: var(--accent-color);
@@ -21,16 +17,17 @@
 
 .explanation {
   @include line-height;
-  margin-bottom: 16u;
+  margin-top: 24u;
   font-size: 90%;
   text-align: justify;
 }
 
 .checkbox {
-  margin-top: 16u;
+  margin-top: 24u;
 }
 
 .form {
+  margin-top: 24u;
   display: flex;
   flex-direction: row;
   justify-content: justify;
@@ -48,9 +45,13 @@
   flex: 5 0 0u;
 }
 
+.button {
+  margin-top: 48u;
+}
+
 .caution {
   @include line-height;
-  margin-top: 16u;
+  margin-top: 48u;
   font-size: 90%;
   color: var(--caution-text-color);
   text-align: justify;

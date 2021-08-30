@@ -69,7 +69,7 @@ addEntryForm:
   caution: >-
     Once you have applied for registration, you cannot change or delete the code.
     Please check the details of your application carefully before clicking the “Submit” button.
-    You will be able to change the name of the language family or language later (currently not implemented).
+    You will be able to change the name of the language family or language later.
 dialectList:
   approved: "Approved codes"
   unapproved: "Unapproved codes"
@@ -97,7 +97,8 @@ registerForm:
   explanation: >-
     If you are working on a group, please create an account for each group.
     Note that the code used for user registration will be a part of the CLA code.
-    Once a user is registered, you cannot change or delete the code, so please decide carefully.
+  caution: >-
+    Once you have created a user, you cannot change its code or delete it, so please decide carefully.
 aboutPage:
   aboutSite:
     head: "About this site"
