@@ -5,9 +5,13 @@
 
 .root {
   padding: 24u 24u;
-  color: var(--caution-text-color);
-  text-align: justify;
   background-color: var(--caution-background-color);
   border-radius: 24u;
   box-shadow: -8u -8u 12u var(--caution-pane-light-shadow-color), 8u 8u 12u var(--caution-pane-dark-shadow-color);
+}
+
+.message {
+  @include line-height;
+  color: var(--caution-text-color);
+  text-align: justify;
 }
