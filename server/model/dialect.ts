@@ -35,6 +35,9 @@ export class DialectSchema {
   @prop()
   public dictionaryUrl?: string;
 
+  @prop()
+  public evidence?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -105,11 +108,11 @@ export class DialectSchema {
     return names;
   }
 
-  public static async add(rawCodes: DialectCodes, name: string): Promise<Dialect> {
+  public static async add(rawCodes: DialectCodes, name: string, evidence: string): Promise<Dialect> {
     let codes = {dialect: rawCodes.dialect, language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
     let createdDate = new Date();
     let approved = false;
-    let dialect = new DialectModel({codes, name, approved, createdDate});
+    let dialect = new DialectModel({codes, name, evidence, approved, createdDate});
     await dialect.save();
     return dialect;
   }
@@ -166,10 +169,10 @@ export class DialectSchema {
       return duplicate;
     } else {
       let dialect = await DialectModel.findOne().or([
-        DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
-        DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.dialect).getFilter(),
-        DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
-        DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
+        DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.user", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter()
       ]);
       let duplicate = dialect !== null;
       return duplicate;
@@ -188,10 +191,11 @@ export class DialectCreator {
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
     let dictionaryUrl = raw.dictionaryUrl;
+    let evidence = raw.evidence;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate, approvedDate};
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, evidence, approved, createdDate, approvedDate};
     return skeleton;
   }
 

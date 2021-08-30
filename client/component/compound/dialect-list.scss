@@ -9,8 +9,19 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  :first-child >& {
+  &:first-child {
     border: none;
+  }
+}
+
+.item:hover {
+  border-top: 3u transparent solid;
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+  &:first-child {
+    border: none;
+  }
+  & +.item {
+    border-top: 3u transparent solid;
   }
 }
 
@@ -28,6 +39,14 @@
 .name-container {
   @include line-height;
   text-align: justify;
+}
+
+.evidence {
+  @include line-height;
+  margin-top: 32u;
+  font-size: 90%;
+  text-align: justify;
+  white-space: pre;
 }
 
 .slash {

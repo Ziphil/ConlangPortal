@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.label-wrapper {
+  height: 100%;
+  display: block;
+}
+
+.input {
+  height: 100%;
+  padding: 0.3em 0.5em;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: $line-height;
+  border-radius: 24u;
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+  box-sizing: border-box;
+}
+
+.input.disabled {
+  color: var(--dimmed-text-color);
+}
+
+.input-inner {
+  width: 100%;
+  height: 100%;
+  margin: 0u;
+  padding: 0u;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  background: none;
+  border: none;
+  outline: none;
+  resize: none;
+  flex-grow: 1;
+}
+
+.prefix,
+.suffix {
+  display: inline-block;
+}
+
+.label {
+  margin-bottom: 8u;
+  font-size: 80%;
+  color: var(--accent-color);
+}
+
+.label.disabled {
+  color: var(--dimmed-accent-color);
+}

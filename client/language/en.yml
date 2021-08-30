@@ -5,6 +5,10 @@ common:
   numberUndefined: "?"
 
 error:
+  hasSyncedFamily: >-
+    There are duplicate language family codes.
+    You can proceed with the application, but the language family you are applying for must be identical with those with the same code that already exist.
+    If you are not sure, please change the language family code to another one.
   loginFailed: >-
     Failed to sign in.
   invalidUserCode: >-
@@ -67,6 +71,12 @@ addEntryForm:
     explanation: >-
       Enter a code that identifies the dialect of the language you are applying for.
       If there are no dialect variants for the language, check the “Do not specify” checkbox.
+  evidence:
+    head: "Evidential information"
+    explanation: >-
+      Enter information indicating that you are actually creating the language or dialect you are applying for.
+      This information will only be used in the approval process.
+      You may leave this field blank, but in this case it may take longer for approval.
   confirm: "Submit"
   caution: >-
     Once you have applied for registration, you cannot change or delete the code.
@@ -81,7 +91,9 @@ entryPane:
   language: "Language"
   dialect: "Dialect"
   notFound: "Unregistered"
-  guide: "Click on each item below to edit it"
+  guide: 
+    approved: "Click on each item below to edit it"
+    unapproved: "The following items will be editable after approval"
 header:
   logout: "Sign out"
   userPage: "User page"
