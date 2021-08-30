@@ -13,6 +13,9 @@ import fs from "fs";
 import mongoose from "mongoose";
 import multer from "multer";
 import {
+  EntryExternalController
+} from "/server/controller/external";
+import {
   EntryController,
   UserController
 } from "/server/controller/internal";
@@ -82,6 +85,7 @@ export class Main {
   private setupRouters(): void {
     EntryController.use(this.application);
     UserController.use(this.application);
+    EntryExternalController.use(this.application);
   }
 
   private setupStatic(): void {
