@@ -7,27 +7,27 @@
 
 リクエスト URL 例:
 ```
-https://https://conlang-portal.herokuapp.com/api/cla/list?onlyApproved=1
+https://conlang-portal.herokuapp.com/api/cla/list?onlyApproved=1
 ```
 
 ### レスポンス
 | 名前 | 型 | 説明 |
 |:-----|:---|:-----|
 | `entries` | object list | コードとそれに紐付けられた各種情報を格納したオブジェクトの配列 |
-| &nbsp;&nbsp;`normalizedCode` | string | CLA 正規形 |
-| &nbsp;&nbsp;`codes` | object | 階層ごとのコード文字列 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`dialect` | string | 方言コード (2 桁) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`language` | string | 言語コード (2 桁) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`family` | string | 語族コード (3 桁) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`user` | string | 製作者コード (3 桁) |
-| &nbsp;&nbsp;`names` | object | 階層ごとの名称 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`dialect` | string | 方言名 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`language` | string | 言語名 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`family` | string | 語族名 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`user` | string | 製作者名 |
-| &nbsp;&nbsp;`approved` | boolean | 承認済みかどうか |
-| &nbsp;&nbsp;`createdDate` | string | 申請日時 (ISO 8601 文字列) |
-| &nbsp;&nbsp;`approvedDate` | string\|null | 承認日時 (ISO 8601 文字列), 未承認なら null |
+| ├ `normalizedCode` | string | CLA 正規形 |
+| ├ `codes` | object | 階層ごとのコード文字列 |
+| │├ `dialect` | string | 方言コード (2 桁) |
+| │├ `language` | string | 言語コード (2 桁) |
+| │├ `family` | string | 語族コード (3 桁) |
+| │└ `user` | string | 製作者コード (3 桁) |
+| ├ `names` | object | 階層ごとの名称 |
+| │├ `dialect` | string | 方言名 |
+| │├ `language` | string | 言語名 |
+| │├ `family` | string | 語族名 |
+| │└ `user` | string | 製作者名 |
+| ├ `approved` | boolean | 承認済みかどうか |
+| ├ `createdDate` | string | 申請日時 (ISO 8601 文字列) |
+| └ `approvedDate` | string\|null | 承認日時 (ISO 8601 文字列), 未承認なら null |
 
 レスポンス例:
 ```json
