@@ -54,6 +54,8 @@ export default class LoginForm extends Component<Props, State> {
               <div styleName="form">
                 <Input label={this.trans("loginForm.code")} value={this.state.code} onSet={(code) => this.setState({code})}/>
                 <Input type="password" label={this.trans("loginForm.password")} value={this.state.password} onSet={(password) => this.setState({password})}/>
+              </div>
+              <div styleName="button">
                 <Button label={this.trans("loginForm.confirm")} reactive={true} onClick={this.performLogin.bind(this)}/>
               </div>
             </div>

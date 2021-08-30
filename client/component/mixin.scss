@@ -40,6 +40,24 @@ $themes: (
   }
 }
 
+@mixin line-height($line-height: $line-height) {
+  line-height: $line-height;
+  &::before {
+    width: 0u;
+    height: 0u;
+    margin-top: - line-intrusion($line-height);
+    display: block;
+    content: "";
+  }
+  &::after {
+    width: 0u;
+    height: 0u;
+    margin-bottom: - line-intrusion($line-height);
+    display: block;
+    content: "";
+  }
+}
+
 @mixin reset-first-margin($directions: top left) {
   @each $direction in $directions {
     $property-name: "margin-" + $direction;

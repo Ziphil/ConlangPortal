@@ -4,18 +4,31 @@
 
 
 .spacer {
-  padding: 48u 96u;
+  padding: 64u 96u;
 }
 
 .form >* {
+  @include reset-first-margin;
   margin-top: 24u;
 }
 
+.button {
+  margin-top: 48u;
+}
+
 .explanation {
-  margin-bottom: 16u;
+  @include line-height;
+  margin-bottom: 48u;
   font-size: 90%;
   text-align: justify;
-  line-height: $line-height;
+}
+
+.caution {
+  @include line-height;
+  margin-top: 48u;
+  font-size: 90%;
+  color: var(--caution-text-color);
+  text-align: justify;
 }
 
 .error {

@@ -4,7 +4,7 @@
 
 
 .root {
-  margin: -0.3em -0.5em;
+  margin: (-0.3em - line-intrusion($line-height)) -0.5em;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -22,7 +22,8 @@
   position: relative;
 }
 
-.input.active {
+.input.active,
+.input:hover {
   box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
 }
 

@@ -106,82 +106,74 @@ export default class AddEntryForm extends Component<Props, State> {
           <div styleName="spacer">
             {errorPane}
             <div styleName="item-list">
-              <div styleName="item">
-                <div styleName="head">{this.trans("addEntryForm.family.head")}</div>
-                <div>
-                  <div styleName="explanation">{this.trans("addEntryForm.family.explanation")}</div>
-                  <div styleName="form">
-                    <Input
-                      label={this.trans("addEntryForm.family.code")}
-                      value={this.state.familyCode}
-                      disabled={this.state.familyUnspecified}
-                      onSet={this.handleFamilyCodeSet.bind(this)}/>
-                    <Input
-                      label={this.trans("addEntryForm.family.name")}
-                      value={this.state.familyName}
-                      disabled={this.state.familyFetching || this.state.familyUnspecified}
-                      onSet={(familyName) => this.setState({familyName})}
-                    />
-                  </div>
-                  <div styleName="checkbox">
-                    <label>
-                      <input type="checkbox" checked={this.state.familyUnspecified} onChange={(event) => this.setState({familyUnspecified: event.target.checked})}/>
-                      {this.trans("addEntryForm.family.unspecified")}
-                    </label>
-                  </div>
+              <div styleName="head">{this.trans("addEntryForm.family.head")}</div>
+              <div>
+                <div styleName="explanation">{this.trans("addEntryForm.family.explanation")}</div>
+                <div styleName="form">
+                  <Input
+                    label={this.trans("addEntryForm.family.code")}
+                    value={this.state.familyCode}
+                    disabled={this.state.familyUnspecified}
+                    onSet={this.handleFamilyCodeSet.bind(this)}/>
+                  <Input
+                    label={this.trans("addEntryForm.family.name")}
+                    value={this.state.familyName}
+                    disabled={this.state.familyFetching || this.state.familyUnspecified}
+                    onSet={(familyName) => this.setState({familyName})}
+                  />
+                </div>
+                <div styleName="checkbox">
+                  <label>
+                    <input type="checkbox" checked={this.state.familyUnspecified} onChange={(event) => this.setState({familyUnspecified: event.target.checked})}/>
+                    {this.trans("addEntryForm.family.unspecified")}
+                  </label>
                 </div>
               </div>
-              <div styleName="item">
-                <div styleName="head">{this.trans("addEntryForm.language.head")}</div>
-                <div>
-                  <div styleName="explanation">{this.trans("addEntryForm.language.explanation")}</div>
-                  <div styleName="form">
-                    <Input
-                      label={this.trans("addEntryForm.language.code")}
-                      value={this.state.languageCode}
-                      onSet={this.handleLanguageCodeSet.bind(this)}
-                    />
-                    <Input
-                      label={this.trans("addEntryForm.language.name")}
-                      value={this.state.languageName}
-                      disabled={this.state.languageFetching}
-                      onSet={(languageName) => this.setState({languageName})}
-                    />
-                  </div>
+              <div styleName="head">{this.trans("addEntryForm.language.head")}</div>
+              <div>
+                <div styleName="explanation">{this.trans("addEntryForm.language.explanation")}</div>
+                <div styleName="form">
+                  <Input
+                    label={this.trans("addEntryForm.language.code")}
+                    value={this.state.languageCode}
+                    onSet={this.handleLanguageCodeSet.bind(this)}
+                  />
+                  <Input
+                    label={this.trans("addEntryForm.language.name")}
+                    value={this.state.languageName}
+                    disabled={this.state.languageFetching}
+                    onSet={(languageName) => this.setState({languageName})}
+                  />
                 </div>
               </div>
-              <div styleName="item">
-                <div styleName="head">{this.trans("addEntryForm.dialect.head")}</div>
-                <div>
-                  <div styleName="explanation">{this.trans("addEntryForm.dialect.explanation")}</div>
-                  <div styleName="form">
-                    <Input
-                      label={this.trans("addEntryForm.dialect.code")}
-                      value={this.state.dialectCode}
-                      disabled={this.state.dialectUnspecified}
-                      onSet={(dialectCode) => this.setState({dialectCode})}
-                    />
-                    <Input
-                      label={this.trans("addEntryForm.dialect.name")}
-                      value={this.state.dialectName}
-                      disabled={this.state.dialectUnspecified}
-                      onSet={(dialectName) => this.setState({dialectName})}
-                    />
-                  </div>
-                  <div styleName="checkbox">
-                    <label>
-                      <input type="checkbox" checked={this.state.dialectUnspecified} onChange={(event) => this.setState({dialectUnspecified: event.target.checked})}/>
-                      {this.trans("addEntryForm.dialect.unspecified")}
-                    </label>
-                  </div>
+              <div styleName="head">{this.trans("addEntryForm.dialect.head")}</div>
+              <div>
+                <div styleName="explanation">{this.trans("addEntryForm.dialect.explanation")}</div>
+                <div styleName="form">
+                  <Input
+                    label={this.trans("addEntryForm.dialect.code")}
+                    value={this.state.dialectCode}
+                    disabled={this.state.dialectUnspecified}
+                    onSet={(dialectCode) => this.setState({dialectCode})}
+                  />
+                  <Input
+                    label={this.trans("addEntryForm.dialect.name")}
+                    value={this.state.dialectName}
+                    disabled={this.state.dialectUnspecified}
+                    onSet={(dialectName) => this.setState({dialectName})}
+                  />
+                </div>
+                <div styleName="checkbox">
+                  <label>
+                    <input type="checkbox" checked={this.state.dialectUnspecified} onChange={(event) => this.setState({dialectUnspecified: event.target.checked})}/>
+                    {this.trans("addEntryForm.dialect.unspecified")}
+                  </label>
                 </div>
               </div>
-              <div styleName="item">
-                <div styleName="button">
-                  <Button label={this.trans("addEntryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
-                </div>
-                <div styleName="caution">{this.trans("addEntryForm.caution")}</div>
+              <div styleName="button">
+                <Button label={this.trans("addEntryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
               </div>
+              <div styleName="caution">{this.trans("addEntryForm.caution")}</div>
             </div>
           </div>
         </CommonPane>

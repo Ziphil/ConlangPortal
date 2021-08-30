@@ -16,7 +16,9 @@ export default class ErrorPane extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <div styleName="root">
-        {this.trans(`error.${this.props.type}`)}
+        <div styleName="message">
+          {this.trans(`error.${this.props.type}`)}
+        </div>
       </div>
     );
     return node;
