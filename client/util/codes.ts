@@ -1,6 +1,6 @@
 //
 
-import {
+import type {
   EntryCodes,
   EntryKind
 } from "/client/skeleton/entry";
@@ -45,7 +45,7 @@ export class CodesUtil {
   }
 
   public static isValidCodePath(codePath: string): boolean {
-    let valid = codePath.match(/^(([a-z]{2}|0|)\-([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3}))$/);
+    let valid = codePath.match(/^(([a-z]{2})\-([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{2})\-([a-z]{3}|0|)\-([a-z]{3})|([a-z]{3})\-([a-z]{3})|([a-z]{3}))$/);
     return !!valid;
   }
 
@@ -61,12 +61,12 @@ export class CodesUtil {
       codeArray.push(codes.family);
     }
     codeArray.push(codes.user);
-    let string = "{cla3}" + codeArray.join("_");
+    let string = codeArray.join("_");
     return string;
   }
 
   public static toBcpString(codes: EntryCodes): string {
-    let string = "x-cla3-";
+    let string = "x-v3-";
     string += codes.user;
     if ("family" in codes) {
       string += (codes.family === "~") ? "0" : codes.family;
