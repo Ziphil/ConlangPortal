@@ -68,7 +68,7 @@ https://conlang-portal.herokuapp.com/api/cla/list?onlyApproved=1
       "approved": false,
       "createdDate": "2021-08-21T14:29:51.180Z",
       "approvedDate": null
-    },
+    }
   ]
 }
 ```
