@@ -91,7 +91,9 @@ entryPane:
   language: "言語"
   dialect: "方言"
   notFound: "未登録"
-  guide: "以下の各項目はクリックで編集できます"
+  guide: 
+    approved: "以下の各項目はクリックで編集できます"
+    unapproved: "以下の各項目は承認後に編集できるようになります"
 header:
   logout: "ログアウト"
   userPage: "ユーザーページ"

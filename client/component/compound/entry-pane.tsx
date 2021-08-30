@@ -148,7 +148,7 @@ export default class EntryPane extends Component<Props, State, Params> {
   private renderInformationList(): ReactNode {
     let entry = this.state.entry;
     if (entry !== null) {
-      let editable = this.props.store!.user?.code === entry.codes.user;
+      let editable = entry.approved && this.props.store!.user?.code === entry.codes.user;
       if (EntryUtil.is(entry, "dialect")) {
         return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else if (EntryUtil.is(entry, "language")) {
@@ -162,11 +162,12 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let editable = this.state.entry !== null && this.props.store!.user?.code === this.state.entry.codes.user;
+    let approved = this.state.entry?.approved;
+    let maybeEditable = this.state.entry !== null && this.props.store!.user?.code === this.state.entry.codes.user;
     let headNode = this.renderHead();
     let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("entryPane.notFound");
-    let guideNode = (editable) && (
-      <div styleName="guide">{this.trans("entryPane.guide")}</div>
+    let guideNode = (maybeEditable) && (
+      <div styleName="guide">{this.trans(`entryPane.guide.${(approved) ? "approved" : "unapproved"}`)}</div>
     );
     let node = (
       <div styleName="root">
