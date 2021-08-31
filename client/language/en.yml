@@ -61,6 +61,7 @@ addEntryForm:
       The language family code is used to group multiple languages that are being created by an individual or group.
       For example, if you are creating multiple languages that are spoken within a single imaginary world or categorised into a single language family, then that imaginary world or language family will be the “group” here.
       Enter a code to identify such a group.
+      Use a distinctive name or code that can be identified as such (avoid generic names such as “auxiliary languages” or codes derived from them).
       If there is no need for grouping, as in the case where you have created only one language, check the “Do not specify” checkbox.
   language:
     head: "Language"
