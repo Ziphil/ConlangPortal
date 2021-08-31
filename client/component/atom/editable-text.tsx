@@ -102,9 +102,12 @@ export default class EditableText extends Component<Props, State> {
       return node;
     } else {
       let innerNode = (this.props.render !== undefined) ? this.props.render(this.props.value) : this.props.value;
+      let inputStyleName = StyleNameUtil.create(
+        {if: this.props.editable, true: "input-inactive", false: "input-uneditable"}
+      );
       let node = (
         <div styleName="root" className={this.props.className}>
-          <div styleName="input-inactive" tabIndex={0} onFocus={this.handleFocus.bind(this)}>
+          <div styleName={inputStyleName} tabIndex={0} onFocus={this.handleFocus.bind(this)}>
             {innerNode}&#x200B;
           </div>
         </div>

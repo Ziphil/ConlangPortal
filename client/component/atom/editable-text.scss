@@ -11,7 +11,8 @@
 }
 
 .input,
-.input-inactive {
+.input-inactive,
+.input-uneditable {
   min-width: 0u;
   padding: 0.3em 0.5em;
   font-family: inherit;
