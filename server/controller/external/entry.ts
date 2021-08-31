@@ -32,7 +32,7 @@ export class EntryExternalController extends Controller {
     let dialectsJsonPromise = dialects.map(async (dialect) => {
       let names = await dialect.fetchNames();
       let dialectJson = {} as any;
-      dialectJson["normalizedCode"] = CodesUtil.toFullCodeString(dialect.codes);
+      dialectJson["normalized"] = CodesUtil.toFullCodeString(dialect.codes);
       dialectJson["bcp47"] = CodesUtil.toBcpString(dialect.codes);
       dialectJson["codes"] = dialect.codes;
       dialectJson["names"] = names;
