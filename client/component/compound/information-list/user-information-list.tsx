@@ -18,6 +18,13 @@ import {
 @style(require("./information-list.scss"))
 export default class DialectInformationList extends InformationList<User> {
 
+  protected renderTwitterLink(id: string): ReactNode {
+    let node = (
+      <a className="link twitter" href={`https://twitter.com/${id}`} target="_blank">@{id}</a>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let node = (
       <div styleName="root">
@@ -34,9 +41,30 @@ export default class DialectInformationList extends InformationList<User> {
           <EditableText
             value={this.state.entry.homepageUrl ?? ""}
             editable={this.props.editable}
+            render={this.renderLink.bind(this)}
             onSet={this.setEntry((homepageUrl) => this.state.entry.homepageUrl = homepageUrl)}
             onConfirm={() => this.props.onSet("homepageUrl", this.state.entry.homepageUrl)}
             onCancel={this.setEntry(() => this.state.entry.homepageUrl = this.props.entry.homepageUrl)}
+          />
+        </InformationPane>
+        <InformationPane label={this.trans("informationList.twitterId")}>
+          <EditableText
+            value={this.state.entry.twitterId ?? ""}
+            editable={this.props.editable}
+            render={this.renderTwitterLink.bind(this)}
+            onSet={this.setEntry((twitterId) => this.state.entry.twitterId = twitterId)}
+            onConfirm={() => this.props.onSet("twitterId", this.state.entry.twitterId)}
+            onCancel={this.setEntry(() => this.state.entry.twitterId = this.props.entry.twitterId)}
+          />
+        </InformationPane>
+        <InformationPane label={this.trans("informationList.biography")}>
+          <EditableText
+            value={this.state.entry.biography ?? ""}
+            editable={this.props.editable}
+            single={false}
+            onSet={this.setEntry((biography) => this.state.entry.biography = biography)}
+            onConfirm={() => this.props.onSet("biography", this.state.entry.biography)}
+            onCancel={this.setEntry(() => this.state.entry.biography = this.props.entry.biography)}
           />
         </InformationPane>
         {this.renderFullCodeString()}

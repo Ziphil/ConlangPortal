@@ -7,3 +7,8 @@
   padding: 48u 96u;
   border-top: 3u var(--border-color) solid;
 }
+
+.root :global(.link) {
+  color: var(--accent-color);
+  text-decoration: underline;
+}

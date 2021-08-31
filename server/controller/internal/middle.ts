@@ -36,10 +36,10 @@ export function verifyUser(): RequestHandler {
   return handler;
 }
 
-export function verifyAdministrator(): RequestHandler {
+export function verifyApprover(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
-    if (user.administrator) {
+    if (user.authority === "approver" || user.authority === "admin") {
       next();
     } else {
       response.status(403).end();

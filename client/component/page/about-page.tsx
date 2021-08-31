@@ -30,6 +30,10 @@ export default class AboutPage extends Component<Props, State> {
         <div>
           {this.renderString(this.trans("aboutPage.aboutCode.content"))}
         </div>
+        <div styleName="head">{this.trans("aboutPage.applicationProcess.head")}</div>
+        <div>
+          {this.renderString(this.trans("aboutPage.applicationProcess.content"))}
+        </div>
       </Page>
     );
     return node;

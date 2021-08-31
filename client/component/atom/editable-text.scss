@@ -10,21 +10,26 @@
   align-items: flex-end;
 }
 
-.input {
+.input,
+.input-inactive,
+.input-uneditable {
   min-width: 0u;
   padding: 0.3em 0.5em;
   font-family: inherit;
   font-size: inherit;
   color: inherit;
   line-height: $line-height;
+  text-align: justify;
+  white-space: pre-wrap;
   border-radius: 24u;
   flex-grow: 1;
   position: relative;
 }
 
-.input.active,
-.input:hover {
+.input,
+.input-inactive:hover {
   box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+  cursor: text;
 }
 
 .input-inner {
@@ -60,6 +65,10 @@
   overflow-wrap: break-word;
   white-space: pre-wrap;
   visibility: hidden;
+}
+
+.empty {
+  color: var(--dimmed-text-color);
 }
 
 .button {

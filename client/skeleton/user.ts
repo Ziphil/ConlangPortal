@@ -9,8 +9,10 @@ export class User {
   public names!: UserNames;
   public name!: string;
   public homepageUrl?: string;
+  public twitterId?: string;
+  public biography?: string;
+  public authority?: string;
   public approved!: boolean;
-  public administrator?: boolean;
   public createdDate!: string;
   public approvedDate?: string;
 

@@ -34,6 +34,7 @@ export default class DialectInformationList extends InformationList<Dialect> {
           <EditableText
             value={this.state.entry.homepageUrl ?? ""}
             editable={this.props.editable}
+            render={this.renderLink.bind(this)}
             onSet={this.setEntry((homepageUrl) => this.state.entry.homepageUrl = homepageUrl)}
             onConfirm={() => this.props.onSet("homepageUrl", this.state.entry.homepageUrl)}
             onCancel={this.setEntry(() => this.state.entry.homepageUrl = this.props.entry.homepageUrl)}
@@ -43,9 +44,20 @@ export default class DialectInformationList extends InformationList<Dialect> {
           <EditableText
             value={this.state.entry.dictionaryUrl ?? ""}
             editable={this.props.editable}
+            render={this.renderLink.bind(this)}
             onSet={this.setEntry((dictionaryUrl) => this.state.entry.dictionaryUrl = dictionaryUrl)}
             onConfirm={() => this.props.onSet("dictionaryUrl", this.state.entry.dictionaryUrl)}
             onCancel={this.setEntry(() => this.state.entry.dictionaryUrl = this.props.entry.dictionaryUrl)}
+          />
+        </InformationPane>
+        <InformationPane label={this.trans("informationList.description")}>
+          <EditableText
+            value={this.state.entry.description ?? ""}
+            editable={this.props.editable}
+            single={false}
+            onSet={this.setEntry((description) => this.state.entry.description = description)}
+            onConfirm={() => this.props.onSet("description", this.state.entry.description)}
+            onCancel={this.setEntry(() => this.state.entry.description = this.props.entry.description)}
           />
         </InformationPane>
         {this.renderFullCodeString()}

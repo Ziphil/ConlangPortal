@@ -35,6 +35,9 @@ export class LanguageSchema {
   @prop()
   public dictionaryUrl?: string;
 
+  @prop()
+  public description?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -92,18 +95,29 @@ export class LanguageSchema {
   }
 
   public static async checkDuplication(codes: LanguageCodes): Promise<boolean> {
-    let dialect = await DialectModel.findOne().or([
-      DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.language).getFilter(),
-      DialectModel.find().where("codes.user", codes.family).where("codes.language", codes.language).getFilter(),
-      DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.language).getFilter(),
-      DialectModel.find().where("codes.family", codes.family).where("codes.language", codes.language).getFilter(),
-      DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.language).getFilter(),
-      DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.language).getFilter(),
-      DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.language).getFilter(),
-      DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.language).getFilter()
-    ]);
-    let duplicate = dialect !== null;
-    return duplicate;
+    if (codes.family !== "~") {
+      let dialect = await DialectModel.findOne().or([
+        DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.language).getFilter(),
+        DialectModel.find().where("codes.user", codes.family).where("codes.language", codes.language).getFilter(),
+        DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.language).getFilter(),
+        DialectModel.find().where("codes.family", codes.family).where("codes.language", codes.language).getFilter(),
+        DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.language).getFilter(),
+        DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.language).getFilter(),
+        DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.language).getFilter(),
+        DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.language).getFilter()
+      ]);
+      let duplicate = dialect !== null;
+      return duplicate;
+    } else {
+      let dialect = await DialectModel.findOne().or([
+        DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.language).getFilter(),
+        DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.language).getFilter(),
+        DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.language).getFilter(),
+        DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.language).getFilter()
+      ]);
+      let duplicate = dialect !== null;
+      return duplicate;
+    }
   }
 
 }
@@ -118,10 +132,11 @@ export class LanguageCreator {
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
     let dictionaryUrl = raw.dictionaryUrl;
+    let description = raw.description;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, approved, createdDate, approvedDate};
+    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, description, approved, createdDate, approvedDate};
     return skeleton;
   }
 

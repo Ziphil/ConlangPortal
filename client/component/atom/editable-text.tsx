@@ -3,8 +3,11 @@
 import * as react from "react";
 import {
   ChangeEvent,
+  FocusEvent,
   MouseEvent,
-  ReactNode
+  ReactNode,
+  RefObject,
+  createRef
 } from "react";
 import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
@@ -25,6 +28,18 @@ export default class EditableText extends Component<Props, State> {
   public state: State = {
     active: false
   };
+
+  private inputRef: RefObject<HTMLTextAreaElement> = createRef();
+
+  private handleFocus(event: FocusEvent<HTMLDivElement>): void {
+    this.setState({active: true}, () => {
+      let element = this.inputRef.current;
+      if (element !== null) {
+        element.focus();
+        element.setSelectionRange(element.value.length, element.value.length);
+      }
+    });
+  }
 
   private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
     let value = event.target.value;
@@ -64,17 +79,36 @@ export default class EditableText extends Component<Props, State> {
         <textarea
           styleName="input-inner"
           value={this.props.value}
-          onFocus={() => this.setState({active: true})}
           onChange={this.handleChange.bind(this)}
+          ref={this.inputRef}
         />
       </div>
     );
     return node;
   }
 
+  private renderInactive(): ReactNode {
+    let innerNode = (() => {
+      if (this.props.value === "") {
+        return <span styleName="empty">{this.trans("editableText.empty")}</span>;
+      } else {
+        return (this.props.render !== undefined) ? this.props.render(this.props.value) : this.props.value;
+      }
+    })();
+    let styleName = StyleNameUtil.create(
+      {if: this.props.editable, true: "input-inactive", false: "input-uneditable"}
+    );
+    let node = (
+      <div styleName={styleName} tabIndex={0} onFocus={this.handleFocus.bind(this)}>
+        {innerNode}
+      </div>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
-    let inputNode = this.renderInput();
-    if (this.props.editable) {
+    if (this.props.editable && this.state.active) {
+      let inputNode = this.renderInput();
       let node = (
         <div styleName="root" className={this.props.className}>
           {inputNode}
@@ -86,9 +120,10 @@ export default class EditableText extends Component<Props, State> {
       );
       return node;
     } else {
+      let inputNode = this.renderInactive();
       let node = (
-        <div styleName="root-uneditable" className={this.props.className}>
-          {this.props.value}&#x200B;
+        <div styleName="root" className={this.props.className}>
+          {inputNode}
         </div>
       );
       return node;
@@ -100,6 +135,7 @@ export default class EditableText extends Component<Props, State> {
 
 type Props = {
   value: string,
+  render?: (value: string) => ReactNode,
   single: boolean,
   editable: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
