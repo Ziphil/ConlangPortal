@@ -22,6 +22,13 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     this.state = {entry};
   }
 
+  protected renderLink(url: string): ReactNode {
+    let node = (
+      <a className="link" href={url} target="_blank">{url}</a>
+    );
+    return node;
+  }
+
   protected renderFullCodeString(): ReactNode {
     let node = (
       <InformationPane label={this.trans("informationList.fullCodeString")}>

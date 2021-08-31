@@ -34,6 +34,7 @@ export default class DialectInformationList extends InformationList<User> {
           <EditableText
             value={this.state.entry.homepageUrl ?? ""}
             editable={this.props.editable}
+            render={this.renderLink.bind(this)}
             onSet={this.setEntry((homepageUrl) => this.state.entry.homepageUrl = homepageUrl)}
             onConfirm={() => this.props.onSet("homepageUrl", this.state.entry.homepageUrl)}
             onCancel={this.setEntry(() => this.state.entry.homepageUrl = this.props.entry.homepageUrl)}
