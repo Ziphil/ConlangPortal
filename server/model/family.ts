@@ -26,6 +26,9 @@ export class FamilySchema {
   @prop()
   public homepageUrl?: string;
 
+  @prop()
+  public description?: string;
+
   @prop({required: true})
   public approved!: boolean;
 
@@ -114,10 +117,11 @@ export class FamilyCreator {
     let names = await raw.fetchNames();
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
+    let description = raw.description;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, approved, createdDate, approvedDate};
+    let skeleton = {id, codes, names, name, homepageUrl, description, approved, createdDate, approvedDate};
     return skeleton;
   }
 

@@ -40,6 +40,16 @@ export default class DialectInformationList extends InformationList<Family> {
             onCancel={this.setEntry(() => this.state.entry.homepageUrl = this.props.entry.homepageUrl)}
           />
         </InformationPane>
+        <InformationPane label={this.trans("informationList.description")}>
+          <EditableText
+            value={this.state.entry.description ?? ""}
+            editable={this.props.editable}
+            single={false}
+            onSet={this.setEntry((description) => this.state.entry.description = description)}
+            onConfirm={() => this.props.onSet("description", this.state.entry.description)}
+            onCancel={this.setEntry(() => this.state.entry.description = this.props.entry.description)}
+          />
+        </InformationPane>
         {this.renderFullCodeString()}
         {this.renderApproval()}
       </div>

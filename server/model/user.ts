@@ -34,6 +34,12 @@ export class UserSchema {
   public homepageUrl?: string;
 
   @prop()
+  public twitterId?: string;
+
+  @prop()
+  public biography?: string;
+
+  @prop()
   public authority?: string;
 
   @prop({required: true})
@@ -127,11 +133,13 @@ export class UserCreator {
     let names = {user: raw.name};
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
+    let twitterId = raw.twitterId;
+    let biography = raw.biography;
     let authority = raw.authority;
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, code, names, name, homepageUrl, authority, approved, createdDate, approvedDate};
+    let skeleton = {id, codes, code, names, name, homepageUrl, twitterId, biography, authority, approved, createdDate, approvedDate};
     return skeleton;
   }
 

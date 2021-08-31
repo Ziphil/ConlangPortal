@@ -50,6 +50,16 @@ export default class LanguageInformationList extends InformationList<Language> {
             onCancel={this.setEntry(() => this.state.entry.dictionaryUrl = this.props.entry.dictionaryUrl)}
           />
         </InformationPane>
+        <InformationPane label={this.trans("informationList.description")}>
+          <EditableText
+            value={this.state.entry.description ?? ""}
+            editable={this.props.editable}
+            single={false}
+            onSet={this.setEntry((description) => this.state.entry.description = description)}
+            onConfirm={() => this.props.onSet("description", this.state.entry.description)}
+            onCancel={this.setEntry(() => this.state.entry.description = this.props.entry.description)}
+          />
+        </InformationPane>
         {this.renderFullCodeString()}
         {this.renderBcpString()}
         {this.renderApproval()}

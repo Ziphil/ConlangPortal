@@ -9,6 +9,7 @@ export class Language {
   public name?: string;
   public homepageUrl?: string;
   public dictionaryUrl?: string;
+  public description?: string;
   public approved!: boolean;
   public createdDate!: string;
   public approvedDate?: string;
