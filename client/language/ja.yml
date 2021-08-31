@@ -36,6 +36,8 @@ error:
     方言コードが重複しています。
     別の方言コードを指定してください。
 
+editableText:
+  empty: "(未登録)"
 informationList:
   name: "名前"
   homepageUrl: "ホームページ URL"

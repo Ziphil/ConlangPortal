@@ -36,6 +36,8 @@ error:
     This dialect code already exists.
     Please specify a different dialect code.
 
+editableText:
+  empty: "(No data)"
 informationList:
   name: "Name"
   homepageUrl: "Homepage URL"

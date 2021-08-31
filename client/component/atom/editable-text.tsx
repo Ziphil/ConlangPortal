@@ -87,9 +87,28 @@ export default class EditableText extends Component<Props, State> {
     return node;
   }
 
+  private renderInactive(): ReactNode {
+    let innerNode = (() => {
+      if (this.props.value === "") {
+        return <span styleName="empty">{this.trans("editableText.empty")}</span>;
+      } else {
+        return (this.props.render !== undefined) ? this.props.render(this.props.value) : this.props.value;
+      }
+    })();
+    let styleName = StyleNameUtil.create(
+      {if: this.props.editable, true: "input-inactive", false: "input-uneditable"}
+    );
+    let node = (
+      <div styleName={styleName} tabIndex={0} onFocus={this.handleFocus.bind(this)}>
+        {innerNode}
+      </div>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
-    let inputNode = this.renderInput();
     if (this.props.editable && this.state.active) {
+      let inputNode = this.renderInput();
       let node = (
         <div styleName="root" className={this.props.className}>
           {inputNode}
@@ -101,15 +120,10 @@ export default class EditableText extends Component<Props, State> {
       );
       return node;
     } else {
-      let innerNode = (this.props.render !== undefined) ? this.props.render(this.props.value) : this.props.value;
-      let inputStyleName = StyleNameUtil.create(
-        {if: this.props.editable, true: "input-inactive", false: "input-uneditable"}
-      );
+      let inputNode = this.renderInactive();
       let node = (
         <div styleName="root" className={this.props.className}>
-          <div styleName={inputStyleName} tabIndex={0} onFocus={this.handleFocus.bind(this)}>
-            {innerNode}&#x200B;
-          </div>
+          {inputNode}
         </div>
       );
       return node;

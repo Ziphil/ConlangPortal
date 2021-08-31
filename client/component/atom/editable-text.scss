@@ -65,6 +65,10 @@
   visibility: hidden;
 }
 
+.empty {
+  color: var(--dimmed-text-color);
+}
+
 .button {
   min-width: 0u;
   margin-left: 32u;
