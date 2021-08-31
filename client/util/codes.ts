@@ -50,18 +50,11 @@ export class CodesUtil {
   }
 
   public static toFullCodeString(codes: EntryCodes): string {
-    let codeArray = [];
-    if ("dialect" in codes) {
-      codeArray.push(codes.dialect);
-    }
-    if ("language" in codes) {
-      codeArray.push(codes.language);
-    }
-    if ("family" in codes) {
-      codeArray.push(codes.family);
-    }
-    codeArray.push(codes.user);
-    let string = codeArray.join("_");
+    let string = "";
+    string += (("dialect" in codes) ? codes.dialect : "*") + "_";
+    string += (("language" in codes) ? codes.language: "*") + "_";
+    string += (("family" in codes) ? codes.family : "*") + "_";
+    string += codes.user;
     return string;
   }
 
