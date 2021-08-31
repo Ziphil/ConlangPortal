@@ -79,7 +79,7 @@ addEntryForm:
   evidence:
     head: "Evidential information"
     explanation: >-
-      Enter information indicating that you are actually creating the language or dialect you are applying for.
+      Enter information indicating that you are actually creating the language or dialect you are applying for (such as a homepage or a Discord channel).
       This information will only be used in the approval process.
       You may leave this field blank, but in this case it may take longer for approval.
   confirm: "Submit"
@@ -128,7 +128,7 @@ aboutPage:
     head: "About CLA codes"
     content: >-
       CLA codes are designed to be uniquely assigned to constructed languages around the world.
-      You can think of it as a conlang version of ISO 639, which assigns a unique code to every natural language in the world, as defined by the International Organization for Standardization.
+      You can think of it as a conlang version of ISO 639, which assigns a unique code to every natural language in the world.
       ---
       CLA codes have a four-level hierarchy: creator, language family, language and dialect.
       The following is a brief explanation of the role of each hierarchy.
@@ -143,6 +143,19 @@ aboutPage:
       ---
       The dialect code consists of two lowercase Latin letters, and is used to identify each dialect if the language has more than one dialect setting.
       If your language does not have a dialect, you can choose not to specify a dialect code.
+  applicationProcess:
+    head: "CLA code application process"
+    content: 
+      First, you must create a user account.
+      If you are working individually, please create a user for yourself.
+      If you are working in a group, please create one user for the group, not for each member.
+      ---
+      After signing in, please fill in the application form at the bottom of the user page.
+      Click the “Submit” button at the bottom of the form to complete the application, and you will be redirected to a provisional language page.
+      When the approval team approves your code, a star will appear in the upper left corner of this page indicating that it has been approved, and you will be able to edit various information.
+      ---
+      Please note that codes are not supposed to be changed forever.
+      Once you submit an application, especially after approval, you will not be able to change or delete the code, so please be careful when submitting your application.
 topPage:
   about: "About"
   userPage: "User"
