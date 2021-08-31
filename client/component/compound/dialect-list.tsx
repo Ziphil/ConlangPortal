@@ -49,12 +49,12 @@ export default class DialectList extends Component<Props, State> {
     let user = this.props.store!.user;
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
-      let evidenceNode = (!this.props.approved && user?.administrator && !dialect.approved && !!dialect.evidence) && (
+      let evidenceNode = (!this.props.approved && (user?.authority === "approver" || user?.authority === "admin") && !dialect.approved && !!dialect.evidence) && (
         <div styleName="evidence">
           {dialect.evidence}
         </div>
       );
-      let buttonNode = (!this.props.approved && user?.administrator) && (
+      let buttonNode = (!this.props.approved && (user?.authority === "approver" || user?.authority === "admin")) && (
         <div styleName="button">
           <Button iconLabel="&#xF164;" onClick={() => this.approveDialect(dialect)}/>
         </div>

@@ -33,14 +33,14 @@ export class UserSchema {
   @prop()
   public homepageUrl?: string;
 
+  @prop()
+  public authority?: string;
+
   @prop({required: true})
   public hash!: string;
 
   @prop({required: true})
   public approved!: boolean;
-
-  @prop()
-  public administrator?: boolean;
 
   @prop({required: true})
   public createdDate!: Date;
@@ -127,11 +127,11 @@ export class UserCreator {
     let names = {user: raw.name};
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
+    let authority = raw.authority;
     let approved = raw.approved;
-    let administrator = raw.administrator;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, code, names, name, homepageUrl, approved, administrator, createdDate, approvedDate};
+    let skeleton = {id, codes, code, names, name, homepageUrl, authority, approved, createdDate, approvedDate};
     return skeleton;
   }
 

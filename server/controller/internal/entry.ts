@@ -14,7 +14,7 @@ import {
   Response
 } from "/server/controller/internal/controller";
 import {
-  verifyAdministrator,
+  verifyApprover,
   verifyCode,
   verifyUser
 } from "/server/controller/internal/middle";
@@ -51,7 +51,7 @@ export class EntryController extends Controller {
   }
 
   @post(SERVER_PATHS["approveDialect"])
-  @before(verifyUser(), verifyAdministrator())
+  @before(verifyUser(), verifyApprover())
   public async [Symbol()](request: Request<"approveDialect">, response: Response<"approveDialect">): Promise<void> {
     let codes = request.body.codes;
     let entry = await DialectModel.fetchOneByCodes(codes);
