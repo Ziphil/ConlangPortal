@@ -33,8 +33,11 @@ export default class EditableText extends Component<Props, State> {
 
   private handleFocus(event: FocusEvent<HTMLDivElement>): void {
     this.setState({active: true}, () => {
-      this.inputRef.current?.focus();
-      this.inputRef.current?.select();
+      let element = this.inputRef.current;
+      if (element !== null) {
+        element.focus();
+        element.setSelectionRange(element.value.length, element.value.length);
+      }
     });
   }
 
