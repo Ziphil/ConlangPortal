@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  padding: 48u 96u;
+  border-top: 3u var(--border-color) solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &:first-child {
+    border: none;
+  }
+}
+
+.root:hover {
+  border-top: 3u transparent solid;
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+  &:first-child {
+    border: none;
+  }
+  & +.root {
+    border-top: 3u transparent solid;
+  }
+}
+
+.root-inner {
+  flex-grow: 1;
+}
+
+.code-container {
+  @include special-font;
+  margin-bottom: 32u;
+  font-size: 120%;
+  color: var(--accent-color);
+}
+
+.name-container {
+  @include line-height;
+  text-align: justify;
+}
+
+.evidence {
+  @include line-height;
+  margin-top: 32u;
+  font-size: 90%;
+  text-align: justify;
+  white-space: pre;
+}
+
+.slash {
+  margin: 0em 0.2em;
+  font-size: 80%;
+  color: var(--dimmed-accent-color);
+  &::before {
+    content: "-";
+  }
+}
+
+.arrow {
+  margin: 0em 0.2em;
+  font-size: 100%;
+  color: var(--dimmed-text-color);
+  &::before {
+    content: "«";
+  }
+}
+
+.button {
+  margin-left: 64u;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
