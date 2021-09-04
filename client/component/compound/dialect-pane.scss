@@ -50,10 +50,13 @@
 }
 
 .slash {
+  margin: 0em 0.15em;
   font-size: 80%;
   color: var(--dimmed-accent-color);
+  position: relative;
+  bottom: 0.1em;
   &::before {
-    content: " - ";
+    content: "_";
   }
 }
 

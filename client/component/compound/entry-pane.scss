@@ -116,11 +116,13 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .slash {
-  margin: 0em -0.1em;
+  margin: 0em 0.15em;
   font-size: 80%;
   color: var(--dimmed-accent-color);
+  position: relative;
+  bottom: 0.1em;
   &::before {
-    content: " - ";
+    content: "_";
   }
   &:first-child {
     margin-left: 0em;
