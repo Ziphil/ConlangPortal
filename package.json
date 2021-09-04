@@ -1,6 +1,6 @@
 {
   "name": "conlang-portal",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
