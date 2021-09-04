@@ -50,20 +50,18 @@
 }
 
 .slash {
-  margin: 0em 0.2em;
   font-size: 80%;
   color: var(--dimmed-accent-color);
   &::before {
-    content: "-";
+    content: " - ";
   }
 }
 
 .arrow {
-  margin: 0em 0.2em;
   font-size: 100%;
   color: var(--dimmed-text-color);
   &::before {
-    content: "«";
+    content: " « ";
   }
 }
 
