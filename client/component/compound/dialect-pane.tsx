@@ -51,7 +51,6 @@ export default class DialectPane extends Component<Props, State> {
     let buttonNode = (this.props.showApproveButton) && (
       <div styleName="button">
         <Button iconLabel="&#xF164;" label={this.trans("dialectPane.approve")} onClick={this.approveDialect.bind(this)}/>
-        <Button iconLabel="&#xF05E;" label={this.trans("dialectPane.reject")}/>
       </div>
     );
     let innerNode = (
