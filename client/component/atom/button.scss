@@ -12,10 +12,11 @@
   background-color: transparent;
   border: none;
   border-radius: 24u;
-  box-shadow: -8u -8u 12u var(--pane-light-shadow-color), 8u 8u 12u var(--pane-dark-shadow-color);
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color), 8u 8u 12u var(--pane-dark-shadow-color), -8u -8u 12u transparent inset, 8u 8u 12u transparent inset;
   white-space: nowrap;
   position: relative;
   outline: none;
+  transition: box-shadow $transition-setting;
 }
 
 .root:not(:disabled) {
@@ -23,7 +24,7 @@
 }
 
 .root:not(:disabled):hover {
-  box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+  box-shadow: -8u -8u 12u transparent, 8u 8u 12u transparent, -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
 }
 
 .root.only-icon {
