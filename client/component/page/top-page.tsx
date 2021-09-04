@@ -19,16 +19,30 @@ import Page from "/client/component/page/page";
 export default class TopPage extends Component<Props, State> {
 
   public render(): ReactNode {
-    let userPageNode = (
-      <Link styleName="circle" to={`/cla/${this.props.store!.user?.code}`}>
-        <div styleName="icon">&#xF007;</div>
-        <div styleName="label">{this.trans("topPage.userPage")}</div>
-      </Link>
-    );
-    let loginNode = (
-      <Link styleName="circle" to="/login">
-        <div styleName="icon">&#xF2F6;</div>
-        <div styleName="label">{this.trans("topPage.login")}</div>
+    let user = this.props.store!.user;
+    let userNode = (() => {
+      if (user !== null) {
+        let userNode = (
+          <Link styleName="circle" to={`/cla/${this.props.store!.user?.code}`}>
+            <div styleName="icon">&#xF007;</div>
+            <div styleName="label">{this.trans("topPage.userPage")}</div>
+          </Link>
+        );
+        return userNode;
+      } else {
+        let userNode = (
+          <Link styleName="circle" to="/login">
+            <div styleName="icon">&#xF2F6;</div>
+            <div styleName="label">{this.trans("topPage.login")}</div>
+          </Link>
+        );
+        return userNode;
+      }
+    })();
+    let approveNode = (user !== null && (user.authority === "approver" || user.authority === "admin")) && (
+      <Link styleName="circle" to="/approve">
+        <div styleName="icon">&#xF164;</div>
+        <div styleName="label">{this.trans("topPage.approve")}</div>
       </Link>
     );
     let node = (
@@ -38,7 +52,8 @@ export default class TopPage extends Component<Props, State> {
             <div styleName="icon">&#xF128;</div>
             <div styleName="label">{this.trans("topPage.about")}</div>
           </Link>
-          {(this.props.store!.user !== null) ? userPageNode : loginNode}
+          {userNode}
+          {approveNode}
         </div>
         <div styleName="list">
           <DialectList title={this.trans("topPage.approvedList")} includeOptions={{approved: true, unapproved: false}}/>

@@ -163,5 +163,6 @@ topPage:
   about: "About"
   userPage: "User"
   login: "Sign in"
+  approve: "Approve"
   approvedList: "Approved codes"
   unapprovedList: "Pending codes"

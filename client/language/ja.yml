@@ -163,5 +163,6 @@ topPage:
   about: "概要"
   userPage: "ユーザー"
   login: "ログイン"
+  approve: "承認"
   approvedList: "承認済みコード"
   unapprovedList: "承認待ちコード"
