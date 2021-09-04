@@ -18,13 +18,24 @@ import {
 @style(require("./dialect-list.scss"))
 export default class DialectList extends Component<Props, State> {
 
+  public static defaultProps: DefaultProps = {
+    onlyUser: false,
+    makeLink: true,
+    showApproveButton: false
+  };
   public state: State = {
     dialects: []
   };
 
   public async componentDidMount(): Promise<void> {
-    let includeOptions = {approved: this.props.approved, unapproved: !this.props.approved};
-    let response = await this.request("fetchDialects", {includeOptions});
+    await this.fetchDialects();
+  }
+
+  private async fetchDialects(): Promise<void> {
+    let user = this.props.store!.user;
+    let userCode = (this.props.onlyUser) ? user?.code ?? "dummy" : undefined;
+    let includeOptions = this.props.includeOptions;
+    let response = await this.request("fetchDialects", {userCode, includeOptions});
     if (response.status === 200) {
       let dialects = response.data;
       this.setState({dialects});
@@ -34,13 +45,19 @@ export default class DialectList extends Component<Props, State> {
   public render(): ReactNode {
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let rowNode = (
-        <DialectPane key={index} dialect={dialect} approved={this.props.approved}/>
+        <DialectPane
+          key={index}
+          dialect={dialect}
+          makeLink={this.props.makeLink}
+          showApproveButton={this.props.showApproveButton}
+          onApprove={this.fetchDialects.bind(this)}
+        />
       );
       return rowNode;
     });
     let node = (
       <div styleName="root">
-        <CommonPane title={this.trans(`dialectList.${(this.props.approved) ? "approved" : "unapproved"}`)}>
+        <CommonPane title={this.props.title}>
           {rowNodes}
         </CommonPane>
       </div>
@@ -52,7 +69,16 @@ export default class DialectList extends Component<Props, State> {
 
 
 type Props = {
-  approved: boolean
+  title: string,
+  includeOptions?: {approved: boolean, unapproved: boolean},
+  onlyUser: boolean,
+  makeLink: boolean,
+  showApproveButton: boolean
+};
+type DefaultProps = {
+  onlyUser: boolean,
+  makeLink: boolean,
+  showApproveButton: boolean
 };
 type State = {
   dialects: Array<Dialect>

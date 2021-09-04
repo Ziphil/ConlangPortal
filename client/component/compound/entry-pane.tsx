@@ -83,8 +83,8 @@ export default class EntryPane extends Component<Props, State, Params> {
       let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "0" : code).join("-");
       let restCodeInnerNode = (
         <Fragment key={index}>
-          <div styleName="slash"/>
-          <div styleName="code"><Link to={path}>{code}</Link></div>
+          <span styleName="slash"/>
+          <span styleName="code"><Link to={path}>{code}</Link></span>
         </Fragment>
       );
       return restCodeInnerNode;

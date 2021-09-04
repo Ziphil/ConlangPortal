@@ -14,11 +14,22 @@ import {
 } from "/server/model/user";
 
 
+export class FamilyCodesSchema {
+
+  @prop({required: true})
+  public family!: string;
+
+  @prop({required: true})
+  public user!: string;
+
+}
+
+
 @modelOptions({schemaOptions: {collection: "families"}})
 export class FamilySchema {
 
   @prop({required: true})
-  public codes!: FamilyCodes;
+  public codes!: FamilyCodesSchema;
 
   @prop()
   public name?: string;
@@ -60,9 +71,8 @@ export class FamilySchema {
     return names;
   }
 
-  public static async add(rawCodes: FamilyCodes, rawName: string): Promise<Family> {
-    let syncedFamilies = await this.fetchByCodesLoose(rawCodes);
-    let codes = {family: rawCodes.family, user: rawCodes.user};
+  public static async add(codes: FamilyCodes, rawName: string): Promise<Family> {
+    let syncedFamilies = await this.fetchByCodesLoose(codes);
     let name = (syncedFamilies[0] !== undefined) ? syncedFamilies[0].name : rawName;
     let createdDate = new Date();
     let approved = false;
@@ -131,5 +141,5 @@ export class FamilyCreator {
 export type Family = DocumentType<FamilySchema>;
 export let FamilyModel = getModelForClass(FamilySchema);
 
-export type FamilyCodes = {family: string, user: string};
+export type FamilyCodes = FamilyCodesSchema;
 export type FamilyNames = {family?: string, user?: string};

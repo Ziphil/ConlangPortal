@@ -20,12 +20,16 @@ export default class Authenticator extends Component<RouteProps & Props, State> 
 
   public render(): ReactNode {
     let type = this.props.type;
-    let redirect = this.props.redirect?.replace(/:userCode/g, this.props.store!.user?.code ?? "");
+    let user = this.props.store!.user;
+    let redirect = this.props.redirect?.replace(/:userCode/g, user?.code ?? "");
     if (type === "private" && redirect !== undefined) {
-      let node = (this.props.store!.user) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
+      let node = (user !== null) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
+      return node;
+    } else if (type === "approver" && redirect !== undefined) {
+      let node = (user !== null && (user.authority === "approver" || user.authority === "admin")) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
       return node;
     } else if (type === "guest" && redirect !== undefined) {
-      let node = (!this.props.store!.user) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
+      let node = (user === null) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
       return node;
     } else {
       let node = <Route {...this.props}/>;
@@ -37,7 +41,7 @@ export default class Authenticator extends Component<RouteProps & Props, State> 
 
 
 type Props = {
-  type: "private" | "guest" | "none",
+  type: "private" | "approver" | "guest" | "none",
   redirect?: string
 };
 type State = {

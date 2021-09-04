@@ -109,21 +109,18 @@ $smartphone-scale-ratio: 0.7;
   @include special-font;
   font-size: 300%;
   color: var(--accent-color);
-  display: flex;
   flex-grow: 0;
-  flex-direction: row;
-  align-items: center;
   @include smartphone {
     font-size: 300% * $smartphone-scale-ratio;
   }
 }
 
 .slash {
-  margin: 0em 0.2em;
+  margin: 0em -0.1em;
   font-size: 80%;
   color: var(--dimmed-accent-color);
   &::before {
-    content: "-";
+    content: " - ";
   }
   &:first-child {
     margin-left: 0em;
@@ -175,14 +172,10 @@ $smartphone-scale-ratio: 0.7;
 }
 
 .arrow {
-  margin: 0em 0.2em;
   font-size: 100%;
   color: var(--dimmed-accent-color);
   &::before {
-    content: "«";
-  }
-  &:first-child {
-    margin-left: 0em;
+    content: " « ";
   }
 }
 

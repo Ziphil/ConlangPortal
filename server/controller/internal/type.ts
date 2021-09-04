@@ -68,12 +68,12 @@ type ServerSpecs = {
     }
   },
   fetchDialects: {
-    request: {includeOptions?: {approved: boolean, unapproved: boolean}},
+    request: {userCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}},
     response: {
       success: Array<Dialect>,
       error: never
     }
-  }
+  },
   login: {
     request: {code: string, password: string},
     response: {

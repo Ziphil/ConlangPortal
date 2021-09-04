@@ -88,15 +88,15 @@ addEntryForm:
     登録申請をした後に、コードの変更や削除を行うことはできません。
     申請内容をしっかりと確認してから申請ボタンを押してください。
     なお、語族や言語などの名称の変更は後から行うことができます。
-dialectList:
-  approved: "承認済みコード一覧"
-  unapproved: "未承認コード一覧"
+dialectPane:
+  approve: "承認"
+  reject: "却下"
 entryPane:
   user: "製作者"
   family: "語族"
   language: "言語"
   dialect: "方言"
-  notFound: "未登録"
+  notFound: "このコードは割り当てられていません"
   guide: 
     approved: "以下の各項目はクリックで編集できます"
     unapproved: "以下の各項目は承認後に編集できるようになります"
@@ -157,7 +157,12 @@ aboutPage:
       ---
       なお、コードは未来永劫変更されないことを想定されています。
       一度申請すると、特に承認後は、コードを変更および削除することはできませんので、申請の際はご注意ください。
+approvePage:
+  list: "未承認コード"
 topPage:
   about: "概要"
   userPage: "ユーザー"
   login: "ログイン"
+  approve: "承認"
+  approvedList: "全ての承認済みコード"
+  unapprovedList: "このユーザーの承認待ちコード"

@@ -88,15 +88,15 @@ addEntryForm:
     Once you have applied for registration, you cannot change or delete the code.
     Please check the details of your application carefully before clicking the “Submit” button.
     You can change the name of the language family or language later.
-dialectList:
-  approved: "Approved codes"
-  unapproved: "Unapproved codes"
+dialectPane:
+  approve: "Approve"
+  reject: "Reject"
 entryPane:
   user: "Creator"
   family: "Family"
   language: "Language"
   dialect: "Dialect"
-  notFound: "Unregistered"
+  notFound: "This code has not been assigned"
   guide: 
     approved: "Click on each item below to edit it"
     unapproved: "The following items will be editable after approval"
@@ -157,7 +157,12 @@ aboutPage:
       ---
       Please note that codes are not supposed to be changed forever.
       Once you submit an application, especially after approval, you will not be able to change or delete the code, so please be careful when submitting your application.
+approvePage:
+  list: "Unapproved codes"
 topPage:
   about: "About"
   userPage: "User"
   login: "Sign in"
+  approve: "Approve"
+  approvedList: "All approved codes"
+  unapprovedList: "Your pending codes"

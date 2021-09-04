@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import Footer from "/client/component/compound/footer";
 import Header from "/client/component/compound/header";
 import {
   style
@@ -23,6 +24,7 @@ export default class Page extends Component<Props, State> {
             {this.props.children}
           </div>
         </div>
+        <Footer/>
       </div>
     );
     return node;

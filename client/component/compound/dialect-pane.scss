@@ -14,7 +14,7 @@
   }
 }
 
-.root:hover {
+.root.link:hover {
   border-top: 3u transparent solid;
   box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
   &:first-child {
@@ -50,25 +50,26 @@
 }
 
 .slash {
-  margin: 0em 0.2em;
   font-size: 80%;
   color: var(--dimmed-accent-color);
   &::before {
-    content: "-";
+    content: " - ";
   }
 }
 
 .arrow {
-  margin: 0em 0.2em;
   font-size: 100%;
   color: var(--dimmed-text-color);
   &::before {
-    content: "«";
+    content: " « ";
   }
 }
 
 .button {
-  margin-left: 64u;
-  flex-grow: 0;
-  flex-shrink: 0;
+  margin-top: 32u;
+}
+
+.button >* {
+  @include reset-first-margin;
+  margin-left: 48u;
 }

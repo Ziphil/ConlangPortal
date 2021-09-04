@@ -28,7 +28,7 @@ export class EntryExternalController extends Controller {
   public async [Symbol()](request: Request, response: Response): Promise<void> {
     let onlyApproved = !!request.query["onlyApproved"];
     let includeOptions = (onlyApproved) ? {approved: true, unapproved: false} : {approved: true, unapproved: true};
-    let dialects = await DialectModel.fetch(includeOptions);
+    let dialects = await DialectModel.fetch(undefined, includeOptions);
     let dialectsJsonPromise = dialects.map(async (dialect) => {
       let names = await dialect.fetchNames();
       let dialectJson = {} as any;

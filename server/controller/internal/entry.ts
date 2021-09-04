@@ -115,8 +115,9 @@ export class EntryController extends Controller {
   @post(SERVER_PATHS["fetchDialects"])
   @before()
   public async [Symbol()](request: Request<"fetchDialects">, response: Response<"fetchDialects">): Promise<void> {
+    let userCode = request.body.userCode;
     let includeOptions = request.body.includeOptions;
-    let dialects = await DialectModel.fetch(includeOptions);
+    let dialects = await DialectModel.fetch(userCode, includeOptions);
     let body = await Promise.all(dialects.map((dialect) => DialectCreator.create(dialect)));
     Controller.respond(response, body);
   }
