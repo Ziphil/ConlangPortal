@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  width: 100%;
+  height: $footer-height;
+  z-index: 100;
+}
+
+.container {
+  margin: 0u 150u;
+  height: 100%;
+  border-top: 3u var(--border-color) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  @include smartphone {
+    width: calc(100% - #{$page-horizontal-margin * 2});
+    margin: 0u auto;
+  }
+}
+
+.message {
+  @include line-height;
+  font-size: 70%;
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.message a {
+  text-decoration: underline;
+}
