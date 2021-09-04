@@ -164,5 +164,5 @@ topPage:
   userPage: "User"
   login: "Sign in"
   approve: "Approve"
-  approvedList: "Approved codes"
-  unapprovedList: "Pending codes"
+  approvedList: "All approved codes"
+  unapprovedList: "Your pending codes"
