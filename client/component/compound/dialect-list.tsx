@@ -19,6 +19,7 @@ import {
 export default class DialectList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
+    onlyUser: false,
     makeLink: true,
     showApproveButton: false
   };
@@ -31,8 +32,10 @@ export default class DialectList extends Component<Props, State> {
   }
 
   private async fetchDialects(): Promise<void> {
+    let user = this.props.store!.user;
+    let userCode = (this.props.onlyUser) ? user?.code ?? "dummy" : undefined;
     let includeOptions = this.props.includeOptions;
-    let response = await this.request("fetchDialects", {includeOptions});
+    let response = await this.request("fetchDialects", {userCode, includeOptions});
     if (response.status === 200) {
       let dialects = response.data;
       this.setState({dialects});
@@ -68,10 +71,12 @@ export default class DialectList extends Component<Props, State> {
 type Props = {
   title: string,
   includeOptions?: {approved: boolean, unapproved: boolean},
+  onlyUser: boolean,
   makeLink: boolean,
   showApproveButton: boolean
 };
 type DefaultProps = {
+  onlyUser: boolean,
   makeLink: boolean,
   showApproveButton: boolean
 };

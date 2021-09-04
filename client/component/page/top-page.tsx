@@ -45,6 +45,11 @@ export default class TopPage extends Component<Props, State> {
         <div styleName="label">{this.trans("topPage.approve")}</div>
       </Link>
     );
+    let unapprovedList = (user !== null) && (
+      <div styleName="list">
+        <DialectList title={this.trans("topPage.unapprovedList")} includeOptions={{approved: false, unapproved: true}} onlyUser={true}/>
+      </div>
+    );
     let node = (
       <Page>
         <div styleName="circle-list">
@@ -58,9 +63,7 @@ export default class TopPage extends Component<Props, State> {
         <div styleName="list">
           <DialectList title={this.trans("topPage.approvedList")} includeOptions={{approved: true, unapproved: false}}/>
         </div>
-        <div styleName="list">
-          <DialectList title={this.trans("topPage.unapprovedList")} includeOptions={{approved: false, unapproved: true}}/>
-        </div>
+        {unapprovedList}
       </Page>
     );
     return node;

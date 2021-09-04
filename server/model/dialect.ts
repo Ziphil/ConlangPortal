@@ -136,7 +136,7 @@ export class DialectSchema {
     return dialect;
   }
 
-  public static async fetch(includeOptions?: {approved: boolean, unapproved: boolean}): Promise<Array<Dialect>> {
+  public static async fetch(userCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}): Promise<Array<Dialect>> {
     let query = (() => {
       if (includeOptions !== undefined) {
         if (includeOptions.approved && includeOptions.unapproved) {
@@ -152,6 +152,9 @@ export class DialectSchema {
         return DialectModel.find();
       }
     })();
+    if (userCode !== undefined) {
+      query = query.where("codes.user", userCode);
+    }
     query = query.sort("-approvedDate -createdDate");
     let dialects = await query;
     return dialects;
