@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactNode
 } from "react";
 import {
@@ -23,30 +24,38 @@ import {
 @style(require("./dialect-pane.scss"))
 export default class DialectPane extends Component<Props, State> {
 
+  public static defaultProps: DefaultProps = {
+    makeLink: true,
+    showApproveButton: false
+  };
+
   private async approveDialect(): Promise<void> {
     let codes = this.props.dialect.codes;
     let response = await this.request("approveDialect", {codes});
     if (response.status === 200) {
       console.log("approved");
+      if (this.props.onApprove) {
+        this.props.onApprove();
+      }
     }
   }
 
   public render(): ReactNode {
-    let user = this.props.store!.user;
     let dialect = this.props.dialect;
     let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
-    let evidenceNode = (this.props.showApproveButton && (user?.authority === "approver" || user?.authority === "admin") && !dialect.approved && !!dialect.evidence) && (
+    let evidenceNode = (this.props.showApproveButton && !dialect.approved && !!dialect.evidence) && (
       <div styleName="evidence">
         {dialect.evidence}
       </div>
     );
-    let buttonNode = (this.props.showApproveButton && (user?.authority === "approver" || user?.authority === "admin")) && (
+    let buttonNode = (this.props.showApproveButton) && (
       <div styleName="button">
-        <Button iconLabel="&#xF164;" onClick={this.approveDialect.bind(this)}/>
+        <Button iconLabel="&#xF164;" label={this.trans("dialectPane.approve")} onClick={this.approveDialect.bind(this)}/>
+        <Button iconLabel="&#xF05E;" label={this.trans("dialectPane.reject")}/>
       </div>
     );
-    let node = (
-      <Link styleName="root" to={path}>
+    let innerNode = (
+      <Fragment>
         <div styleName="item-inner">
           <div styleName="code-container">
             <span styleName="code">{dialect.codes.dialect}</span>
@@ -67,18 +76,38 @@ export default class DialectPane extends Component<Props, State> {
             <span styleName="name">{dialect.names.user}</span>
           </div>
           {evidenceNode}
+          {buttonNode}
         </div>
-        {buttonNode}
-      </Link>
+      </Fragment>
     );
-    return node;
+    if (this.props.makeLink) {
+      let node = (
+        <Link styleName="root link" to={path}>
+          {innerNode}
+        </Link>
+      );
+      return node;
+    } else {
+      let node = (
+        <div styleName="root">
+          {innerNode}
+        </div>
+      );
+      return node;
+    }
   }
 
 }
 
 
 type Props = {
-  dialect: Dialect
+  dialect: Dialect,
+  makeLink: boolean,
+  showApproveButton: boolean,
+  onApprove?: () => void,
+};
+type DefaultProps = {
+  makeLink: boolean,
   showApproveButton: boolean
 };
 type State = {

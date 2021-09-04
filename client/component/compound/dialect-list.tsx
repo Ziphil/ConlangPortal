@@ -18,11 +18,19 @@ import {
 @style(require("./dialect-list.scss"))
 export default class DialectList extends Component<Props, State> {
 
+  public static defaultProps: DefaultProps = {
+    makeLink: true,
+    showApproveButton: false
+  };
   public state: State = {
     dialects: []
   };
 
   public async componentDidMount(): Promise<void> {
+    await this.fetchDialects();
+  }
+
+  private async fetchDialects(): Promise<void> {
     let includeOptions = this.props.includeOptions;
     let response = await this.request("fetchDialects", {includeOptions});
     if (response.status === 200) {
@@ -34,7 +42,13 @@ export default class DialectList extends Component<Props, State> {
   public render(): ReactNode {
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let rowNode = (
-        <DialectPane key={index} dialect={dialect} showApproveButton={this.props.includeOptions?.unapproved ?? false}/>
+        <DialectPane
+          key={index}
+          dialect={dialect}
+          makeLink={this.props.makeLink}
+          showApproveButton={this.props.showApproveButton}
+          onApprove={this.fetchDialects.bind(this)}
+        />
       );
       return rowNode;
     });
@@ -53,7 +67,13 @@ export default class DialectList extends Component<Props, State> {
 
 type Props = {
   title: string,
-  includeOptions?: {approved: boolean, unapproved: boolean}
+  includeOptions?: {approved: boolean, unapproved: boolean},
+  makeLink: boolean,
+  showApproveButton: boolean
+};
+type DefaultProps = {
+  makeLink: boolean,
+  showApproveButton: boolean
 };
 type State = {
   dialects: Array<Dialect>

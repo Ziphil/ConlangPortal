@@ -14,7 +14,7 @@
   }
 }
 
-.root:hover {
+.root.link:hover {
   border-top: 3u transparent solid;
   box-shadow: -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
   &:first-child {
@@ -68,7 +68,10 @@
 }
 
 .button {
-  margin-left: 64u;
-  flex-grow: 0;
-  flex-shrink: 0;
+  margin-top: 32u;
+}
+
+.button >* {
+  @include reset-first-margin;
+  margin-left: 48u;
 }

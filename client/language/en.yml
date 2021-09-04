@@ -88,6 +88,9 @@ addEntryForm:
     Once you have applied for registration, you cannot change or delete the code.
     Please check the details of your application carefully before clicking the “Submit” button.
     You can change the name of the language family or language later.
+dialectPane:
+  approve: "Approve"
+  reject: "Reject"
 entryPane:
   user: "Creator"
   family: "Family"
@@ -154,6 +157,8 @@ aboutPage:
       ---
       Please note that codes are not supposed to be changed forever.
       Once you submit an application, especially after approval, you will not be able to change or delete the code, so please be careful when submitting your application.
+approvePage:
+  list: "Unapproved codes"
 topPage:
   about: "About"
   userPage: "User"
