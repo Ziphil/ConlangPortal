@@ -15,12 +15,14 @@ export default class Footer extends Component<Props, State> {
 
   public render(): ReactNode {
     let version = process.env["npm_package_version"];
+    let date = new Date();
+    let yearString = date.getFullYear().toString();
     let node = (
       <footer styleName="root">
         <div styleName="container">
           <div styleName="message">
             Conlang Portal (ver {version})<br/>
-            This site is supported by <a href="https://migdal.jp/cl_kiita" target="_blank">CL-KIITA</a>
+            © {yearString} Ziphil · This site is supported by <a href="https://migdal.jp/cl_kiita" target="_blank">CL-KIITA</a>
           </div>
         </div>
       </footer>
