@@ -20,11 +20,25 @@ import {
 } from "/server/model/user";
 
 
+export class LanguageCodesSchema {
+
+  @prop({required: true})
+  public language!: string;
+
+  @prop({required: true})
+  public family!: string;
+
+  @prop({required: true})
+  public user!: string;
+
+}
+
+
 @modelOptions({schemaOptions: {collection: "languages"}})
 export class LanguageSchema {
 
   @prop({required: true})
-  public codes!: LanguageCodes;
+  public codes!: LanguageCodesSchema;
 
   @prop()
   public name?: string;
@@ -70,8 +84,7 @@ export class LanguageSchema {
     return names;
   }
 
-  public static async add(rawCodes: LanguageCodes, name: string): Promise<Language> {
-    let codes = {language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
+  public static async add(codes: LanguageCodes, name: string): Promise<Language> {
     let createdDate = new Date();
     let approved = false;
     let language = new LanguageModel({codes, name, approved, createdDate});
@@ -146,5 +159,5 @@ export class LanguageCreator {
 export type Language = DocumentType<LanguageSchema>;
 export let LanguageModel = getModelForClass(LanguageSchema);
 
-export type LanguageCodes = {language: string, family: string, user: string};
+export type LanguageCodes = LanguageCodesSchema;
 export type LanguageNames = {language?: string, family?: string, user?: string};

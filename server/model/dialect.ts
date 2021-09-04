@@ -20,11 +20,28 @@ import {
 } from "/server/model/user";
 
 
+export class DialectCodesSchema {
+
+  @prop({required: true})
+  public dialect!: string;
+
+  @prop({required: true})
+  public language!: string;
+
+  @prop({required: true})
+  public family!: string;
+
+  @prop({required: true})
+  public user!: string;
+
+}
+
+
 @modelOptions({schemaOptions: {collection: "dialects"}})
 export class DialectSchema {
 
   @prop({required: true})
-  public codes!: DialectCodes;
+  public codes!: DialectCodesSchema;
 
   @prop()
   public name?: string;
@@ -111,8 +128,7 @@ export class DialectSchema {
     return names;
   }
 
-  public static async add(rawCodes: DialectCodes, name: string, evidence: string): Promise<Dialect> {
-    let codes = {dialect: rawCodes.dialect, language: rawCodes.language, family: rawCodes.family, user: rawCodes.user};
+  public static async add(codes: DialectCodes, name: string, evidence: string): Promise<Dialect> {
     let createdDate = new Date();
     let approved = false;
     let dialect = new DialectModel({codes, name, evidence, approved, createdDate});
@@ -220,5 +236,5 @@ export class DialectCreator {
 export type Dialect = DocumentType<DialectSchema>;
 export let DialectModel = getModelForClass(DialectSchema);
 
-export type DialectCodes = {dialect: string, language: string, family: string, user: string};
+export type DialectCodes = DialectCodesSchema;
 export type DialectNames = {dialect?: string, language?: string, family?: string, user?: string};
