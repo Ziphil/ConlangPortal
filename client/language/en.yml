@@ -96,7 +96,7 @@ entryPane:
   family: "Family"
   language: "Language"
   dialect: "Dialect"
-  notFound: "Unregistered"
+  notFound: "This code has not been assigned"
   guide: 
     approved: "Click on each item below to edit it"
     unapproved: "The following items will be editable after approval"
