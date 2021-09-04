@@ -23,7 +23,7 @@ export default class DialectList extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let includeOptions = {approved: this.props.approved, unapproved: !this.props.approved};
+    let includeOptions = this.props.includeOptions;
     let response = await this.request("fetchDialects", {includeOptions});
     if (response.status === 200) {
       let dialects = response.data;
@@ -34,13 +34,13 @@ export default class DialectList extends Component<Props, State> {
   public render(): ReactNode {
     let rowNodes = this.state.dialects.map((dialect, index) => {
       let rowNode = (
-        <DialectPane key={index} dialect={dialect} approved={this.props.approved}/>
+        <DialectPane key={index} dialect={dialect} showApproveButton={this.props.includeOptions?.unapproved ?? false}/>
       );
       return rowNode;
     });
     let node = (
       <div styleName="root">
-        <CommonPane title={this.trans(`dialectList.${(this.props.approved) ? "approved" : "unapproved"}`)}>
+        <CommonPane title={this.props.title}>
           {rowNodes}
         </CommonPane>
       </div>
@@ -52,7 +52,8 @@ export default class DialectList extends Component<Props, State> {
 
 
 type Props = {
-  approved: boolean
+  title: string,
+  includeOptions?: {approved: boolean, unapproved: boolean}
 };
 type State = {
   dialects: Array<Dialect>

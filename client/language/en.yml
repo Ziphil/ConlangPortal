@@ -88,9 +88,6 @@ addEntryForm:
     Once you have applied for registration, you cannot change or delete the code.
     Please check the details of your application carefully before clicking the “Submit” button.
     You can change the name of the language family or language later.
-dialectList:
-  approved: "Approved codes"
-  unapproved: "Unapproved codes"
 entryPane:
   user: "Creator"
   family: "Family"
@@ -161,3 +158,5 @@ topPage:
   about: "About"
   userPage: "User"
   login: "Sign in"
+  approvedList: "Approved codes"
+  unapprovedList: "Pending codes"

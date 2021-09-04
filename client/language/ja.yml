@@ -88,9 +88,6 @@ addEntryForm:
     登録申請をした後に、コードの変更や削除を行うことはできません。
     申請内容をしっかりと確認してから申請ボタンを押してください。
     なお、語族や言語などの名称の変更は後から行うことができます。
-dialectList:
-  approved: "承認済みコード一覧"
-  unapproved: "未承認コード一覧"
 entryPane:
   user: "製作者"
   family: "語族"
@@ -161,3 +158,5 @@ topPage:
   about: "概要"
   userPage: "ユーザー"
   login: "ログイン"
+  approvedList: "承認済みコード"
+  unapprovedList: "承認待ちコード"

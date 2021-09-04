@@ -73,7 +73,7 @@ type ServerSpecs = {
       success: Array<Dialect>,
       error: never
     }
-  }
+  },
   login: {
     request: {code: string, password: string},
     response: {

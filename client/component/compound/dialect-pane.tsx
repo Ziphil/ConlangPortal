@@ -35,12 +35,12 @@ export default class DialectPane extends Component<Props, State> {
     let user = this.props.store!.user;
     let dialect = this.props.dialect;
     let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
-    let evidenceNode = (!this.props.approved && (user?.authority === "approver" || user?.authority === "admin") && !dialect.approved && !!dialect.evidence) && (
+    let evidenceNode = (this.props.showApproveButton && (user?.authority === "approver" || user?.authority === "admin") && !dialect.approved && !!dialect.evidence) && (
       <div styleName="evidence">
         {dialect.evidence}
       </div>
     );
-    let buttonNode = (!this.props.approved && (user?.authority === "approver" || user?.authority === "admin")) && (
+    let buttonNode = (this.props.showApproveButton && (user?.authority === "approver" || user?.authority === "admin")) && (
       <div styleName="button">
         <Button iconLabel="&#xF164;" onClick={this.approveDialect.bind(this)}/>
       </div>
@@ -79,7 +79,7 @@ export default class DialectPane extends Component<Props, State> {
 
 type Props = {
   dialect: Dialect
-  approved: boolean
+  showApproveButton: boolean
 };
 type State = {
 };

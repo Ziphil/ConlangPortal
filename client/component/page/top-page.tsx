@@ -47,10 +47,10 @@ export default class TopPage extends Component<Props, State> {
           {(this.props.store!.user !== null) ? userPageNode : loginNode}
         </div>
         <div styleName="list">
-          <DialectList approved={true}/>
+          <DialectList title={this.trans("topPage.approvedList")} includeOptions={{approved: true, unapproved: false}}/>
         </div>
         <div styleName="list">
-          <DialectList approved={false}/>
+          <DialectList title={this.trans("topPage.unapprovedList")} includeOptions={{approved: false, unapproved: true}}/>
         </div>
       </Page>
     );
