@@ -112,6 +112,15 @@ export class EntryController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["fetchDescendantDialects"])
+  @before()
+  public async [Symbol()](request: Request<"fetchDescendantDialects">, response: Response<"fetchDescendantDialects">): Promise<void> {
+    let codes = request.body.codes;
+    let dialects = await DialectModel.fetchDescendants(codes);
+    let body = await Promise.all(dialects.map((dialect) => DialectCreator.create(dialect)));
+    Controller.respond(response, body);
+  }
+
   @post(SERVER_PATHS["fetchDialects"])
   @before()
   public async [Symbol()](request: Request<"fetchDialects">, response: Response<"fetchDialects">): Promise<void> {
