@@ -12,25 +12,27 @@ export class SuperEntry<K extends string, C extends SuperEntryCodes, N extends S
   public createdDate!: string;
   public approvedDate?: string;
 
-  public getNameArray(): Array<string> {
+  public getNameArray(): Array<string | undefined> {
     let nameArray = [];
     if (this.kind === "dialect") {
-      nameArray.push((this.codes.dialect === "~") ? "—" : this.names.dialect ?? "");
+      nameArray.push(this.getName("dialect"));
     }
     if (this.kind === "dialect" || this.kind === "language") {
-      nameArray.push(this.codes.language ?? "");
+      nameArray.push(this.getName("language"));
     }
     if (this.kind === "dialect" || this.kind === "language" || this.kind === "family") {
-      nameArray.push((this.codes.family === "~") ? "—" : this.names.family ?? "");
+      nameArray.push(this.getName("family"));
     }
-    nameArray.push(this.names.user ?? "");
+    nameArray.push(this.getName("user"));
     return nameArray;
   }
 
+  // フロントエンド側で表示するようのコードを返します。
   public getCode<K extends keyof SuperEntryCodes>(kind: K): C[K] {
     return this.codes[kind];
   }
 
+  // フロントエンド側で表示するようの名称を返します。
   public getName<K extends keyof SuperEntryNames>(kind: K): N[K] {
     return (this.codes[kind] === "~") ? "—" : this.names[kind];
   }

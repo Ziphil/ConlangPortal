@@ -77,7 +77,20 @@ export default class EntryPane extends Component<Props, State, Params> {
     }
   }
 
-  private renderHead(): ReactNode {
+  private renderHeadMainCode(): ReactNode {
+    let codes = this.props.codes as any;
+    let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
+    let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
+    let node = (
+      <div styleName="left-inner">
+        <div styleName="main-code">{codeArray[0]}</div>
+        {markNode}
+      </div>
+    );
+    return node;
+  }
+
+  private renderHeadRightTop(): ReactNode {
     let codes = this.props.codes as any;
     let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
     let restCodeInnerNodes = codeArray.slice(1).map((code, index) => {
@@ -85,7 +98,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       let restCodeInnerNode = (
         <Fragment key={index}>
           <span styleName="slash"/>
-          <span styleName="code"><Link to={path}>{code}</Link></span>
+          <Link styleName="code" to={path}>{code}</Link>
         </Fragment>
       );
       return restCodeInnerNode;
@@ -95,51 +108,55 @@ export default class EntryPane extends Component<Props, State, Params> {
         {restCodeInnerNodes}
       </div>
     );
-    let nameNode = (() => {
-      let entry = this.state.entry;
-      if (entry !== null) {
-        let nameArray = entry.getNameArray();
-        let restNameNodes = nameArray.slice(1).map((name, index) => {
-          let restNameNode = (
-            <Fragment key={index}>
-              <span styleName="arrow"/>
-              <span styleName="name">{name}</span>
-            </Fragment>
-          );
-          return restNameNode;
-        });
-        let nameNode = (
-          <div styleName="right-bottom">
-            <div styleName="main-name">{nameArray[0]}</div>
-            <div styleName="rest-name">
-              {restNameNodes}
-            </div>
-          </div>
-        );
-        return nameNode;
-      } else {
-        return null;
-      }
-    })();
-    let rightTopNode = (
+    let node = (
       <div styleName="right-top">
         {restCodeNode}
         <div styleName="separator"/>
         <div styleName="kind">{this.trans(`entryPane.${CodesUtil.getKind(codes)}`)}</div>
       </div>
     );
-    let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
+    return node;
+  }
+
+  private renderHeadNames(): ReactNode {
+    let entry = this.state.entry;
+    if (entry !== null) {
+      let nameArray = entry.getNameArray();
+      let restNameNodes = nameArray.slice(1).map((name, index) => {
+        let restNameNode = (
+          <Fragment key={index}>
+            <span styleName="arrow"/>
+            <span styleName="name">{name}</span>
+          </Fragment>
+        );
+        return restNameNode;
+      });
+      let nameNode = (
+        <div styleName="right-bottom">
+          <div styleName="main-name">{nameArray[0]}</div>
+          <div styleName="rest-name">
+            {restNameNodes}
+          </div>
+        </div>
+      );
+      return nameNode;
+    } else {
+      return null;
+    }
+  }
+
+  private renderHead(): ReactNode {
+    let mainCodeNode = this.renderHeadMainCode();
+    let rightTopNode = this.renderHeadRightTop();
+    let namesNode = this.renderHeadNames();
     let node = (
       <div styleName="head">
         <div styleName="left">
-          <div styleName="left-inner">
-            <div styleName="main-code">{codeArray[0]}</div>
-            {markNode}
-          </div>
+          {mainCodeNode}
         </div>
         <div styleName="right">
           {rightTopNode}
-          {nameNode}
+          {namesNode}
         </div>
       </div>
     );
