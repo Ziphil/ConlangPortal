@@ -40,6 +40,9 @@ export class OgpUtil {
     }
   }
 
+  // サムネイル用の画像データを生成します。
+  // HTML をヘッドレス Chrome で描画して画像を生成するという実装になっており、さらに Google Fonts からフォントをダウンロードする必要もあるので、少し時間がかかります。
+  // 別のより高速なフォント生成方法を考えた方が良い気がしますし、そもそも HTML をソースコード中に直接書くのはどう考えても頭が悪いので、何とかしてください。
   public static async createEntryImage(codePath: string): Promise<Buffer | null> {
     if (CodesUtil.isValidCodePath(codePath)) {
       let codes = CodesUtil.fromCodePath(codePath);
@@ -60,11 +63,13 @@ export class OgpUtil {
                   width: 1200px; height: 630px;
                   margin: 0px; padding: 0px;
                   font-size: 63px;
-                  background-color: hsl(275, 50%, 40%);
+                  background:
+                    linear-gradient(90deg, hsl(275, 40%, 50%), hsla(275, 40%, 50%, 0) 80%), linear-gradient(270deg, hsl(275, 40%, 50%), hsla(275, 40%, 50%, 0) 80%),
+                    linear-gradient(210deg, hsl(320, 40%, 50%), hsla(320, 40%, 50%, 0) 80%), linear-gradient(30deg, hsl(230, 40%, 50%), hsla(230, 40%, 50%, 0) 80%);
                 }
                 .main {
                   height: 100%;
-                  padding: 0.5rem 0.5rem;
+                  padding: 0.6rem 0.8rem 0.8rem 0.8rem;
                   display: flex; flex-direction: column;
                   box-sizing: border-box;
                 }
@@ -96,10 +101,10 @@ export class OgpUtil {
                   font-size: 0.8rem;
                 }
                 .title {
-                  margin: 0rem 0.5rem 0.2rem 0rem;
+                  margin: -0.2rem 0.5rem 0.2rem 0rem;
                   font-family: "Nunito", sans-serif;
                   font-size: 0.5rem; font-weight: 900;
-                  color: hsl(275, 50%, 40%);
+                  color: hsl(275, 40%, 50%);
                   text-align: right;
                 }
               </style>
