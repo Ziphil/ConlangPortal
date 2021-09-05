@@ -49,7 +49,7 @@ export class CodesUtil {
     return !!valid;
   }
 
-  public static toFullCodeString(codes: EntryCodes): string {
+  public static toNormalizedForm(codes: EntryCodes): string {
     let string = "";
     string += (("dialect" in codes) ? codes.dialect : "*") + "_";
     string += (("language" in codes) ? codes.language: "*") + "_";

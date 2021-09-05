@@ -14,11 +14,11 @@ export class OgpUtil {
   public static createMetaHtml(entry: Entry | null, codes: EntryCodes, fullUrl: string): string {
     let html = this.createDefaultMetaHtml(fullUrl);
     if (entry !== null) {
-      let title = `${entry.name} [${CodesUtil.toFullCodeString(entry.codes)}]`;
+      let title = `${entry.name} [${CodesUtil.toNormalizedForm(entry.codes)}]`;
       html += `<meta property="og:title" content="${this.escapeHtml(title)}">`;
       html += `<meta property="og:description" content="${this.escapeHtml(title)}">`;
     } else {
-      let title = `Unregistered [${CodesUtil.toFullCodeString(codes)}]`;
+      let title = `Unregistered [${CodesUtil.toNormalizedForm(codes)}]`;
       html += `<meta property="og:title" content="${this.escapeHtml(title)}">`;
       html += `<meta property="og:description" content="${this.escapeHtml(title)}">`;
     }
@@ -36,7 +36,7 @@ export class OgpUtil {
   public static createTitle(entry: Entry | null): string {
     let defaultTitle = this.createDefaultTitle();
     if (entry !== null) {
-      return `${entry.name} [${CodesUtil.toFullCodeString(entry.codes)}] — ${defaultTitle}`;
+      return `${entry.name} [${CodesUtil.toNormalizedForm(entry.codes)}] — ${defaultTitle}`;
     } else {
       return defaultTitle;
     }

@@ -40,7 +40,7 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     let codes = this.props.entry.codes;
     let response = await this.request("fetchDescendantDialects", {codes});
     if (response.status === 200) {
-      let descendantDialects = response.data;
+      let descendantDialects = response.data.map(Dialect.create);
       this.setState({descendantDialects});
     }
   }
@@ -53,10 +53,11 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
   }
 
   protected renderDescendantDialects(): ReactNode {
+    let entry = this.state.entry;
     let dialects = this.state.descendantDialects;
     let innerNode = (() => {
       if (dialects !== null) {
-        if (CodesUtil.getKind(this.state.entry.codes) === "language") {
+        if (entry.kind === "language") {
           dialects = dialects.filter((dialect) => dialect.codes.dialect !== "~");
         }
         if (dialects.length > 0) {
@@ -64,7 +65,7 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
             let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
             let dialectNode = (
               <li key={dialect.id}>
-                <Link className="link" to={path}>{CodesUtil.toFullCodeString(dialect.codes)}</Link>
+                <Link className="link" to={path}>{CodesUtil.toNormalizedForm(dialect.codes)}</Link>
               </li>
             );
             return dialectNode;
@@ -99,7 +100,7 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
   protected renderFullCodeString(): ReactNode {
     let node = (
       <InformationPane label={this.trans("informationList.fullCodeString")}>
-        {CodesUtil.toFullCodeString(this.props.entry.codes)}
+        {CodesUtil.toNormalizedForm(this.props.entry.codes)}
       </InformationPane>
     );
     return node;

@@ -20,7 +20,7 @@ import {
 import {
   Entry,
   EntryCodes,
-  EntryUtil
+  EntryStatic
 } from "/client/skeleton/entry";
 import {
   CodesUtil
@@ -53,8 +53,8 @@ export default class EntryPane extends Component<Props, State, Params> {
   private async fetchEntry(): Promise<void> {
     let codes = this.props.codes;
     let response = await this.request("fetchEntry", {codes});
-    let entry = response.data;
     if (response.status === 200) {
+      let entry = (response.data !== null) ? EntryStatic.create(response.data) : null;
       document.title = OgpUtil.createTitle(entry);
       if (entry !== null) {
         this.setState({found: true, entry});
@@ -65,17 +65,13 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   private async changeInformations(key: string, value: any): Promise<void> {
-    let entry = this.state.entry as any;
+    let entry = this.state.entry;
     if (entry !== null) {
       let codes = entry.codes;
       let informations = {[key]: value};
       let response = await this.request("changeEntryInformations", {codes, informations});
       if (response.status === 200) {
-        entry[key] = value;
-        if (key === "name") {
-          let kind = CodesUtil.getKind(codes);
-          entry.names[kind] = value;
-        }
+        entry.changeInformations(informations);
         this.setState({entry});
       }
     }
@@ -153,13 +149,13 @@ export default class EntryPane extends Component<Props, State, Params> {
   private renderInformationList(): ReactNode {
     let entry = this.state.entry;
     if (entry !== null) {
-      let approved = entry !== null && (entry.approved || EntryUtil.is(entry, "user"));
+      let approved = entry !== null && (entry.approved || entry.kind === "user");
       let editable = approved && this.props.store!.user?.code === entry.codes.user;
-      if (EntryUtil.is(entry, "dialect")) {
+      if (entry.kind === "dialect") {
         return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
-      } else if (EntryUtil.is(entry, "language")) {
+      } else if (entry.kind === "language") {
         return <LanguageInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
-      } else if (EntryUtil.is(entry, "family")) {
+      } else if (entry.kind === "family") {
         return <FamilyInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else {
         return <UserInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
@@ -169,7 +165,7 @@ export default class EntryPane extends Component<Props, State, Params> {
 
   public render(): ReactNode {
     let entry = this.state.entry;
-    let approved = entry !== null && (entry.approved || EntryUtil.is(entry, "user"));
+    let approved = entry !== null && (entry.approved || entry.kind === "user");
     let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
     let headNode = this.renderHead();
     let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("entryPane.notFound");

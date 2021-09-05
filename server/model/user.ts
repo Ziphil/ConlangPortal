@@ -131,6 +131,7 @@ export class UserCreator {
 
   public static create(raw: User): Jsonify<UserSkeleton> {
     let id = raw.id;
+    let kind = "user" as const;
     let codes = {user: raw.code};
     let code = raw.code;
     let names = {user: raw.name};
@@ -142,7 +143,7 @@ export class UserCreator {
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, code, names, name, homepageUrl, twitterId, biography, authority, approved, createdDate, approvedDate};
+    let skeleton = {id, kind, codes, code, names, name, homepageUrl, twitterId, biography, authority, approved, createdDate, approvedDate};
     return skeleton;
   }
 

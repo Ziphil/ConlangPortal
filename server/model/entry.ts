@@ -4,6 +4,9 @@ import {
   getClassForDocument
 } from "@typegoose/typegoose";
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   Entry as EntrySkeleton
 } from "/client/skeleton/entry";
 import {
@@ -121,7 +124,7 @@ export class EntryUtil {
 
 export class EntryCreator {
 
-  public static async create(raw: Entry): Promise<EntrySkeleton> {
+  public static async create(raw: Entry): Promise<Jsonify<EntrySkeleton>> {
     let anyRaw = raw as any;
     let clazz = getClassForDocument(raw);
     if (clazz === DialectSchema) {

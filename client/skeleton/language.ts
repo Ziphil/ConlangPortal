@@ -1,9 +1,17 @@
 //
 
+import {
+  Jsonify
+} from "jsonify-type";
+import {
+  SuperEntry
+} from "/client/skeleton/super-entry";
 
-export class Language {
+
+export class Language extends SuperEntry {
 
   public id!: string;
+  public kind!: "language";
   public codes!: LanguageCodes;
   public names!: LanguageNames;
   public name?: string;
@@ -13,6 +21,10 @@ export class Language {
   public approved!: boolean;
   public createdDate!: string;
   public approvedDate?: string;
+
+  public static create(raw: Jsonify<Language>): Language {
+    return Object.assign(Object.create(Language.prototype), raw);
+  }
 
 }
 

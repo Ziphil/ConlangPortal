@@ -1,6 +1,9 @@
 //
 
 import {
+  EntryStatic as EntrySkeletonStatic
+} from "/client/skeleton/entry";
+import {
   CodesUtil
 } from "/client/util/codes";
 import {
@@ -20,7 +23,7 @@ export class OgpUtil {
       let codePath = match[1];
       let codes = CodesUtil.fromCodePath(codePath);
       let rawEntry = await EntryUtil.fetchOneByCodes(codes);
-      let entry = (rawEntry !== null) ? await EntryCreator.create(rawEntry) : null;
+      let entry = (rawEntry !== null) ? EntrySkeletonStatic.create(await EntryCreator.create(rawEntry)) : null;
       let title = ClientOgpUtil.createTitle(entry);
       let titleHtml = `<title>${ClientOgpUtil.escapeHtml(title)}</title>`;
       let metaHtml = ClientOgpUtil.createMetaHtml(entry, codes, fullUrl);
