@@ -118,7 +118,7 @@ export class OgpUtil {
             </body>
           </html>
         `;
-        let puppeteerArgs = {executablePath: CHROMIUM_PATH};
+        let puppeteerArgs = {args: ["--no-sandbox"], executablePath: CHROMIUM_PATH};
         let image = await htmlToImage({html, waitUntil: "networkidle0", puppeteerArgs}) as Buffer;
         return image;
       } else {
