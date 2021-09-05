@@ -50,6 +50,7 @@ export default class DialectInformationList extends InformationList<Family> {
             onCancel={this.setEntry(() => this.state.entry.description = this.props.entry.description)}
           />
         </InformationPane>
+        {this.renderDescendantDialects()}
         {this.renderFullCodeString()}
         {this.renderApproval()}
       </div>

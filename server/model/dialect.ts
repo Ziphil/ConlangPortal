@@ -10,6 +10,9 @@ import {
   Dialect as DialectSkeleton
 } from "/client/skeleton/dialect";
 import {
+  EntryCodes
+} from "/server/model/entry";
+import {
   FamilyModel
 } from "/server/model/family";
 import {
@@ -156,7 +159,7 @@ export class DialectSchema {
       query = query.where("codes.user", userCode);
     }
     query = query.sort("-approvedDate -createdDate");
-    let dialects = await query;
+    let dialects = await query.exec();
     return dialects;
   }
 
@@ -172,6 +175,22 @@ export class DialectSchema {
       DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
       DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
     ]);
+    return dialects;
+  }
+
+  public static async fetchDescendants(code: EntryCodes): Promise<Array<Dialect>> {
+    let query = DialectModel.find();
+    if ("dialect" in code) {
+      query = query.where("codes.dialect", code.dialect);
+    }
+    if ("language" in code) {
+      query = query.where("codes.language", code.language);
+    }
+    if ("family" in code) {
+      query = query.where("codes.family", code.family);
+    }
+    query = query.where("codes.user", code.user);
+    let dialects = await query.exec();
     return dialects;
   }
 

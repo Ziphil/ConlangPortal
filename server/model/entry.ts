@@ -55,7 +55,7 @@ export class EntryUtil {
     }
   }
 
-  public static async add(codes: DialectCodes, names: Required<DialectNames>, evidence: string): Promise<void> {
+  public static async add(codes: DialectCodes, names: Omit<Required<DialectNames>, "user">, evidence: string): Promise<void> {
     let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.fetchOneByCodes(codes);

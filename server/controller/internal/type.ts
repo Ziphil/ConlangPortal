@@ -4,10 +4,13 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
-  Dialect
+  Dialect,
+  DialectCodes,
+  DialectNames
 } from "/client/skeleton/dialect";
 import {
-  Entry
+  Entry,
+  EntryCodes
 } from "/client/skeleton/entry";
 import {
   CustomError
@@ -24,6 +27,7 @@ export const SERVER_PATHS = {
   changeEntryInformations: "/cla/edit",
   fetchEntry: "/cla/fetch",
   fetchEntryName: "/cla/fetch/name",
+  fetchDescendantDialects: "/cla/fetch/descendant",
   fetchDialects: "/cla/fetch/list",
   login: "/user/login",
   logout: "/user/logout",
@@ -33,37 +37,44 @@ export const SERVER_PATHS = {
 
 type ServerSpecs = {
   addEntry: {
-    request: {codes: any, names: any, evidence: string},
+    request: {codes: DialectCodes, names: Omit<Required<DialectNames>, "user">, evidence: string},
     response: {
       success: {},
       error: CustomError<string>
     }
   },
   approveDialect: {
-    request: {codes: any, informations: any},
+    request: {codes: DialectCodes},
     response: {
       success: {},
       error: CustomError<"noSuchCodes">
     }
-  }
+  },
   changeEntryInformations: {
-    request: {codes: any, informations: any},
+    request: {codes: EntryCodes, informations: any},
     response: {
       success: {},
       error: CustomError<"noSuchCodes">
     }
   },
   fetchEntry: {
-    request: {codes: any},
+    request: {codes: EntryCodes},
     response: {
       success: Entry | null,
       error: never
     }
   },
   fetchEntryName: {
-    request: {codes: any},
+    request: {codes: EntryCodes},
     response: {
-      success: {name: string | null, cautionType: string | null}
+      success: {name: string | null, cautionType: string | null},
+      error: never
+    }
+  },
+  fetchDescendantDialects: {
+    request: {codes: EntryCodes},
+    response: {
+      success: Array<Dialect>,
       error: never
     }
   },

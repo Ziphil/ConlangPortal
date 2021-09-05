@@ -22,8 +22,10 @@
   text-align: justify;
   white-space: pre-wrap;
   border-radius: 24u;
+  box-shadow: -8u -8u 12u transparent inset, 8u 8u 12u transparent inset;
   flex-grow: 1;
   position: relative;
+  transition: box-shadow $transition-setting;
 }
 
 .input,

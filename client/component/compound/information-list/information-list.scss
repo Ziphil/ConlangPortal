@@ -9,6 +9,10 @@
 }
 
 .root :global(.link) {
-  color: var(--accent-color);
-  text-decoration: underline;
+  @include link;
+}
+
+.root :global(.list) {
+  @include line-height;
+  @include unordered-list("\F0DA", var(--accent-color), 0.4em);
 }
