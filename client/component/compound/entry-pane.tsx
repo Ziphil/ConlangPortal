@@ -96,21 +96,21 @@ export default class EntryPane extends Component<Props, State, Params> {
       </div>
     );
     let nameNode = (() => {
-      let entry = this.state.entry as any;
+      let entry = this.state.entry;
       if (entry !== null) {
-        let nameArray = [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
+        let nameArray = entry.getNameArray();
         let restNameNodes = nameArray.slice(1).map((name, index) => {
           let restNameNode = (
             <Fragment key={index}>
               <span styleName="arrow"/>
-              <span styleName="name">{(codeArray[index + 1] === "~") ? "—" : name}</span>
+              <span styleName="name">{name}</span>
             </Fragment>
           );
           return restNameNode;
         });
         let nameNode = (
           <div styleName="right-bottom">
-            <div styleName="main-name">{(codeArray[0] === "~") ? "—" : nameArray[0]}</div>
+            <div styleName="main-name">{nameArray[0]}</div>
             <div styleName="rest-name">
               {restNameNodes}
             </div>

@@ -66,13 +66,13 @@ export default class DialectPane extends Component<Props, State> {
             <span styleName="code">{dialect.codes.user}</span>
           </div>
           <div styleName="name-container">
-            <span styleName="name">{(dialect.codes.dialect === "~") ? "—" : dialect.names.dialect}</span>
+            <span styleName="name">{dialect.getName("dialect")}</span>
             <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.language}</span>
+            <span styleName="name">{dialect.getName("language")}</span>
             <span styleName="arrow"/>
-            <span styleName="name">{(dialect.codes.family === "~") ? "—" : dialect.names.family}</span>
+            <span styleName="name">{dialect.getName("family")}</span>
             <span styleName="arrow"/>
-            <span styleName="name">{dialect.names.user}</span>
+            <span styleName="name">{dialect.getName("user")}</span>
           </div>
           {evidenceNode}
           {buttonNode}
