@@ -12,7 +12,7 @@ import {
 
 
 @style(require("./information-pane.scss"))
-export default class InformationPane extends Component<Props, State, Params> {
+export default class InformationPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
@@ -33,6 +33,4 @@ type Props = {
   label: string
 };
 type State = {
-};
-type Params = {
 };
