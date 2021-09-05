@@ -1,7 +1,39 @@
 //
 
 
-export class SuperEntry {
+export class SuperEntry<K extends string, C extends SuperEntryCodes, N extends SuperEntryNames> {
+
+  public id!: string;
+  public kind!: K;
+  public codes!: C;
+  public names!: N;
+  public name?: string;
+  public approved!: boolean;
+  public createdDate!: string;
+  public approvedDate?: string;
+
+  public getNameArray(): Array<string> {
+    let nameArray = [];
+    if (this.kind === "dialect") {
+      nameArray.push((this.codes.dialect === "~") ? "—" : this.names.dialect ?? "");
+    }
+    if (this.kind === "dialect" || this.kind === "language") {
+      nameArray.push(this.codes.language ?? "");
+    }
+    if (this.kind === "dialect" || this.kind === "language" || this.kind === "family") {
+      nameArray.push((this.codes.family === "~") ? "—" : this.names.family ?? "");
+    }
+    nameArray.push(this.names.user ?? "");
+    return nameArray;
+  }
+
+  public getCode<K extends keyof SuperEntryCodes>(kind: K): C[K] {
+    return this.codes[kind];
+  }
+
+  public getName<K extends keyof SuperEntryNames>(kind: K): N[K] {
+    return (this.codes[kind] === "~") ? "—" : this.names[kind];
+  }
 
   public changeInformations(informations: any): void {
     let anyThis = this as any;
@@ -16,3 +48,7 @@ export class SuperEntry {
   }
 
 }
+
+
+export type SuperEntryCodes = {dialect?: string, language?: string, family?: string, user: string};
+export type SuperEntryNames = {dialect?: string, language?: string, family?: string, user?: string};

@@ -8,18 +8,10 @@ import {
 } from "/client/skeleton/super-entry";
 
 
-export class Family extends SuperEntry {
+export class Family extends SuperEntry<"family", FamilyCodes, FamilyNames> {
 
-  public id!: string;
-  public kind!: "family";
-  public codes!: FamilyCodes;
-  public names!: FamilyNames;
-  public name?: string;
   public homepageUrl?: string;
   public description?: string;
-  public approved!: boolean;
-  public createdDate!: string;
-  public approvedDate?: string;
 
   public static create(raw: Jsonify<Family>): Family {
     return Object.assign(Object.create(Family.prototype), raw);

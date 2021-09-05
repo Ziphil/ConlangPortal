@@ -8,20 +8,12 @@ import {
 } from "/client/skeleton/super-entry";
 
 
-export class Dialect extends SuperEntry {
+export class Dialect extends SuperEntry<"dialect", DialectCodes, DialectNames> {
 
-  public id!: string;
-  public kind!: "dialect";
-  public codes!: DialectCodes;
-  public names!: DialectNames;
-  public name?: string;
   public homepageUrl?: string;
   public dictionaryUrl?: string;
   public description?: string;
   public evidence?: string;
-  public approved!: boolean;
-  public createdDate!: string;
-  public approvedDate?: string;
 
   public static create(raw: Jsonify<Dialect>): Dialect {
     return Object.assign(Object.create(Dialect.prototype), raw);

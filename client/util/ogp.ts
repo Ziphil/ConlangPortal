@@ -15,12 +15,14 @@ export class OgpUtil {
     let html = this.createDefaultMetaHtml(fullUrl);
     if (entry !== null) {
       let title = `${entry.name} [${CodesUtil.toNormalizedForm(entry.codes)}]`;
+      let description = entry.getNameArray().join(" « ");
       html += `<meta property="og:title" content="${this.escapeHtml(title)}">`;
-      html += `<meta property="og:description" content="${this.escapeHtml(title)}">`;
+      html += `<meta property="og:description" content="${this.escapeHtml(description)}">`;
     } else {
       let title = `Unregistered [${CodesUtil.toNormalizedForm(codes)}]`;
+      let description = "Unregistered";
       html += `<meta property="og:title" content="${this.escapeHtml(title)}">`;
-      html += `<meta property="og:description" content="${this.escapeHtml(title)}">`;
+      html += `<meta property="og:description" content="${this.escapeHtml(description)}">`;
     }
     return html;
   }
