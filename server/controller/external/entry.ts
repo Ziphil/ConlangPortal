@@ -19,6 +19,9 @@ import {
 import {
   DialectModel
 } from "/server/model/dialect";
+import {
+  OgpUtil
+} from "/server/util/ogp";
 
 
 @controller("/api/cla")
@@ -45,6 +48,18 @@ export class EntryExternalController extends Controller {
     let json = {} as any;
     json["entries"] = dialectsJson;
     Controller.respond(response, json);
+  }
+
+  @get("/image/:codePath")
+  public async [Symbol()](request: Request, response: Response): Promise<void> {
+    let codePath = request.params["codePath"];
+    let image = await OgpUtil.createEntryImage(codePath);
+    if (image !== null) {
+      response.header("Content-Type", "image/png");
+      response.send(image).end();
+    } else {
+      response.sendStatus(400).end();
+    }
   }
 
 }

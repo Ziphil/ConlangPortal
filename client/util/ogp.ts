@@ -18,6 +18,8 @@ export class OgpUtil {
       let description = entry.getNameArray().join(" « ");
       html += `<meta property="og:title" content="${this.escapeHtml(title)}">`;
       html += `<meta property="og:description" content="${this.escapeHtml(description)}">`;
+      html += `<meta property="og:image" content="https://conlang-portal.herokuapp.com/api/cla/image/${CodesUtil.toCodePath(codes)}">`;
+      html += `<meta name="twitter:card" content="summary_large_image">`;
     } else {
       let title = `Unregistered [${CodesUtil.toNormalizedForm(codes)}]`;
       let description = "Unregistered";
@@ -29,7 +31,8 @@ export class OgpUtil {
 
   public static createDefaultMetaHtml(fullUrl: string): string {
     let html = "";
-    html += `<meta property="og:url" content="${fullUrl}">`;
+    html += `<head prefix="og: http://ogp.me/ns#">`;
+    html += `<meta property="og:url" content="${this.escapeHtml(fullUrl)}">`;
     html += `<meta property="og:type" content="article">`;
     html += `<meta property="og:site_name" content="Conlang Portal">`;
     return html;
