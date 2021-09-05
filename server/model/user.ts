@@ -11,6 +11,9 @@ import {
   hashSync
 } from "bcrypt";
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   User as UserSkeleton
 } from "/client/skeleton/user";
 import {
@@ -126,7 +129,7 @@ export class UserSchema {
 
 export class UserCreator {
 
-  public static create(raw: User): UserSkeleton {
+  public static create(raw: User): Jsonify<UserSkeleton> {
     let id = raw.id;
     let codes = {user: raw.code};
     let code = raw.code;
