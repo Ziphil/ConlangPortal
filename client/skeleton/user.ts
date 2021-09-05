@@ -1,20 +1,24 @@
 //
 
+import {
+  Jsonify
+} from "jsonify-type";
+import {
+  SuperEntry
+} from "/client/skeleton/super-entry";
 
-export class User {
 
-  public id!: string;
-  public codes!: UserCodes;
+export class User extends SuperEntry<"user", UserCodes, UserNames> {
+
   public code!: string;
-  public names!: UserNames;
-  public name!: string;
   public homepageUrl?: string;
   public twitterId?: string;
   public biography?: string;
   public authority?: string;
-  public approved!: boolean;
-  public createdDate!: string;
-  public approvedDate?: string;
+
+  public static create(raw: Jsonify<User>): User {
+    return Object.assign(Object.create(User.prototype), raw);
+  }
 
 }
 

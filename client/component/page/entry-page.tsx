@@ -71,7 +71,7 @@ export default class EntryPage extends Component<Props, State, Params> {
       let codes = CodesUtil.fromCodePath(codePath);
       let addEntryForm = this.renderAddEntryForm();
       let node = (
-        <Page>
+        <Page setTitle={false}>
           <EntryPane codes={codes}/>
           {addEntryForm}
         </Page>
@@ -79,13 +79,14 @@ export default class EntryPage extends Component<Props, State, Params> {
       return node;
     } else if (valid === false) {
       let node = (
-        <Page>
-          invalid code
-        </Page>
+        <Page>invalid code</Page>
       );
       return node;
     } else {
-      return null;
+      let node = (
+        <Page></Page>
+      );
+      return node;
     }
   }
 

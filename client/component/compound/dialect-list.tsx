@@ -37,7 +37,7 @@ export default class DialectList extends Component<Props, State> {
     let includeOptions = this.props.includeOptions;
     let response = await this.request("fetchDialects", {userCode, includeOptions});
     if (response.status === 200) {
-      let dialects = response.data;
+      let dialects = response.data.map(Dialect.create);
       this.setState({dialects});
     }
   }

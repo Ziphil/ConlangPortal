@@ -7,6 +7,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   Family as FamilySkeleton
 } from "/client/skeleton/family";
 import {
@@ -121,8 +124,9 @@ export class FamilySchema {
 
 export class FamilyCreator {
 
-  public static async create(raw: Family): Promise<FamilySkeleton> {
+  public static async create(raw: Family): Promise<Jsonify<FamilySkeleton>> {
     let id = raw.id;
+    let kind = "family" as const;
     let codes = raw.codes;
     let names = await raw.fetchNames();
     let name = raw.name;
@@ -131,7 +135,7 @@ export class FamilyCreator {
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, description, approved, createdDate, approvedDate};
+    let skeleton = {id, kind, codes, names, name, homepageUrl, description, approved, createdDate, approvedDate};
     return skeleton;
   }
 

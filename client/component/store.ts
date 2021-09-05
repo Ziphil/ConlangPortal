@@ -2,6 +2,9 @@
 
 import axios from "axios";
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   action,
   observable
 } from "mobx";
@@ -26,7 +29,7 @@ export class GlobalStore {
   public messages: Record<string, string> = {};
 
   @observable
-  public user: User | null = null;
+  public user: Jsonify<User> | null = null;
 
   @action
   public async changeLocale(locale: string): Promise<void> {

@@ -103,7 +103,8 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
       try {
         return await BaseComponent.client.request({url, method, ...config, data});
       } catch (error) {
-        if (error.code === "ECONNABORTED") {
+        let anyError = error as any;
+        if (anyError.code === "ECONNABORTED") {
           let data = undefined as any;
           let headers = config.headers;
           return {status: 408, statusText: "Request Timeout", data, headers, config};

@@ -23,6 +23,9 @@ import {
   MongoUtil
 } from "/server/util/mongo";
 import {
+  OgpUtil
+} from "/server/util/ogp";
+import {
   COOKIE_SECRET,
   MONGO_URI,
   PORT
@@ -101,14 +104,16 @@ export class Main {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       response.status(404).end();
     };
-    let otherHandler = function (request: Request, response: Response, next: NextFunction): void {
+    let otherHandler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
       let method = request.method;
       if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
-        response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
-          if (error) {
-            next(error);
-          }
-        });
+        let originalUrl = request.originalUrl;
+        let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+        let htmlPath = process.cwd() + "/dist/client/index.html";
+        let [html, injectionHtml] = await Promise.all([fs.promises.readFile(htmlPath, {encoding: "utf-8"}), OgpUtil.createInjectionHtml(originalUrl, fullUrl)]);
+        let convertedHtml = html.replace("<!-- meta-injection -->", injectionHtml);
+        response.header("Content-Type", "text/html");
+        response.send(convertedHtml).end();
       } else {
         next();
       }

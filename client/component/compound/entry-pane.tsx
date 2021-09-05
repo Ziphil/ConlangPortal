@@ -20,11 +20,14 @@ import {
 import {
   Entry,
   EntryCodes,
-  EntryUtil
+  EntryStatic
 } from "/client/skeleton/entry";
 import {
   CodesUtil
 } from "/client/util/codes";
+import {
+  OgpUtil
+} from "/client/util/ogp";
 
 
 @style(require("./entry-pane.scss"))
@@ -41,6 +44,7 @@ export default class EntryPane extends Component<Props, State, Params> {
 
   public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.codes !== previousProps.codes) {
+      document.title = OgpUtil.createDefaultTitle();
       this.setState({found: null, entry: null});
       await this.fetchEntry();
     }
@@ -49,8 +53,9 @@ export default class EntryPane extends Component<Props, State, Params> {
   private async fetchEntry(): Promise<void> {
     let codes = this.props.codes;
     let response = await this.request("fetchEntry", {codes});
-    let entry = response.data;
     if (response.status === 200) {
+      let entry = (response.data !== null) ? EntryStatic.create(response.data) : null;
+      document.title = OgpUtil.createTitle(entry);
       if (entry !== null) {
         this.setState({found: true, entry});
       } else {
@@ -60,23 +65,32 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   private async changeInformations(key: string, value: any): Promise<void> {
-    let entry = this.state.entry as any;
+    let entry = this.state.entry;
     if (entry !== null) {
       let codes = entry.codes;
       let informations = {[key]: value};
       let response = await this.request("changeEntryInformations", {codes, informations});
       if (response.status === 200) {
-        entry[key] = value;
-        if (key === "name") {
-          let kind = CodesUtil.getKind(codes);
-          entry.names[kind] = value;
-        }
+        entry.changeInformations(informations);
         this.setState({entry});
       }
     }
   }
 
-  private renderHead(): ReactNode {
+  private renderHeadMainCode(): ReactNode {
+    let codes = this.props.codes as any;
+    let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
+    let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
+    let node = (
+      <div styleName="left-inner">
+        <div styleName="main-code">{codeArray[0]}</div>
+        {markNode}
+      </div>
+    );
+    return node;
+  }
+
+  private renderHeadRightTop(): ReactNode {
     let codes = this.props.codes as any;
     let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
     let restCodeInnerNodes = codeArray.slice(1).map((code, index) => {
@@ -84,7 +98,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       let restCodeInnerNode = (
         <Fragment key={index}>
           <span styleName="slash"/>
-          <span styleName="code"><Link to={path}>{code}</Link></span>
+          <Link styleName="code" to={path}>{code}</Link>
         </Fragment>
       );
       return restCodeInnerNode;
@@ -94,51 +108,55 @@ export default class EntryPane extends Component<Props, State, Params> {
         {restCodeInnerNodes}
       </div>
     );
-    let nameNode = (() => {
-      let entry = this.state.entry as any;
-      if (entry !== null) {
-        let nameArray = [entry.names.dialect, entry.names.language, entry.names.family, entry.names.user].filter((name) => name !== undefined);
-        let restNameNodes = nameArray.slice(1).map((name, index) => {
-          let restNameNode = (
-            <Fragment key={index}>
-              <span styleName="arrow"/>
-              <span styleName="name">{(codeArray[index + 1] === "~") ? "—" : name}</span>
-            </Fragment>
-          );
-          return restNameNode;
-        });
-        let nameNode = (
-          <div styleName="right-bottom">
-            <div styleName="main-name">{(codeArray[0] === "~") ? "—" : nameArray[0]}</div>
-            <div styleName="rest-name">
-              {restNameNodes}
-            </div>
-          </div>
-        );
-        return nameNode;
-      } else {
-        return null;
-      }
-    })();
-    let rightTopNode = (
+    let node = (
       <div styleName="right-top">
         {restCodeNode}
         <div styleName="separator"/>
         <div styleName="kind">{this.trans(`entryPane.${CodesUtil.getKind(codes)}`)}</div>
       </div>
     );
-    let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
+    return node;
+  }
+
+  private renderHeadNames(): ReactNode {
+    let entry = this.state.entry;
+    if (entry !== null) {
+      let nameArray = entry.getNameArray();
+      let restNameNodes = nameArray.slice(1).map((name, index) => {
+        let restNameNode = (
+          <Fragment key={index}>
+            <span styleName="arrow"/>
+            <span styleName="name">{name}</span>
+          </Fragment>
+        );
+        return restNameNode;
+      });
+      let nameNode = (
+        <div styleName="right-bottom">
+          <div styleName="main-name">{nameArray[0]}</div>
+          <div styleName="rest-name">
+            {restNameNodes}
+          </div>
+        </div>
+      );
+      return nameNode;
+    } else {
+      return null;
+    }
+  }
+
+  private renderHead(): ReactNode {
+    let mainCodeNode = this.renderHeadMainCode();
+    let rightTopNode = this.renderHeadRightTop();
+    let namesNode = this.renderHeadNames();
     let node = (
       <div styleName="head">
         <div styleName="left">
-          <div styleName="left-inner">
-            <div styleName="main-code">{codeArray[0]}</div>
-            {markNode}
-          </div>
+          {mainCodeNode}
         </div>
         <div styleName="right">
           {rightTopNode}
-          {nameNode}
+          {namesNode}
         </div>
       </div>
     );
@@ -148,13 +166,13 @@ export default class EntryPane extends Component<Props, State, Params> {
   private renderInformationList(): ReactNode {
     let entry = this.state.entry;
     if (entry !== null) {
-      let approved = entry !== null && (entry.approved || EntryUtil.is(entry, "user"));
+      let approved = entry !== null && (entry.approved || entry.kind === "user");
       let editable = approved && this.props.store!.user?.code === entry.codes.user;
-      if (EntryUtil.is(entry, "dialect")) {
+      if (entry.kind === "dialect") {
         return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
-      } else if (EntryUtil.is(entry, "language")) {
+      } else if (entry.kind === "language") {
         return <LanguageInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
-      } else if (EntryUtil.is(entry, "family")) {
+      } else if (entry.kind === "family") {
         return <FamilyInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else {
         return <UserInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
@@ -164,7 +182,7 @@ export default class EntryPane extends Component<Props, State, Params> {
 
   public render(): ReactNode {
     let entry = this.state.entry;
-    let approved = entry !== null && (entry.approved || EntryUtil.is(entry, "user"));
+    let approved = entry !== null && (entry.approved || entry.kind === "user");
     let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
     let headNode = this.renderHead();
     let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("entryPane.notFound");

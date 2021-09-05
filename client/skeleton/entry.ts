@@ -1,6 +1,9 @@
 //
 
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   Dialect,
   DialectCodes
 } from "/client/skeleton/dialect";
@@ -18,18 +21,17 @@ import {
 } from "/client/skeleton/user";
 
 
-export class EntryUtil {
+export class EntryStatic {
 
-  public static is<K extends EntryKind>(entry: Entry, kind: K): entry is Entries[K] {
-    let codes = entry.codes;
-    if (kind === "dialect") {
-      return "dialect" in codes;
-    } else if (kind === "language") {
-      return !("dialect" in codes) && "language" in codes;
-    } else if (kind === "family") {
-      return !("dialect" in codes) && !("language" in codes) && "family" in codes;
+  public static create(raw: Jsonify<Entry>): Entry {
+    if (raw.kind === "dialect") {
+      return Object.assign(Object.create(Dialect.prototype), raw);
+    } else if (raw.kind === "language") {
+      return Object.assign(Object.create(Language.prototype), raw);
+    } else if (raw.kind === "family") {
+      return Object.assign(Object.create(Family.prototype), raw);
     } else {
-      return !("dialect" in codes) && !("language" in codes) && !("family" in codes) && "user" in codes;
+      return Object.assign(Object.create(User.prototype), raw);
     }
   }
 
@@ -38,13 +40,4 @@ export class EntryUtil {
 
 export type Entry = Dialect | Language | Family | User;
 export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | UserCodes;
-
-export const ENTRY_KINDS = ["dialect", "language", "family", "user"] as const;
-export type EntryKind = (typeof ENTRY_KINDS)[number];
-
-export type Entries = {
-  dialect: Dialect,
-  language: Language,
-  family: Family,
-  user: User
-};
+export type EntryKind = Entry["kind"];

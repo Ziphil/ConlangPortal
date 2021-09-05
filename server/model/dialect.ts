@@ -7,6 +7,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   Dialect as DialectSkeleton
 } from "/client/skeleton/dialect";
 import {
@@ -236,8 +239,9 @@ export class DialectSchema {
 
 export class DialectCreator {
 
-  public static async create(raw: Dialect): Promise<DialectSkeleton> {
+  public static async create(raw: Dialect): Promise<Jsonify<DialectSkeleton>> {
     let id = raw.id;
+    let kind = "dialect" as const;
     let codes = raw.codes;
     let names = await raw.fetchNames();
     let name = raw.name;
@@ -248,7 +252,7 @@ export class DialectCreator {
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, description, evidence, approved, createdDate, approvedDate};
+    let skeleton = {id, kind, codes, names, name, homepageUrl, dictionaryUrl, description, evidence, approved, createdDate, approvedDate};
     return skeleton;
   }
 

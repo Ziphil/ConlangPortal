@@ -1,17 +1,21 @@
 //
 
+import {
+  Jsonify
+} from "jsonify-type";
+import {
+  SuperEntry
+} from "/client/skeleton/super-entry";
 
-export class Family {
 
-  public id!: string;
-  public codes!: FamilyCodes;
-  public names!: FamilyNames;
-  public name?: string;
+export class Family extends SuperEntry<"family", FamilyCodes, FamilyNames> {
+
   public homepageUrl?: string;
   public description?: string;
-  public approved!: boolean;
-  public createdDate!: string;
-  public approvedDate?: string;
+
+  public static create(raw: Jsonify<Family>): Family {
+    return Object.assign(Object.create(Family.prototype), raw);
+  }
 
 }
 

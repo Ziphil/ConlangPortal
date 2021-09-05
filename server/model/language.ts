@@ -7,6 +7,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   Language as LanguageSkeleton
 } from "/client/skeleton/language";
 import {
@@ -138,8 +141,9 @@ export class LanguageSchema {
 
 export class LanguageCreator {
 
-  public static async create(raw: Language): Promise<LanguageSkeleton> {
+  public static async create(raw: Language): Promise<Jsonify<LanguageSkeleton>> {
     let id = raw.id;
+    let kind = "language" as const;
     let codes = raw.codes;
     let names = await raw.fetchNames();
     let name = raw.name;
@@ -149,7 +153,7 @@ export class LanguageCreator {
     let approved = raw.approved;
     let createdDate = raw.createdDate.toISOString();
     let approvedDate = raw.approvedDate?.toISOString();
-    let skeleton = {id, codes, names, name, homepageUrl, dictionaryUrl, description, approved, createdDate, approvedDate};
+    let skeleton = {id, kind, codes, names, name, homepageUrl, dictionaryUrl, description, approved, createdDate, approvedDate};
     return skeleton;
   }
 
