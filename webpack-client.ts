@@ -102,7 +102,8 @@ let config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./client/public/index.html"
+      template: "./client/public/index.html",
+      minify: false
     }),
     new EnvironmentPlugin(["npm_package_version"])
   ]

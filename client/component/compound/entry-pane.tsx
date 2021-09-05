@@ -25,6 +25,9 @@ import {
 import {
   CodesUtil
 } from "/client/util/codes";
+import {
+  OgpUtil
+} from "/client/util/ogp";
 
 
 @style(require("./entry-pane.scss"))
@@ -41,6 +44,7 @@ export default class EntryPane extends Component<Props, State, Params> {
 
   public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.codes !== previousProps.codes) {
+      document.title = OgpUtil.createDefaultTitle();
       this.setState({found: null, entry: null});
       await this.fetchEntry();
     }
@@ -51,6 +55,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     let response = await this.request("fetchEntry", {codes});
     let entry = response.data;
     if (response.status === 200) {
+      document.title = OgpUtil.createTitle(entry);
       if (entry !== null) {
         this.setState({found: true, entry});
       } else {
