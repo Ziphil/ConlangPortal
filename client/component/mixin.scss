@@ -14,6 +14,8 @@ $page-horizontal-margin: 96u;
 $header-height: 200u;
 $footer-height: 150u;
 
+$blank-margin: 0.3em;
+
 $line-height: 1.4;
 
 $transition-setting: 0.2s ease;
@@ -78,4 +80,35 @@ $themes: (
 @mixin icon-font {
   font-family: $icon-font-family;
   font-weight: 900;
+}
+
+@mixin unordered-list($icon, $icon-color, $marker-width) {
+  margin: 0u;
+  padding: 0u;
+  list-style-type: none;
+  >li {
+    margin-left: $marker-width + $blank-margin;
+    text-align: justify;
+    &::before {
+      @include icon-font;
+      width: $marker-width;
+      margin-right: $blank-margin;
+      margin-left: -$marker-width - $blank-margin;
+      color: $icon-color;
+      content: $icon;
+      display: inline-block;
+    }
+  }
+}
+
+@mixin link {
+  border-radius: 8u;
+  background: linear-gradient(to bottom, transparent 90%, var(--background-color) 90%), linear-gradient(to bottom, transparent 50%, var(--link-background-color) 50%);
+  background-position: 0% 0%, 0% 30%;
+  background-size: 100% 100%, 100% 200%;
+  transition: background-position $transition-setting;
+  line-height: 1;
+  &:hover {
+    background-position: 0% 90%;
+  }
 }

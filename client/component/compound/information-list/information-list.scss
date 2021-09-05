@@ -3,35 +3,16 @@
 @import "/client/component/mixin.scss";
 
 
-$marker-width: 0.4em;
-$blank-margin: 0.3em;
-
 .root >* {
   padding: 48u 96u;
   border-top: 3u var(--border-color) solid;
 }
 
 .root :global(.link) {
-  color: var(--accent-color);
-  text-decoration: underline;
+  @include link;
 }
 
 .root :global(.list) {
   @include line-height;
-  margin: 0u;
-  padding: 0u;
-  list-style-type: none;
-  >li {
-    margin-left: $marker-width + $blank-margin;
-    text-align: justify;
-    &::before {
-      @include icon-font;
-      width: $marker-width;
-      margin-right: $blank-margin;
-      margin-left: -$marker-width - $blank-margin;
-      color: var(--accent-color);
-      content: "\F0DA";
-      display: inline-block;
-    }
-  }
+  @include unordered-list("\F0DA", var(--accent-color), 0.4em);
 }
