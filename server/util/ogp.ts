@@ -20,18 +20,11 @@ export class OgpUtil {
       let codePath = match[1];
       let codes = CodesUtil.fromCodePath(codePath);
       let rawEntry = await EntryUtil.fetchOneByCodes(codes);
-      if (rawEntry !== null) {
-        let entry = await EntryCreator.create(rawEntry);
-        let title = ClientOgpUtil.createTitle(entry);
-        let titleHtml = `<title>${ClientOgpUtil.escapeHtml(title)}</title>`;
-        let metaHtml = ClientOgpUtil.createMetaHtml(entry, codes, fullUrl);
-        return metaHtml + titleHtml;
-      } else {
-        let title = ClientOgpUtil.createTitle(null);
-        let titleHtml = `<title>${ClientOgpUtil.escapeHtml(title)}</title>`;
-        let metaHtml = ClientOgpUtil.createMetaHtml(null, codes, fullUrl);
-        return metaHtml + titleHtml;
-      }
+      let entry = (rawEntry !== null) ? await EntryCreator.create(rawEntry) : null;
+      let title = ClientOgpUtil.createTitle(entry);
+      let titleHtml = `<title>${ClientOgpUtil.escapeHtml(title)}</title>`;
+      let metaHtml = ClientOgpUtil.createMetaHtml(entry, codes, fullUrl);
+      return metaHtml + titleHtml;
     } else {
       let title = ClientOgpUtil.createDefaultTitle();
       let titleHtml = `<title>${ClientOgpUtil.escapeHtml(title)}</title>`;
