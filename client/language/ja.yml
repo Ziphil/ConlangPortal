@@ -43,7 +43,7 @@ informationList:
   homepageUrl: "ホームページ URL"
   dictionaryUrl: "辞書 URL"
   twitterId: "Twitter ID"
-  description: "簡単な説明"
+  description: "概要"
   biography: "自己紹介"
   descendantDialects: "下位の言語/方言"
   fullCodeString: "CLA v3 正規形"
@@ -51,6 +51,7 @@ informationList:
   approval: "承認状況"
   approved: "承認済み ({dateString})"
   unapproved: "未承認"
+  noData: "なし"
 addEntryForm:
   title: "新規コード申請"
   family:

@@ -55,30 +55,35 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
   protected renderDescendantDialects(): ReactNode {
     let dialects = this.state.descendantDialects;
     let innerNode = (() => {
-      if (dialects !== null && dialects.length > 0) {
-        let dialectNodes = dialects.map((dialect) => {
-          let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
-          let dialectNode = (
-            <li key={dialect.id}>
-              <Link className="link" to={path}>{CodesUtil.toFullCodeString(dialect.codes)}</Link>
-            </li>
+      if (dialects !== null) {
+        if (CodesUtil.getKind(this.state.entry.codes) === "language") {
+          dialects = dialects.filter((dialect) => dialect.codes.dialect !== "~");
+        }
+        if (dialects.length > 0) {
+          let dialectNodes = dialects.map((dialect) => {
+            let path = "/cla/" + CodesUtil.toCodePath(dialect.codes);
+            let dialectNode = (
+              <li key={dialect.id}>
+                <Link className="link" to={path}>{CodesUtil.toFullCodeString(dialect.codes)}</Link>
+              </li>
+            );
+            return dialectNode;
+          });
+          let innerNode = (
+            <ul className="list">
+              {dialectNodes}
+            </ul>
           );
-          return dialectNode;
-        });
-        let innerNode = (
-          <ul className="list">
-            {dialectNodes}
-          </ul>
-        );
-        return innerNode;
-      } else if (dialects !== null && dialects.length <= 0) {
-        let innerNode = (
-          <div>{this.trans("informationList.nothing")}</div>
-        );
-        return innerNode;
+          return innerNode;
+        } else {
+          let innerNode = (
+            <div className="no-data">{this.trans("informationList.noData")}</div>
+          );
+          return innerNode;
+        }
       } else {
         let innerNode = (
-          <div className="null">?</div>
+          <div className="loading">?</div>
         );
         return innerNode;
       }

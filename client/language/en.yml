@@ -51,6 +51,7 @@ informationList:
   approval: "Approval status"
   approved: "Approved ({dateString})"
   unapproved: "Not yet approved"
+  noData: "None"
 addEntryForm:
   title: "Apply for new code"
   family:
