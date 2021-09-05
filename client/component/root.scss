@@ -22,6 +22,7 @@ body {
   background-color: var(--background-color);
   overflow-x: auto;
   overflow-y: scroll;
+  text-decoration-skip-ink: none;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
