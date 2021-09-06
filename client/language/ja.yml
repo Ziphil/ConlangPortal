@@ -98,10 +98,14 @@ entryPane:
   family: "語族"
   language: "言語"
   dialect: "方言"
-  notFound: "このコードは割り当てられていません"
   guide: 
     approved: "以下の各項目はクリックで編集できます"
     unapproved: "以下の各項目は承認後に編集できるようになります"
+  unspecified: >-
+    この階層には情報がありません。
+    1 つ上の階層を参照してください。
+  unregistered: >-
+    このコードはまだ割り当てられていません。
 header:
   logout: "ログアウト"
   userPage: "ユーザーページ"

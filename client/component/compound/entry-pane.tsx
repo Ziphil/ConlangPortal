@@ -181,12 +181,48 @@ export default class EntryPane extends Component<Props, State, Params> {
     }
   }
 
+  private renderUnspecifiedMessage(): ReactNode {
+    let node = (
+      <div styleName="message">
+        {this.trans("entryPane.unspecified")}
+      </div>
+    );
+    return node;
+  }
+
+  private renderUnregisteredMessage(): ReactNode {
+    let node = (
+      <div styleName="message">
+        {this.trans("entryPane.unregistered")}
+      </div>
+    );
+    return node;
+  }
+
+  private renderContent(): ReactNode {
+    let found = this.state.found;
+    let entry = this.state.entry;
+    if (found !== null) {
+      if (found && entry !== null) {
+        if (CodesUtil.toCodeArray(entry.codes)[0] !== "~") {
+          return this.renderInformationList();
+        } else {
+          return this.renderUnspecifiedMessage();
+        }
+      } else {
+        return this.renderUnregisteredMessage();
+      }
+    } else {
+      return null;
+    }
+  }
+
   public render(): ReactNode {
     let entry = this.state.entry;
     let approved = entry !== null && (entry.approved || entry.kind === "user");
     let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
     let headNode = this.renderHead();
-    let informationList = (this.state.found === null) ? "" : (this.state.found) ? this.renderInformationList() : this.trans("entryPane.notFound");
+    let contentNode = this.renderContent();
     let guideNode = (maybeEditable) && (
       <div styleName="guide">{this.trans(`entryPane.guide.${(approved) ? "approved" : "unapproved"}`)}</div>
     );
@@ -195,7 +231,7 @@ export default class EntryPane extends Component<Props, State, Params> {
         <CommonPane>
           {headNode}
           {guideNode}
-          {informationList}
+          {contentNode}
         </CommonPane>
       </div>
     );

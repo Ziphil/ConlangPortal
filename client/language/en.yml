@@ -98,10 +98,14 @@ entryPane:
   family: "Family"
   language: "Language"
   dialect: "Dialect"
-  notFound: "This code has not been assigned"
   guide: 
     approved: "Click on each item below to edit it"
     unapproved: "The following items will be editable after approval"
+  unspecified: >-
+    There is no information in this level.
+    Please refer to the one level above.
+  unregistered: >-
+    This code has not yet been assigned.
 header:
   logout: "Sign out"
   userPage: "User page"

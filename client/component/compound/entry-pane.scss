@@ -187,3 +187,8 @@ $smartphone-scale-ratio: 0.7;
   color: var(--dimmed-accent-color);
   text-align: center;
 }
+
+.message {
+  @include line-height;
+  padding: 0u 96u 64u 96u;
+}
