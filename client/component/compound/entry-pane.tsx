@@ -205,7 +205,19 @@ export default class EntryPane extends Component<Props, State, Params> {
     if (found !== null) {
       if (found && entry !== null) {
         if (CodesUtil.toCodeArray(entry.codes)[0] !== "~") {
-          return this.renderInformationList();
+          let approved = entry !== null && (entry.approved || entry.kind === "user");
+          let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
+          let informationListNode = this.renderInformationList();
+          let guideNode = (maybeEditable) && (
+            <div styleName="guide">{this.trans(`entryPane.guide.${(approved) ? "approved" : "unapproved"}`)}</div>
+          );
+          let node = (
+            <Fragment>
+              {guideNode}
+              {informationListNode}
+            </Fragment>
+          );
+          return node;
         } else {
           return this.renderUnspecifiedMessage();
         }
@@ -218,19 +230,12 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let entry = this.state.entry;
-    let approved = entry !== null && (entry.approved || entry.kind === "user");
-    let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
     let headNode = this.renderHead();
     let contentNode = this.renderContent();
-    let guideNode = (maybeEditable) && (
-      <div styleName="guide">{this.trans(`entryPane.guide.${(approved) ? "approved" : "unapproved"}`)}</div>
-    );
     let node = (
       <div styleName="root">
         <CommonPane>
           {headNode}
-          {guideNode}
           {contentNode}
         </CommonPane>
       </div>
