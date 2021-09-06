@@ -49,6 +49,21 @@ export class CodesUtil {
     return !!valid;
   }
 
+  public static toCodeArray(codes: EntryCodes): Array<string> {
+    let codeArray = [];
+    if ("dialect" in codes) {
+      codeArray.push(codes.dialect);
+    }
+    if ("language" in codes) {
+      codeArray.push(codes.language);
+    }
+    if ("family" in codes) {
+      codeArray.push(codes.family);
+    }
+    codeArray.push(codes.user);
+    return codeArray;
+  }
+
   public static toNormalizedForm(codes: EntryCodes): string {
     let string = "";
     string += (("dialect" in codes) ? codes.dialect : "*") + "_";
@@ -71,6 +86,26 @@ export class CodesUtil {
       string += "-" + ((codes.dialect === "~") ? "0" : codes.dialect);
     }
     return string;
+  }
+
+  public static getParentCodes(codes: EntryCodes): EntryCodes | null {
+    if ("dialect" in codes) {
+      return {language: codes.language, family: codes.family, user: codes.user};
+    } else if ("language" in codes) {
+      return {family: codes.family, user: codes.user};
+    } else if ("family" in codes) {
+      return {user: codes.user};
+    } else {
+      return null;
+    }
+  }
+
+  public static getAncestorCodes(codes: EntryCodes): Array<EntryCodes> {
+    let ancestorCodes = [];
+    for (let currentCodes = this.getParentCodes(codes) ; currentCodes !== null ; currentCodes = this.getParentCodes(currentCodes)) {
+      ancestorCodes.push(currentCodes);
+    }
+    return ancestorCodes;
   }
 
   public static getKind(codes: EntryCodes): EntryKind {

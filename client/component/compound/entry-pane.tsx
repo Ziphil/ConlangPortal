@@ -91,14 +91,15 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   private renderHeadRightTop(): ReactNode {
-    let codes = this.props.codes as any;
-    let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
-    let restCodeInnerNodes = codeArray.slice(1).map((code, index) => {
-      let path = "/cla/" + codeArray.slice((code === "~") ? index + 2 : index + 1).map((code) => (code === "~") ? "0" : code).join("-");
+    let codes = this.props.codes;
+    let ancestorCodes = CodesUtil.getAncestorCodes(codes);
+    let restCodeInnerNodes = ancestorCodes.map((codes, index) => {
+      let path = "/cla/" + CodesUtil.toCodePath(codes);
+      let topCode = CodesUtil.toCodeArray(codes)[0];
       let restCodeInnerNode = (
         <Fragment key={index}>
           <span styleName="slash"/>
-          <Link styleName="code" to={path}>{code}</Link>
+          <Link styleName="code" to={path}>{topCode}</Link>
         </Fragment>
       );
       return restCodeInnerNode;
