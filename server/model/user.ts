@@ -24,7 +24,7 @@ import {
 } from "/server/model/family";
 
 
-@modelOptions({schemaOptions: {collection: "users"}})
+@modelOptions({schemaOptions: {collection: "creators"}})
 export class UserSchema {
 
   @prop({required: true, unique: true})
