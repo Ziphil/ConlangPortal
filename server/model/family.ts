@@ -23,7 +23,7 @@ export class FamilyCodesSchema {
   public family!: string;
 
   @prop({required: true})
-  public user!: string;
+  public creator!: string;
 
 }
 
@@ -67,10 +67,10 @@ export class FamilySchema {
   }
 
   public async fetchNames(): Promise<FamilyNames> {
-    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.user).then((creator) => creator?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.creator).then((creator) => creator?.name);
     let [creatorName] = await Promise.all([creatorNamePromise]);
     let familyName = this.name;
-    let names = {family: familyName, user: creatorName};
+    let names = {family: familyName, creator: creatorName};
     return names;
   }
 
@@ -85,7 +85,7 @@ export class FamilySchema {
   }
 
   public static async fetchOneByCodes(codes: FamilyCodes): Promise<Family | null> {
-    let family = await FamilyModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family);
+    let family = await FamilyModel.findOne().where("codes.creator", codes.creator).where("codes.family", codes.family);
     return family;
   }
 
@@ -97,7 +97,7 @@ export class FamilySchema {
       let families = await FamilyModel.find().where("codes.family", codes.family);
       return families;
     } else {
-      let families = await FamilyModel.find().where("codes.user", codes.user).where("codes.family", codes.family);
+      let families = await FamilyModel.find().where("codes.creator", codes.creator).where("codes.family", codes.family);
       return families;
     }
   }
@@ -105,14 +105,14 @@ export class FamilySchema {
   public static async checkDuplication(codes: FamilyCodes): Promise<boolean> {
     if (codes.family !== "~") {
       let family = await FamilyModel.findOne().or([
-        FamilyModel.find().where("codes.user", codes.family).getFilter(),
-        FamilyModel.find().where("codes.user", codes.user).where("codes.family", codes.family).getFilter()
+        FamilyModel.find().where("codes.creator", codes.family).getFilter(),
+        FamilyModel.find().where("codes.creator", codes.creator).where("codes.family", codes.family).getFilter()
       ]);
       let duplicate = family !== null;
       return duplicate;
     } else {
       let family = await FamilyModel.findOne().or([
-        FamilyModel.find().where("codes.user", codes.user).where("codes.family", codes.family).getFilter()
+        FamilyModel.find().where("codes.creator", codes.creator).where("codes.family", codes.family).getFilter()
       ]);
       let duplicate = family !== null;
       return duplicate;
@@ -146,4 +146,4 @@ export type Family = DocumentType<FamilySchema>;
 export let FamilyModel = getModelForClass(FamilySchema);
 
 export type FamilyCodes = FamilyCodesSchema;
-export type FamilyNames = {family?: string, user?: string};
+export type FamilyNames = {family?: string, creator?: string};

@@ -66,7 +66,7 @@ export class Root extends Component<Props, State> {
                 <ScrollTop>
                   <Switch>
                     <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
-                    <Authenticator type="guest" exact sensitive path="/login" redirect="/cla/:userCode" component={LoginPage}/>
+                    <Authenticator type="guest" exact sensitive path="/login" redirect="/cla/:creatorCode" component={LoginPage}/>
                     <Authenticator type="approver" exact sensitive path="/approve" redirect="/" component={ApprovePage}/>
                     <Authenticator type="none" exact sensitive path="/about" component={AboutPage}/>
                     <Authenticator type="none" exact sensitive path="/cla/:codePath" component={EntryPage}/>

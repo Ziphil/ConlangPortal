@@ -19,7 +19,7 @@ export class CodesUtil {
     if ("family" in codes) {
       codePath += ((codes.family === "~") ? "0" : codes.family) + "-";
     }
-    codePath += codes.user;
+    codePath += codes.creator;
     if (!options?.preserveTilde && codePath.startsWith("0")) {
       codePath = codePath.replace(/^0-/, "");
     }
@@ -30,7 +30,7 @@ export class CodesUtil {
     let codeArray = codePath.split("-").reverse();
     let codes = {} as any;
     if (codeArray.length >= 1) {
-      codes.user = codeArray[0];
+      codes.creator = codeArray[0];
     }
     if (codeArray.length >= 2) {
       codes.family = (codeArray[1] === "" || codeArray[1] === "0") ? "~" : codeArray[1];
@@ -60,7 +60,7 @@ export class CodesUtil {
     if ("family" in codes) {
       codeArray.push(codes.family);
     }
-    codeArray.push(codes.user);
+    codeArray.push(codes.creator);
     return codeArray;
   }
 
@@ -69,13 +69,13 @@ export class CodesUtil {
     string += (("dialect" in codes) ? codes.dialect : "*") + "_";
     string += (("language" in codes) ? codes.language: "*") + "_";
     string += (("family" in codes) ? codes.family : "*") + "_";
-    string += codes.user;
+    string += codes.creator;
     return string;
   }
 
   public static toBcpString(codes: EntryCodes): string {
     let string = "x-v3-";
-    string += codes.user;
+    string += codes.creator;
     if ("family" in codes) {
       string += (codes.family === "~") ? "0" : codes.family;
     }
@@ -90,11 +90,11 @@ export class CodesUtil {
 
   public static getParentCodes(codes: EntryCodes): EntryCodes | null {
     if ("dialect" in codes) {
-      return {language: codes.language, family: codes.family, user: codes.user};
+      return {language: codes.language, family: codes.family, creator: codes.creator};
     } else if ("language" in codes) {
-      return {family: codes.family, user: codes.user};
+      return {family: codes.family, creator: codes.creator};
     } else if ("family" in codes) {
-      return {user: codes.user};
+      return {creator: codes.creator};
     } else {
       return null;
     }

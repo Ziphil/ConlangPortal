@@ -32,7 +32,7 @@ export default class LoginForm extends Component<Props, State> {
     let response = await this.login({code, password});
     if (response.status === 200) {
       console.log("login successful");
-      let path = "/cla/" + CodesUtil.toCodePath({user: code});
+      let path = "/cla/" + CodesUtil.toCodePath({creator: code});
       this.replacePath(path);
     } else {
       this.setState({errorType: "loginFailed"});

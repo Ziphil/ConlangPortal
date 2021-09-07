@@ -73,11 +73,11 @@ export class CreatorSchema {
   // 渡されたパスワードは自動的にハッシュ化されます。
   public static async register(code: string, name: string, password: string): Promise<Creator> {
     if (!code.match(/^[a-z]{3}$/)) {
-      throw new CustomError("invalidUserCode");
+      throw new CustomError("invalidCreatorCode");
     } else {
       let duplicate = await this.checkDuplication(code);
       if (duplicate) {
-        throw new CustomError("duplicateUserCode");
+        throw new CustomError("duplicateCreatorCode");
       } else {
         let approved = false;
         let createdDate = new Date();
@@ -132,9 +132,9 @@ export class CreatorCreator {
   public static create(raw: Creator): Jsonify<CreatorSkeleton> {
     let id = raw.id;
     let kind = "creator" as const;
-    let codes = {user: raw.code};
+    let codes = {creator: raw.code};
     let code = raw.code;
-    let names = {user: raw.name};
+    let names = {creator: raw.name};
     let name = raw.name;
     let homepageUrl = raw.homepageUrl;
     let twitterId = raw.twitterId;

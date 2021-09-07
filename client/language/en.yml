@@ -11,7 +11,7 @@ error:
     If you are not sure, please change the language family code to another one.
   loginFailed: >-
     Failed to sign in.
-  invalidUserCode: >-
+  invalidCreatorCode: >-
     The creator code is invalid.
     Please enter a three-character code consisting of only lowercase Latin letters.
   invalidFamilyCode: >-
@@ -23,7 +23,7 @@ error:
   invalidDialectCode: >-
     The dialect code is invalid.
     Please enter a two-character code consisting of only lowercase Latin letters.
-  duplicateUserCode: >-
+  duplicateCreatorCode: >-
     This creator code already exists.
     Please specify a different producer code.
   duplicateFamilyCode: >-

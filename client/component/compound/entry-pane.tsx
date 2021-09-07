@@ -78,8 +78,8 @@ export default class EntryPane extends Component<Props, State, Params> {
   }
 
   private renderHeadMainCode(): ReactNode {
-    let codes = this.props.codes as any;
-    let codeArray = [codes.dialect, codes.language, codes.family, codes.user].filter((name) => name !== undefined);
+    let codes = this.props.codes;
+    let codeArray = CodesUtil.toCodeArray(codes);
     let markNode = (this.state.entry?.approved) && <div styleName="mark"/>;
     let node = (
       <div styleName="left-inner">
@@ -168,7 +168,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     let entry = this.state.entry;
     if (entry !== null) {
       let approved = entry !== null && (entry.approved || entry.kind === "creator");
-      let editable = approved && this.props.store!.user?.code === entry.codes.user;
+      let editable = approved && this.props.store!.user?.code === entry.codes.creator;
       if (entry.kind === "dialect") {
         return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else if (entry.kind === "language") {
@@ -206,7 +206,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       if (found && entry !== null) {
         if (CodesUtil.toCodeArray(entry.codes)[0] !== "~") {
           let approved = entry !== null && (entry.approved || entry.kind === "creator");
-          let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
+          let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.creator;
           let informationListNode = this.renderInformationList();
           let guideNode = (maybeEditable) && (
             <div styleName="guide">{this.trans(`entryPane.guide.${(approved) ? "approved" : "unapproved"}`)}</div>

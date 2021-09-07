@@ -35,7 +35,7 @@ export default class RegisterForm extends Component<Props, State> {
     if (response.status === 200) {
       let loginResponse = await this.login({code, password});
       if (loginResponse.status === 200) {
-        let path = "/cla/" + CodesUtil.toCodePath({user: code});
+        let path = "/cla/" + CodesUtil.toCodePath({creator: code});
         this.replacePath(path);
       } else {
         console.log("login failed");

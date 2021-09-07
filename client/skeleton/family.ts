@@ -20,5 +20,5 @@ export class Family extends SuperEntry<"family", FamilyCodes, FamilyNames> {
 }
 
 
-export type FamilyCodes = {family: string, user: string};
-export type FamilyNames = {family?: string, user?: string};
+export type FamilyCodes = {family: string, creator: string};
+export type FamilyNames = {family?: string, creator?: string};

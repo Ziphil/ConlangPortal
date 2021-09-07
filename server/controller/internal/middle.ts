@@ -51,8 +51,8 @@ export function verifyApprover(): RequestHandler {
 export function verifyCode(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
-    let userCode = request.query.codes?.user || request.body.codes?.user;
-    if (user.code === userCode) {
+    let creatorCode = request.query.codes?.creator || request.body.codes?.creator;
+    if (user.code === creatorCode) {
       next();
     } else {
       response.status(403).end();

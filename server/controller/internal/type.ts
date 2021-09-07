@@ -37,7 +37,7 @@ export const SERVER_PATHS = {
 
 type ServerSpecs = {
   addEntry: {
-    request: {codes: DialectCodes, names: Omit<Required<DialectNames>, "user">, evidence: string},
+    request: {codes: DialectCodes, names: Omit<Required<DialectNames>, "creator">, evidence: string},
     response: {
       success: {},
       error: CustomError<string>
@@ -79,7 +79,7 @@ type ServerSpecs = {
     }
   },
   fetchDialects: {
-    request: {userCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}},
+    request: {creatorCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}},
     response: {
       success: Array<Dialect>,
       error: never

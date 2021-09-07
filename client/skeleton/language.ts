@@ -21,5 +21,5 @@ export class Language extends SuperEntry<"language", LanguageCodes, LanguageName
 }
 
 
-export type LanguageCodes = {language: string, family: string, user: string};
-export type LanguageNames = {language?: string, family?: string, user?: string};
+export type LanguageCodes = {language: string, family: string, creator: string};
+export type LanguageNames = {language?: string, family?: string, creator?: string};

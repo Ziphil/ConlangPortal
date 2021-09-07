@@ -22,5 +22,5 @@ export class Dialect extends SuperEntry<"dialect", DialectCodes, DialectNames> {
 }
 
 
-export type DialectCodes = {dialect: string, language: string, family: string, user: string};
-export type DialectNames = {dialect?: string, language?: string, family?: string, user?: string};
+export type DialectCodes = {dialect: string, language: string, family: string, creator: string};
+export type DialectNames = {dialect?: string, language?: string, family?: string, creator?: string};

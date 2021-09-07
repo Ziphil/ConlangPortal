@@ -11,7 +11,7 @@ error:
     心当たりがなければ、語族コードを別のものに変更してください。
   loginFailed: >-
     ログインに失敗しました。
-  invalidUserCode: >-
+  invalidCreatorCode: >-
     製作者コードが不正です。
     ラテン小文字のみから成る 3 文字のコードを入力してください。
   invalidFamilyCode: >-
@@ -23,7 +23,7 @@ error:
   invalidDialectCode: >-
     方言コードが不正です。
     ラテン小文字のみから成る 2 文字のコードを入力してください。
-  duplicateUserCode: >-
+  duplicateCreatorCode: >-
     製作者コードが重複しています。
     別の製作者コードを指定してください。
   duplicateFamilyCode: >-

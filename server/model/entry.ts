@@ -44,8 +44,8 @@ import {
 export class EntryUtil {
 
   private static assertCodes(codes: DialectCodes): void {
-    if (!codes.user.match(/^[a-z]{3}$/)) {
-      throw new CustomError("invalidUserCode");
+    if (!codes.creator.match(/^[a-z]{3}$/)) {
+      throw new CustomError("invalidCreatorCode");
     }
     if (codes.family !== "~" && !codes.family.match(/^[a-z]{3}$/)) {
       throw new CustomError("invalidFamilyCode");
@@ -58,7 +58,7 @@ export class EntryUtil {
     }
   }
 
-  public static async add(codes: DialectCodes, names: Omit<Required<DialectNames>, "user">, evidence: string): Promise<void> {
+  public static async add(codes: DialectCodes, names: Omit<Required<DialectNames>, "creator">, evidence: string): Promise<void> {
     let methods = [] as Array<() => Promise<any>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.fetchOneByCodes(codes);
@@ -103,7 +103,7 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchOneByCodes(codes);
     } else {
-      return await CreatorModel.fetchOneByCode(codes.user);
+      return await CreatorModel.fetchOneByCode(codes.creator);
     }
   }
 
@@ -115,7 +115,7 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchByCodesLoose(codes);
     } else {
-      return [await CreatorModel.fetchOneByCode(codes.user)].flatMap((user) => (user !== null) ? [user] : []);
+      return [await CreatorModel.fetchOneByCode(codes.creator)].flatMap((creator) => (creator !== null) ? [creator] : []);
     }
   }
 
@@ -142,4 +142,4 @@ export class EntryCreator {
 
 
 export type Entry = Dialect | Language | Family | Creator;
-export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {user: string};
+export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {creator: string};

@@ -23,7 +23,7 @@ export class SuperEntry<K extends string, C extends SuperEntryCodes, N extends S
     if (this.kind === "dialect" || this.kind === "language" || this.kind === "family") {
       nameArray.push(this.getName("family"));
     }
-    nameArray.push(this.getName("user"));
+    nameArray.push(this.getName("creator"));
     return nameArray;
   }
 
@@ -52,5 +52,5 @@ export class SuperEntry<K extends string, C extends SuperEntryCodes, N extends S
 }
 
 
-export type SuperEntryCodes = {dialect?: string, language?: string, family?: string, user: string};
-export type SuperEntryNames = {dialect?: string, language?: string, family?: string, user?: string};
+export type SuperEntryCodes = {dialect?: string, language?: string, family?: string, creator: string};
+export type SuperEntryNames = {dialect?: string, language?: string, family?: string, creator?: string};

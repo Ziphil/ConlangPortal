@@ -23,5 +23,5 @@ export class Creator extends SuperEntry<"creator", CreatorCodes, CreatorNames> {
 }
 
 
-export type CreatorCodes = {user: string};
-export type CreatorNames = {user?: string};
+export type CreatorCodes = {creator: string};
+export type CreatorNames = {creator?: string};
