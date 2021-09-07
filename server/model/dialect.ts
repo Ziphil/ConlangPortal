@@ -74,7 +74,7 @@ export class DialectSchema {
   public approvedDate?: Date;
 
   public async approve(this: Dialect): Promise<Dialect> {
-    let creatorPromise = CreatorModel.fetchOneByCode(this.codes.creator).then((creator) => {
+    let creatorPromise = CreatorModel.fetchOneByCodes(this.codes).then((creator) => {
       if (creator !== null && !creator.approved) {
         creator.approved = true;
         creator.approvedDate = new Date();
@@ -125,7 +125,7 @@ export class DialectSchema {
   }
 
   public async fetchNames(): Promise<DialectNames> {
-    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.creator).then((creator) => creator?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCodes(this.codes).then((creator) => creator?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
     let languageNamePromise = LanguageModel.fetchOneByCodes(this.codes).then((language) => language?.name);
     let [creatorName, familyName, languageName] = await Promise.all([creatorNamePromise, familyNamePromise, languageNamePromise]);

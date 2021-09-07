@@ -67,7 +67,7 @@ export class FamilySchema {
   }
 
   public async fetchNames(): Promise<FamilyNames> {
-    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.creator).then((creator) => creator?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCodes(this.codes).then((creator) => creator?.name);
     let [creatorName] = await Promise.all([creatorNamePromise]);
     let familyName = this.name;
     let names = {family: familyName, creator: creatorName};

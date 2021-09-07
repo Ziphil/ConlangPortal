@@ -79,7 +79,7 @@ export class LanguageSchema {
   }
 
   public async fetchNames(): Promise<LanguageNames> {
-    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.creator).then((creator) => creator?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCodes(this.codes).then((creator) => creator?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
     let [creatorName, familyName] = await Promise.all([creatorNamePromise, familyNamePromise]);
     let languageName = this.name;

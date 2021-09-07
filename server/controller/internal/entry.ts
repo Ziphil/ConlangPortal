@@ -98,10 +98,7 @@ export class EntryController extends Controller {
     let codes = request.body.codes;
     let entries = await EntryUtil.fetchByCodesLoose(codes);
     if (entries.length > 0) {
-      let hasSyncedEntries = entries.some((entry) => {
-        let creatorCodes = ("code" in entry) ? entry.code : entry.codes.creator;
-        return creatorCodes !== codes.creator;
-      });
+      let hasSyncedEntries = entries.some((entry) => entry.codes.creator !== codes.creator);
       let name = entries[0].name ?? null;
       let cautionType = (hasSyncedEntries) ? "hasSyncedFamily" : null;
       let body = {name, cautionType};

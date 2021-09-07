@@ -59,7 +59,7 @@ export class EntryUtil {
   }
 
   public static async add(codes: DialectCodes, names: Omit<Required<DialectNames>, "creator">, evidence: string): Promise<void> {
-    let methods = [] as Array<() => Promise<any>>;
+    let methods = [] as Array<() => Promise<unknown>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.fetchOneByCodes(codes);
       if (family === null) {
@@ -103,7 +103,7 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchOneByCodes(codes);
     } else {
-      return await CreatorModel.fetchOneByCode(codes.creator);
+      return await CreatorModel.fetchOneByCodes(codes);
     }
   }
 
@@ -115,7 +115,7 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchByCodesLoose(codes);
     } else {
-      return [await CreatorModel.fetchOneByCode(codes.creator)].flatMap((creator) => (creator !== null) ? [creator] : []);
+      return await CreatorModel.fetchByCodesLoose(codes);
     }
   }
 
@@ -134,7 +134,7 @@ export class EntryCreator {
     } else if (clazz === FamilySchema) {
       return await FamilyCreator.create(anyRaw);
     } else {
-      return CreatorCreator.create(anyRaw);
+      return await CreatorCreator.create(anyRaw);
     }
   }
 
