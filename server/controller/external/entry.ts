@@ -37,8 +37,16 @@ export class EntryExternalController extends Controller {
       let dialectJson = {} as any;
       dialectJson["normalized"] = CodesUtil.toNormalizedForm(dialect.codes);
       dialectJson["bcp47"] = CodesUtil.toBcpString(dialect.codes);
-      dialectJson["codes"] = dialect.codes;
-      dialectJson["names"] = names;
+      dialectJson["codes"] = {};
+      dialectJson["codes"]["dialect"] = dialect.codes.dialect;
+      dialectJson["codes"]["language"] = dialect.codes.language;
+      dialectJson["codes"]["family"] = dialect.codes.family;
+      dialectJson["codes"]["user"] = dialect.codes.creator;
+      dialectJson["names"] = {};
+      dialectJson["names"]["dialect"] = names.dialect;
+      dialectJson["names"]["language"] = names.language;
+      dialectJson["names"]["family"] = names.family;
+      dialectJson["names"]["user"] = names.creator;
       dialectJson["approved"] = dialect.approved;
       dialectJson["createdDate"] = dialect.createdDate.toISOString();
       dialectJson["approvedDate"] = dialect.approvedDate?.toISOString() ?? null;
@@ -53,12 +61,16 @@ export class EntryExternalController extends Controller {
   @get("/image/:codePath")
   public async [Symbol()](request: Request, response: Response): Promise<void> {
     let codePath = request.params["codePath"];
-    let image = await OgpUtil.createEntryImage(codePath);
-    if (image !== null) {
-      response.header("Content-Type", "image/png");
-      response.send(image).end();
-    } else {
-      response.sendStatus(400).end();
+    try {
+      let image = await OgpUtil.createEntryImage(codePath);
+      if (image !== null) {
+        response.header("Content-Type", "image/png");
+        response.send(image).end();
+      } else {
+        response.sendStatus(400).end();
+      }
+    } catch (error) {
+      response.sendStatus(500).end();
     }
   }
 

@@ -16,7 +16,7 @@ import {
 
 
 @style(require("./information-list.scss"))
-export default class DialectInformationList extends InformationList<Family> {
+export default class FamilyInformationList extends InformationList<Family> {
 
   public render(): ReactNode {
     let node = (

@@ -39,7 +39,7 @@ export default class AddEntryForm extends Component<Props, State> {
 
   private async handleClick(): Promise<void> {
     let codes = {
-      user: this.props.userCode,
+      creator: this.props.creatorCode,
       family: (this.state.familyUnspecified) ? "~" : this.state.familyCode,
       language: this.state.languageCode,
       dialect: (this.state.dialectUnspecified) ? "~" : this.state.dialectCode
@@ -65,7 +65,7 @@ export default class AddEntryForm extends Component<Props, State> {
     this.setState({familyCode, familyFetching: true});
     this.handleLanguageCodeSet(this.state.languageCode, familyCode);
     let codes = {
-      user: this.props.userCode,
+      creator: this.props.creatorCode,
       family: (this.state.familyUnspecified) ? "~" : familyCode
     };
     let response = await this.request("fetchEntryName", {codes});
@@ -83,7 +83,7 @@ export default class AddEntryForm extends Component<Props, State> {
   private async handleLanguageCodeSet(languageCode: string, familyCode?: string): Promise<void> {
     this.setState({languageCode, languageFetching: true});
     let codes = {
-      user: this.props.userCode,
+      creator: this.props.creatorCode,
       family: (this.state.familyUnspecified) ? "~" : familyCode ?? this.state.familyCode,
       language: languageCode
     };
@@ -206,7 +206,7 @@ export default class AddEntryForm extends Component<Props, State> {
 
 
 type Props = {
-  userCode: string
+  creatorCode: string
 };
 type State = {
   familyCode: string,

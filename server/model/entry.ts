@@ -10,6 +10,11 @@ import {
   Entry as EntrySkeleton
 } from "/client/skeleton/entry";
 import {
+  Creator,
+  CreatorCreator,
+  CreatorModel
+} from "/server/model/creator";
+import {
   Dialect,
   DialectCodes,
   DialectCreator,
@@ -34,18 +39,13 @@ import {
   LanguageModel,
   LanguageSchema
 } from "/server/model/language";
-import {
-  User,
-  UserCreator,
-  UserModel
-} from "/server/model/user";
 
 
 export class EntryUtil {
 
   private static assertCodes(codes: DialectCodes): void {
-    if (!codes.user.match(/^[a-z]{3}$/)) {
-      throw new CustomError("invalidUserCode");
+    if (!codes.creator.match(/^[a-z]{3}$/)) {
+      throw new CustomError("invalidCreatorCode");
     }
     if (codes.family !== "~" && !codes.family.match(/^[a-z]{3}$/)) {
       throw new CustomError("invalidFamilyCode");
@@ -58,8 +58,8 @@ export class EntryUtil {
     }
   }
 
-  public static async add(codes: DialectCodes, names: Omit<Required<DialectNames>, "user">, evidence: string): Promise<void> {
-    let methods = [] as Array<() => Promise<any>>;
+  public static async add(codes: DialectCodes, names: Omit<Required<DialectNames>, "creator">, evidence: string): Promise<void> {
+    let methods = [] as Array<() => Promise<unknown>>;
     let familyPromise = (async () => {
       let family = await FamilyModel.fetchOneByCodes(codes);
       if (family === null) {
@@ -103,19 +103,19 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchOneByCodes(codes);
     } else {
-      return await UserModel.fetchOneByCode(codes.user);
+      return await CreatorModel.fetchOneByCodes(codes);
     }
   }
 
-  public static async fetchByCodesLoose(codes: EntryCodes): Promise<Array<Entry>> {
+  public static async fetchSyncedByCodes(codes: EntryCodes): Promise<Array<Entry>> {
     if ("dialect" in codes) {
-      return await DialectModel.fetchByCodesLoose(codes);
+      return await DialectModel.fetchSyncedByCodes(codes);
     } else if ("language" in codes) {
-      return await LanguageModel.fetchByCodesLoose(codes);
+      return await LanguageModel.fetchSyncedByCodes(codes);
     } else if ("family" in codes) {
-      return await FamilyModel.fetchByCodesLoose(codes);
+      return await FamilyModel.fetchSyncedByCodes(codes);
     } else {
-      return [await UserModel.fetchOneByCode(codes.user)].flatMap((user) => (user !== null) ? [user] : []);
+      return await CreatorModel.fetchSyncedByCodes(codes);
     }
   }
 
@@ -134,12 +134,12 @@ export class EntryCreator {
     } else if (clazz === FamilySchema) {
       return await FamilyCreator.create(anyRaw);
     } else {
-      return UserCreator.create(anyRaw);
+      return await CreatorCreator.create(anyRaw);
     }
   }
 
 }
 
 
-export type Entry = Dialect | Language | Family | User;
-export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {user: string};
+export type Entry = Dialect | Language | Family | Creator;
+export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {creator: string};

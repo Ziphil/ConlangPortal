@@ -83,7 +83,7 @@ $smartphone-scale-ratio: 0.7;
 
 .right {
   margin-top: 64u;
-  margin-left: 64u;
+  margin-left: 80u;
   margin-right: 96u;
   flex-grow: 1;
   @include smartphone {
@@ -157,6 +157,7 @@ $smartphone-scale-ratio: 0.7;
   font-size: 200%;
   font-weight: bold;
   color: var(--accent-color);
+  text-align: justify;
   @include smartphone {
     font-size: 150%;
   }
@@ -164,10 +165,11 @@ $smartphone-scale-ratio: 0.7;
 
 .rest-name {
   @include line-height;
-  margin-top: 24u;
+  margin-top: 32u;
   font-size: 130%;
   font-weight: bold;
   color: var(--accent-color);
+  text-align: justify;
   @include smartphone {
     font-size: 100%;
   }
@@ -186,4 +188,9 @@ $smartphone-scale-ratio: 0.7;
   font-size: 80%;
   color: var(--dimmed-accent-color);
   text-align: center;
+}
+
+.message {
+  @include line-height;
+  padding: 0u 96u 64u 96u;
 }

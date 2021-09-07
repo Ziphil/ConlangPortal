@@ -8,8 +8,8 @@ import {
 } from "express";
 import * as jwt from "jsonwebtoken";
 import {
-  UserModel
-} from "/server/model/user";
+  CreatorModel
+} from "/server/model/creator";
 import {
   JWT_SECRET
 } from "/server/variable";
@@ -21,7 +21,7 @@ export function verifyUser(): RequestHandler {
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && data && "id" in data) {
         let anyData = data as any;
-        let user = await UserModel.findById(anyData.id).exec();
+        let user = await CreatorModel.findById(anyData.id).exec();
         if (user) {
           request.user = user;
           next();
@@ -51,8 +51,8 @@ export function verifyApprover(): RequestHandler {
 export function verifyCode(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
-    let userCode = request.query.codes?.user || request.body.codes?.user;
-    if (user.code === userCode) {
+    let creatorCode = request.query.codes?.creator || request.body.codes?.creator;
+    if (user.codes.creator === creatorCode) {
       next();
     } else {
       response.status(403).end();
@@ -65,7 +65,7 @@ export function login(expiresIn: number): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let code = request.body.code ?? request.query.code;
     let password = request.body.password ?? request.query.code;
-    let user = await UserModel.authenticate(code, password);
+    let user = await CreatorModel.authenticate(code, password);
     if (user) {
       jwt.sign({id: user.id}, JWT_SECRET, {expiresIn}, (error, token) => {
         if (!error) {

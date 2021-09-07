@@ -15,8 +15,8 @@ import {
   ResponseEachData
 } from "/server/controller/internal/type";
 import {
-  User
-} from "/server/model/user";
+  Creator
+} from "/server/model/creator";
 
 
 export class Controller extends BaseController {
@@ -61,7 +61,7 @@ export interface Request<N extends ProcessName> extends ExpressRequest<ExpressPa
 
   // 認証に成功した場合にユーザーデータが格納されます。
   // このプロパティは、authenticate ミドルウェアおよび verifyUser ミドルウェアが呼び出された場合にのみ、値が格納されます。
-  user?: User;
+  user?: Creator;
 
   // reCAPTCHA が返したスコアが格納されます。
   // このプロパティは、verifyRecaptcha ミドルウェアが呼び出された場合にのみ、値が格納されます。

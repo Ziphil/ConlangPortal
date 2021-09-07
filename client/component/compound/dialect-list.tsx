@@ -33,9 +33,9 @@ export default class DialectList extends Component<Props, State> {
 
   private async fetchDialects(): Promise<void> {
     let user = this.props.store!.user;
-    let userCode = (this.props.onlyUser) ? user?.code ?? "dummy" : undefined;
+    let creatorCode = (this.props.onlyUser) ? user?.code ?? "dummy" : undefined;
     let includeOptions = this.props.includeOptions;
-    let response = await this.request("fetchDialects", {userCode, includeOptions});
+    let response = await this.request("fetchDialects", {creatorCode, includeOptions});
     if (response.status === 200) {
       let dialects = response.data.map(Dialect.create);
       this.setState({dialects});

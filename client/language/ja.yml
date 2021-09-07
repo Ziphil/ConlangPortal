@@ -11,7 +11,7 @@ error:
     心当たりがなければ、語族コードを別のものに変更してください。
   loginFailed: >-
     ログインに失敗しました。
-  invalidUserCode: >-
+  invalidCreatorCode: >-
     製作者コードが不正です。
     ラテン小文字のみから成る 3 文字のコードを入力してください。
   invalidFamilyCode: >-
@@ -23,7 +23,7 @@ error:
   invalidDialectCode: >-
     方言コードが不正です。
     ラテン小文字のみから成る 2 文字のコードを入力してください。
-  duplicateUserCode: >-
+  duplicateCreatorCode: >-
     製作者コードが重複しています。
     別の製作者コードを指定してください。
   duplicateFamilyCode: >-
@@ -94,14 +94,18 @@ dialectPane:
   approve: "承認"
   reject: "却下"
 entryPane:
-  user: "製作者"
+  creator: "製作者"
   family: "語族"
   language: "言語"
   dialect: "方言"
-  notFound: "このコードは割り当てられていません"
   guide: 
     approved: "以下の各項目はクリックで編集できます"
     unapproved: "以下の各項目は承認後に編集できるようになります"
+  unspecified: >-
+    この階層には情報がありません。
+    1 つ上の階層を参照してください。
+  unregistered: >-
+    このコードはまだ割り当てられていません。
 header:
   logout: "ログアウト"
   userPage: "ユーザーページ"

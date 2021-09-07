@@ -35,7 +35,7 @@ export default class Header extends Component<Props, State> {
 
   public render(): ReactNode {
     let user = this.props.store!.user;
-    let userNameNode = (user !== null) && (
+    let userNode = (user !== null) && (
       <div styleName="user">
         <div styleName="item" onClick={this.performLogout.bind(this)}>{this.trans("header.logout")}</div>
         <div styleName="item" onClick={this.jumpUserPage.bind(this)}>{this.trans("header.userPage")}</div>
@@ -55,7 +55,7 @@ export default class Header extends Component<Props, State> {
             </div>
           </div>
           <div styleName="right">
-            {userNameNode}
+            {userNode}
           </div>
         </div>
       </header>

@@ -13,6 +13,9 @@ import {
   Dialect as DialectSkeleton
 } from "/client/skeleton/dialect";
 import {
+  CreatorModel
+} from "/server/model/creator";
+import {
   EntryCodes
 } from "/server/model/entry";
 import {
@@ -21,9 +24,6 @@ import {
 import {
   LanguageModel
 } from "/server/model/language";
-import {
-  UserModel
-} from "/server/model/user";
 
 
 export class DialectCodesSchema {
@@ -38,7 +38,7 @@ export class DialectCodesSchema {
   public family!: string;
 
   @prop({required: true})
-  public user!: string;
+  public creator!: string;
 
 }
 
@@ -74,11 +74,11 @@ export class DialectSchema {
   public approvedDate?: Date;
 
   public async approve(this: Dialect): Promise<Dialect> {
-    let userPromise = UserModel.fetchOneByCode(this.codes.user).then((user) => {
-      if (user !== null && !user.approved) {
-        user.approved = true;
-        user.approvedDate = new Date();
-        return user.save();
+    let creatorPromise = CreatorModel.fetchOneByCodes(this.codes).then((creator) => {
+      if (creator !== null && !creator.approved) {
+        creator.approved = true;
+        creator.approvedDate = new Date();
+        return creator.save();
       } else {
         return null;
       }
@@ -106,12 +106,12 @@ export class DialectSchema {
       this.approvedDate = new Date();
       await this.save();
     })();
-    let [user, family, language] = await Promise.all([userPromise, familyPromise, languagePromise, dialectPromise]);
+    let [creator, family, language] = await Promise.all([creatorPromise, familyPromise, languagePromise, dialectPromise]);
     return this;
   }
 
   public async changeInformations(this: Dialect, informations: any): Promise<Dialect> {
-    let dialects = await DialectModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let dialects = await DialectModel.fetchSyncedByCodes(this.codes) as Array<any>;
     let promises = dialects.map(async (dialect) => {
       for (let [key, value] of Object.entries(informations)) {
         if (value !== undefined) {
@@ -125,12 +125,12 @@ export class DialectSchema {
   }
 
   public async fetchNames(): Promise<DialectNames> {
-    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCodes(this.codes).then((creator) => creator?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
     let languageNamePromise = LanguageModel.fetchOneByCodes(this.codes).then((language) => language?.name);
-    let [userName, familyName, languageName] = await Promise.all([userNamePromise, familyNamePromise, languageNamePromise]);
+    let [creatorName, familyName, languageName] = await Promise.all([creatorNamePromise, familyNamePromise, languageNamePromise]);
     let dialectName = this.name;
-    let names = {dialect: dialectName, language: languageName, family: familyName, user: userName};
+    let names = {dialect: dialectName, language: languageName, family: familyName, creator: creatorName};
     return names;
   }
 
@@ -142,7 +142,7 @@ export class DialectSchema {
     return dialect;
   }
 
-  public static async fetch(userCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}): Promise<Array<Dialect>> {
+  public static async fetch(creatorCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}): Promise<Array<Dialect>> {
     let query = (() => {
       if (includeOptions !== undefined) {
         if (includeOptions.approved && includeOptions.unapproved) {
@@ -158,8 +158,8 @@ export class DialectSchema {
         return DialectModel.find();
       }
     })();
-    if (userCode !== undefined) {
-      query = query.where("codes.user", userCode);
+    if (creatorCode !== undefined) {
+      query = query.where("codes.creator", creatorCode);
     }
     query = query.sort("-approvedDate -createdDate");
     let dialects = await query.exec();
@@ -167,32 +167,32 @@ export class DialectSchema {
   }
 
   public static async fetchOneByCodes(codes: DialectCodes): Promise<Dialect | null> {
-    let dialect = await DialectModel.findOne().where("codes.user", codes.user).where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect);
+    let dialect = await DialectModel.findOne().where("codes.creator", codes.creator).where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect);
     return dialect;
   }
 
-  public static async fetchByCodesLoose(codes: DialectCodes): Promise<Array<Dialect>> {
+  public static async fetchSyncedByCodes(codes: DialectCodes): Promise<Array<Dialect>> {
     let dialects = await DialectModel.find().or([
-      DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
-      DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.dialect).getFilter(),
-      DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.creator", codes.creator).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.creator", codes.family).where("codes.dialect", codes.dialect).getFilter(),
+      DialectModel.find().where("codes.family", codes.creator).where("codes.dialect", codes.dialect).getFilter(),
       DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
     ]);
     return dialects;
   }
 
-  public static async fetchDescendants(code: EntryCodes): Promise<Array<Dialect>> {
+  public static async fetchDescendants(codes: EntryCodes): Promise<Array<Dialect>> {
     let query = DialectModel.find();
-    if ("dialect" in code) {
-      query = query.where("codes.dialect", code.dialect);
+    if ("dialect" in codes) {
+      query = query.where("codes.dialect", codes.dialect);
     }
-    if ("language" in code) {
-      query = query.where("codes.language", code.language);
+    if ("language" in codes) {
+      query = query.where("codes.language", codes.language);
     }
-    if ("family" in code) {
-      query = query.where("codes.family", code.family);
+    if ("family" in codes) {
+      query = query.where("codes.family", codes.family);
     }
-    query = query.where("codes.user", code.user);
+    query = query.where("codes.creator", codes.creator);
     let dialects = await query.exec();
     return dialects;
   }
@@ -201,32 +201,32 @@ export class DialectSchema {
     if (codes.dialect !== "~") {
       if (codes.family !== "~") {
         let dialect = await DialectModel.findOne().or([
-          DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.user", codes.family).where("codes.language", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.creator", codes.creator).where("codes.language", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.creator", codes.family).where("codes.language", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.family", codes.creator).where("codes.language", codes.dialect).getFilter(),
           DialectModel.find().where("codes.family", codes.family).where("codes.language", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.user", codes.family).where("codes.dialect", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.creator", codes.creator).where("codes.dialect", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.creator", codes.family).where("codes.dialect", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.family", codes.creator).where("codes.dialect", codes.dialect).getFilter(),
           DialectModel.find().where("codes.family", codes.family).where("codes.dialect", codes.dialect).getFilter()
         ]);
         let duplicate = dialect !== null;
         return duplicate;
       } else {
         let dialect = await DialectModel.findOne().or([
-          DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.user", codes.user).where("codes.dialect", codes.dialect).getFilter(),
-          DialectModel.find().where("codes.family", codes.user).where("codes.dialect", codes.dialect).getFilter()
+          DialectModel.find().where("codes.creator", codes.creator).where("codes.language", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.family", codes.creator).where("codes.language", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.creator", codes.creator).where("codes.dialect", codes.dialect).getFilter(),
+          DialectModel.find().where("codes.family", codes.creator).where("codes.dialect", codes.dialect).getFilter()
         ]);
         let duplicate = dialect !== null;
         return duplicate;
       }
     } else {
       let dialect = await DialectModel.findOne().or([
-        DialectModel.find().where("codes.user", codes.user).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
-        DialectModel.find().where("codes.user", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
-        DialectModel.find().where("codes.family", codes.user).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.creator", codes.creator).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.creator", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
+        DialectModel.find().where("codes.family", codes.creator).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter(),
         DialectModel.find().where("codes.family", codes.family).where("codes.language", codes.language).where("codes.dialect", codes.dialect).getFilter()
       ]);
       let duplicate = dialect !== null;
@@ -263,4 +263,4 @@ export type Dialect = DocumentType<DialectSchema>;
 export let DialectModel = getModelForClass(DialectSchema);
 
 export type DialectCodes = DialectCodesSchema;
-export type DialectNames = {dialect?: string, language?: string, family?: string, user?: string};
+export type DialectNames = {dialect?: string, language?: string, family?: string, creator?: string};

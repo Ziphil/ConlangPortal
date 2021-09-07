@@ -51,11 +51,12 @@ export default class EntryPage extends Component<Props, State, Params> {
 
   private renderAddEntryForm(): ReactNode {
     let user = this.props.store!.user;
-    let codeArray = this.props.match!.params.codePath.split("-");
-    if (codeArray.length === 1 && codeArray[0] === user?.code) {
+    let codePath = this.props.match!.params.codePath;
+    let codes = CodesUtil.fromCodePath(codePath);
+    if (CodesUtil.getKind(codes) === "creator" && codes.creator === user?.code) {
       let node = (
         <div styleName="form">
-          <AddEntryForm userCode={codeArray[0]}/>
+          <AddEntryForm creatorCode={codes.creator}/>
         </div>
       );
       return node;

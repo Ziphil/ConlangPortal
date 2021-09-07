@@ -96,12 +96,9 @@ export class EntryController extends Controller {
   @before()
   public async [Symbol()](request: Request<"fetchEntryName">, response: Response<"fetchEntryName">): Promise<void> {
     let codes = request.body.codes;
-    let entries = await EntryUtil.fetchByCodesLoose(codes);
+    let entries = await EntryUtil.fetchSyncedByCodes(codes);
     if (entries.length > 0) {
-      let hasSyncedEntries = entries.some((entry) => {
-        let userCode = ("code" in entry) ? entry.code : entry.codes.user;
-        return userCode !== codes.user;
-      });
+      let hasSyncedEntries = entries.some((entry) => entry.codes.creator !== codes.creator);
       let name = entries[0].name ?? null;
       let cautionType = (hasSyncedEntries) ? "hasSyncedFamily" : null;
       let body = {name, cautionType};
@@ -124,9 +121,9 @@ export class EntryController extends Controller {
   @post(SERVER_PATHS["fetchDialects"])
   @before()
   public async [Symbol()](request: Request<"fetchDialects">, response: Response<"fetchDialects">): Promise<void> {
-    let userCode = request.body.userCode;
+    let creatorCode = request.body.creatorCode;
     let includeOptions = request.body.includeOptions;
-    let dialects = await DialectModel.fetch(userCode, includeOptions);
+    let dialects = await DialectModel.fetch(creatorCode, includeOptions);
     let body = await Promise.all(dialects.map((dialect) => DialectCreator.create(dialect)));
     Controller.respond(response, body);
   }

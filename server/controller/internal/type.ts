@@ -4,6 +4,9 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
+  Creator
+} from "/client/skeleton/creator";
+import {
   Dialect,
   DialectCodes,
   DialectNames
@@ -15,9 +18,6 @@ import {
 import {
   CustomError
 } from "/client/skeleton/error";
-import {
-  User
-} from "/client/skeleton/user";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
@@ -37,7 +37,7 @@ export const SERVER_PATHS = {
 
 type ServerSpecs = {
   addEntry: {
-    request: {codes: DialectCodes, names: Omit<Required<DialectNames>, "user">, evidence: string},
+    request: {codes: DialectCodes, names: Omit<Required<DialectNames>, "creator">, evidence: string},
     response: {
       success: {},
       error: CustomError<string>
@@ -79,7 +79,7 @@ type ServerSpecs = {
     }
   },
   fetchDialects: {
-    request: {userCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}},
+    request: {creatorCode?: string, includeOptions?: {approved: boolean, unapproved: boolean}},
     response: {
       success: Array<Dialect>,
       error: never
@@ -88,7 +88,7 @@ type ServerSpecs = {
   login: {
     request: {code: string, password: string},
     response: {
-      success: {token: string, user: User},
+      success: {token: string, user: Creator},
       error: never
     }
   },
@@ -102,14 +102,14 @@ type ServerSpecs = {
   fetchUser: {
     request: {},
     response: {
-      success: User,
+      success: Creator,
       error: never
     }
   },
   registerUser: {
     request: {code: string, name: string, password: string},
     response: {
-      success: User,
+      success: Creator,
       error: CustomError<string>
     }
   }
