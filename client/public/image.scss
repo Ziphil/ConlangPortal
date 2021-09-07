@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+$text-color: map-get($light-theme, text-color);
+$background-color: map-get($light-theme, background-color);
+$accent-first-start-color: scale-color(map-get($light-theme, accent-first-start-color), $lightness: -20%, $saturation: -30%);
+$accent-first-end-color: scale-color(map-get($light-theme, accent-first-end-color), $lightness: -20%, $saturation: -30%);
+$accent-second-start-color: scale-color(map-get($light-theme, accent-second-start-color), $lightness: -20%, $saturation: -30%);
+$accent-second-end-color: scale-color(map-get($light-theme, accent-second-end-color), $lightness: -20%, $saturation: -30%);
+$accent-third-start-color: scale-color(map-get($light-theme, accent-third-start-color), $lightness: -20%, $saturation: -30%);
+$accent-third-end-color: scale-color(map-get($light-theme, accent-third-end-color), $lightness: -20%, $saturation: -30%);
+$accent-fourth-start-color: scale-color(map-get($light-theme, accent-fourth-start-color), $lightness: -20%, $saturation: -30%);
+$accent-fourth-end-color: scale-color(map-get($light-theme, accent-fourth-end-color), $lightness: -20%, $saturation: -30%);
+
+
+html,
+body {
+  width: 1200px;
+  height: 630px;
+  margin: 0px;
+  padding: 0px;
+  font-size: 63px;
+  background: four-gradient(90deg, $accent-first-start-color, $accent-first-end-color, $accent-second-start-color, $accent-second-end-color, $accent-third-start-color, $accent-third-end-color, $accent-fourth-start-color, $accent-fourth-end-color);
+}
+
+.root {
+  height: 100%;
+  padding: 0.6rem 0.8rem 0.8rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.code {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+  font-style: italic;
+  color: $background-color;
+  flex-grow: 0;
+}
+
+.box {
+  margin-top: 0.2rem;
+  border-radius: 0.3rem;
+  background-color: $background-color;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.name-container {
+  padding: 0rem 1rem;
+  font-family: "Nunito", "M PLUS Rounded 1c", sans-serif;
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: $text-color;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-name {
+  font-size: 1.5rem;
+}
+
+.rest-name {
+  font-size: 0.8rem;
+}
+
+.title {
+  margin: -0.2rem 0.5rem 0.2rem 0rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.5rem;
+  font-weight: 900;
+  color: $accent-first-start-color;
+  text-align: right;
+}
