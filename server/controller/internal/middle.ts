@@ -52,7 +52,7 @@ export function verifyCode(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
     let creatorCode = request.query.codes?.creator || request.body.codes?.creator;
-    if (user.code === creatorCode) {
+    if (user.codes.creator === creatorCode) {
       next();
     } else {
       response.status(403).end();
