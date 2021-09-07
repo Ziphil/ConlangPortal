@@ -65,7 +65,7 @@ export class LanguageSchema {
   public approvedDate?: Date;
 
   public async changeInformations(this: Language, informations: any): Promise<Language> {
-    let languages = await LanguageModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let languages = await LanguageModel.fetchSyncedByCodes(this.codes) as Array<any>;
     let promises = languages.map(async (language) => {
       for (let [key, value] of Object.entries(informations)) {
         if (value !== undefined) {
@@ -100,7 +100,7 @@ export class LanguageSchema {
     return language;
   }
 
-  public static async fetchByCodesLoose(codes: LanguageCodes): Promise<Array<Language>> {
+  public static async fetchSyncedByCodes(codes: LanguageCodes): Promise<Array<Language>> {
     let languages = await LanguageModel.find().or([
       LanguageModel.find().where("codes.creator", codes.creator).where("codes.language", codes.language).getFilter(),
       LanguageModel.find().where("codes.creator", codes.family).where("codes.language", codes.language).getFilter(),

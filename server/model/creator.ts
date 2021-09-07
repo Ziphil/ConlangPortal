@@ -120,7 +120,7 @@ export class CreatorSchema {
     return creator;
   }
 
-  public static async fetchByCodesLoose(codes: CreatorCodes): Promise<Array<Creator>> {
+  public static async fetchSyncedByCodes(codes: CreatorCodes): Promise<Array<Creator>> {
     let creators = await CreatorModel.find().or([
       CreatorModel.find().where("codes.creator", codes.creator).getFilter(),
       CreatorModel.find().where("codes.family", codes.creator).getFilter()

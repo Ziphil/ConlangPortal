@@ -107,15 +107,15 @@ export class EntryUtil {
     }
   }
 
-  public static async fetchByCodesLoose(codes: EntryCodes): Promise<Array<Entry>> {
+  public static async fetchSyncedByCodes(codes: EntryCodes): Promise<Array<Entry>> {
     if ("dialect" in codes) {
-      return await DialectModel.fetchByCodesLoose(codes);
+      return await DialectModel.fetchSyncedByCodes(codes);
     } else if ("language" in codes) {
-      return await LanguageModel.fetchByCodesLoose(codes);
+      return await LanguageModel.fetchSyncedByCodes(codes);
     } else if ("family" in codes) {
-      return await FamilyModel.fetchByCodesLoose(codes);
+      return await FamilyModel.fetchSyncedByCodes(codes);
     } else {
-      return await CreatorModel.fetchByCodesLoose(codes);
+      return await CreatorModel.fetchSyncedByCodes(codes);
     }
   }
 

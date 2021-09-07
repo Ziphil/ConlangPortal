@@ -53,7 +53,7 @@ export class FamilySchema {
   public approvedDate?: Date;
 
   public async changeInformations(this: Family, informations: any): Promise<Family> {
-    let families = await FamilyModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let families = await FamilyModel.fetchSyncedByCodes(this.codes) as Array<any>;
     let promises = families.map(async (family) => {
       for (let [key, value] of Object.entries(informations)) {
         if (value !== undefined) {
@@ -75,7 +75,7 @@ export class FamilySchema {
   }
 
   public static async add(codes: FamilyCodes, rawName: string): Promise<Family> {
-    let syncedFamilies = await this.fetchByCodesLoose(codes);
+    let syncedFamilies = await this.fetchSyncedByCodes(codes);
     let name = (syncedFamilies[0] !== undefined) ? syncedFamilies[0].name : rawName;
     let createdDate = new Date();
     let approved = false;
@@ -92,7 +92,7 @@ export class FamilySchema {
   // 与えられたコードの語族データと共通のプロパティをもたなければならない全ての語族データの配列を返します。
   // すなわち、与えられたコードのプロパティを変更したい場合、このメソッドが返す全ての語族データに対しても同じプロパティで変更する必要があります。
   // 例えば、引数に xxx/aaa を渡した場合、このメソッドが返す配列には、完全に合致する xxx/aaa はもちろん含まれる他、xxx/bbb のような製作者部分が異なるものも含まれます。
-  public static async fetchByCodesLoose(codes: FamilyCodes): Promise<Array<Family>> {
+  public static async fetchSyncedByCodes(codes: FamilyCodes): Promise<Array<Family>> {
     if (codes.family !== "~") {
       let families = await FamilyModel.find().where("codes.family", codes.family);
       return families;

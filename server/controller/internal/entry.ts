@@ -96,7 +96,7 @@ export class EntryController extends Controller {
   @before()
   public async [Symbol()](request: Request<"fetchEntryName">, response: Response<"fetchEntryName">): Promise<void> {
     let codes = request.body.codes;
-    let entries = await EntryUtil.fetchByCodesLoose(codes);
+    let entries = await EntryUtil.fetchSyncedByCodes(codes);
     if (entries.length > 0) {
       let hasSyncedEntries = entries.some((entry) => entry.codes.creator !== codes.creator);
       let name = entries[0].name ?? null;

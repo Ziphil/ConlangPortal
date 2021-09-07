@@ -111,7 +111,7 @@ export class DialectSchema {
   }
 
   public async changeInformations(this: Dialect, informations: any): Promise<Dialect> {
-    let dialects = await DialectModel.fetchByCodesLoose(this.codes) as Array<any>;
+    let dialects = await DialectModel.fetchSyncedByCodes(this.codes) as Array<any>;
     let promises = dialects.map(async (dialect) => {
       for (let [key, value] of Object.entries(informations)) {
         if (value !== undefined) {
@@ -171,7 +171,7 @@ export class DialectSchema {
     return dialect;
   }
 
-  public static async fetchByCodesLoose(codes: DialectCodes): Promise<Array<Dialect>> {
+  public static async fetchSyncedByCodes(codes: DialectCodes): Promise<Array<Dialect>> {
     let dialects = await DialectModel.find().or([
       DialectModel.find().where("codes.creator", codes.creator).where("codes.dialect", codes.dialect).getFilter(),
       DialectModel.find().where("codes.creator", codes.family).where("codes.dialect", codes.dialect).getFilter(),
@@ -181,18 +181,18 @@ export class DialectSchema {
     return dialects;
   }
 
-  public static async fetchDescendants(code: EntryCodes): Promise<Array<Dialect>> {
+  public static async fetchDescendants(codes: EntryCodes): Promise<Array<Dialect>> {
     let query = DialectModel.find();
-    if ("dialect" in code) {
-      query = query.where("codes.dialect", code.dialect);
+    if ("dialect" in codes) {
+      query = query.where("codes.dialect", codes.dialect);
     }
-    if ("language" in code) {
-      query = query.where("codes.language", code.language);
+    if ("language" in codes) {
+      query = query.where("codes.language", codes.language);
     }
-    if ("family" in code) {
-      query = query.where("codes.family", code.family);
+    if ("family" in codes) {
+      query = query.where("codes.family", codes.family);
     }
-    query = query.where("codes.creator", code.creator);
+    query = query.where("codes.creator", codes.creator);
     let dialects = await query.exec();
     return dialects;
   }
