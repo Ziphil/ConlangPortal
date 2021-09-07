@@ -72,7 +72,7 @@ body {
 
 .rest-name {
   @include line-height;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
   font-size: 0.8rem;
 }
 
@@ -100,7 +100,7 @@ body {
 
 .title {
   @include special-font;
-  margin: -0.2rem 0.5rem 0.2rem 0rem;
+  margin: -0.5rem 0.4rem 0.2rem 0rem;
   font-size: 0.5rem;
   font-style: normal;
   color: $accent-first-start-color;
