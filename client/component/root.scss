@@ -15,7 +15,7 @@ html {
 body {
   margin: 0u;
   padding: 0u;
-  font-family: $european-font-family, $japanese-font-family, serif;
+  font-family: $european-font-family, $japanese-font-family, sans-serif;
   font-feature-settings: "palt" 1, "pkna" 1;
   color: var(--text-color);
   line-height: 1;
