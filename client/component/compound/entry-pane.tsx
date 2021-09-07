@@ -55,7 +55,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     let response = await this.request("fetchEntry", {codes});
     if (response.status === 200) {
       let entry = (response.data !== null) ? EntryStatic.create(response.data) : null;
-      document.title = OgpUtil.createTitle(entry);
+      document.title = OgpUtil.createTitle(entry, codes);
       if (entry !== null) {
         this.setState({found: true, entry});
       } else {

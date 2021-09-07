@@ -38,12 +38,12 @@ export class OgpUtil {
     return html;
   }
 
-  public static createTitle(entry: Entry | null): string {
+  public static createTitle(entry: Entry | null, codes: EntryCodes): string {
     let defaultTitle = this.createDefaultTitle();
     if (entry !== null) {
       return `${entry.name} [${CodesUtil.toNormalizedForm(entry.codes)}] — ${defaultTitle}`;
     } else {
-      return defaultTitle;
+      return `[${CodesUtil.toNormalizedForm(codes)}] — ${defaultTitle}`;
     }
   }
 
