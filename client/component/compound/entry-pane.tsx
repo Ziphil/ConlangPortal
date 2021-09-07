@@ -10,10 +10,10 @@ import {
 } from "react-router-dom";
 import Component from "/client/component/component";
 import CommonPane from "/client/component/compound/common-pane";
+import CreatorInformationList from "/client/component/compound/information-list/creator-information-list";
 import DialectInformationList from "/client/component/compound/information-list/dialect-information-list";
 import FamilyInformationList from "/client/component/compound/information-list/family-information-list";
 import LanguageInformationList from "/client/component/compound/information-list/language-information-list";
-import UserInformationList from "/client/component/compound/information-list/user-information-list";
 import {
   style
 } from "/client/component/decorator";
@@ -167,7 +167,7 @@ export default class EntryPane extends Component<Props, State, Params> {
   private renderInformationList(): ReactNode {
     let entry = this.state.entry;
     if (entry !== null) {
-      let approved = entry !== null && (entry.approved || entry.kind === "user");
+      let approved = entry !== null && (entry.approved || entry.kind === "creator");
       let editable = approved && this.props.store!.user?.code === entry.codes.user;
       if (entry.kind === "dialect") {
         return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
@@ -176,7 +176,7 @@ export default class EntryPane extends Component<Props, State, Params> {
       } else if (entry.kind === "family") {
         return <FamilyInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       } else {
-        return <UserInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+        return <CreatorInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
       }
     }
   }
@@ -205,7 +205,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     if (found !== null) {
       if (found && entry !== null) {
         if (CodesUtil.toCodeArray(entry.codes)[0] !== "~") {
-          let approved = entry !== null && (entry.approved || entry.kind === "user");
+          let approved = entry !== null && (entry.approved || entry.kind === "creator");
           let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.user;
           let informationListNode = this.renderInformationList();
           let guideNode = (maybeEditable) && (

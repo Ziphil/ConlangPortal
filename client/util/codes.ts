@@ -116,7 +116,7 @@ export class CodesUtil {
     } else if ("family" in codes) {
       return "family";
     } else {
-      return "user";
+      return "creator";
     }
   }
 

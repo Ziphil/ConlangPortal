@@ -94,7 +94,7 @@ dialectPane:
   approve: "Approve"
   reject: "Reject"
 entryPane:
-  user: "Creator"
+  creator: "Creator"
   family: "Family"
   language: "Language"
   dialect: "Dialect"

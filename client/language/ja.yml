@@ -94,7 +94,7 @@ dialectPane:
   approve: "承認"
   reject: "却下"
 entryPane:
-  user: "製作者"
+  creator: "製作者"
   family: "語族"
   language: "言語"
   dialect: "方言"

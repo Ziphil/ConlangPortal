@@ -12,8 +12,8 @@ import {
   LANGUAGES
 } from "/client/language";
 import {
-  User
-} from "/client/skeleton/user";
+  Creator
+} from "/client/skeleton/creator";
 import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
@@ -29,7 +29,7 @@ export class GlobalStore {
   public messages: Record<string, string> = {};
 
   @observable
-  public user: Jsonify<User> | null = null;
+  public user: Jsonify<Creator> | null = null;
 
   @action
   public async changeLocale(locale: string): Promise<void> {

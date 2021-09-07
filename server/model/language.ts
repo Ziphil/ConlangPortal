@@ -13,14 +13,14 @@ import {
   Language as LanguageSkeleton
 } from "/client/skeleton/language";
 import {
+  CreatorModel
+} from "/server/model/creator";
+import {
   DialectModel
 } from "/server/model/dialect";
 import {
   FamilyModel
 } from "/server/model/family";
-import {
-  UserModel
-} from "/server/model/user";
 
 
 export class LanguageCodesSchema {
@@ -79,11 +79,11 @@ export class LanguageSchema {
   }
 
   public async fetchNames(): Promise<LanguageNames> {
-    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.user).then((creator) => creator?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
-    let [userName, familyName] = await Promise.all([userNamePromise, familyNamePromise]);
+    let [creatorName, familyName] = await Promise.all([creatorNamePromise, familyNamePromise]);
     let languageName = this.name;
-    let names = {language: languageName, family: familyName, user: userName};
+    let names = {language: languageName, family: familyName, user: creatorName};
     return names;
   }
 

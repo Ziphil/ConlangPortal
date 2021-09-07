@@ -10,6 +10,11 @@ import {
   Entry as EntrySkeleton
 } from "/client/skeleton/entry";
 import {
+  Creator,
+  CreatorCreator,
+  CreatorModel
+} from "/server/model/creator";
+import {
   Dialect,
   DialectCodes,
   DialectCreator,
@@ -34,11 +39,6 @@ import {
   LanguageModel,
   LanguageSchema
 } from "/server/model/language";
-import {
-  User,
-  UserCreator,
-  UserModel
-} from "/server/model/user";
 
 
 export class EntryUtil {
@@ -103,7 +103,7 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchOneByCodes(codes);
     } else {
-      return await UserModel.fetchOneByCode(codes.user);
+      return await CreatorModel.fetchOneByCode(codes.user);
     }
   }
 
@@ -115,7 +115,7 @@ export class EntryUtil {
     } else if ("family" in codes) {
       return await FamilyModel.fetchByCodesLoose(codes);
     } else {
-      return [await UserModel.fetchOneByCode(codes.user)].flatMap((user) => (user !== null) ? [user] : []);
+      return [await CreatorModel.fetchOneByCode(codes.user)].flatMap((user) => (user !== null) ? [user] : []);
     }
   }
 
@@ -134,12 +134,12 @@ export class EntryCreator {
     } else if (clazz === FamilySchema) {
       return await FamilyCreator.create(anyRaw);
     } else {
-      return UserCreator.create(anyRaw);
+      return CreatorCreator.create(anyRaw);
     }
   }
 
 }
 
 
-export type Entry = Dialect | Language | Family | User;
+export type Entry = Dialect | Language | Family | Creator;
 export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | {user: string};

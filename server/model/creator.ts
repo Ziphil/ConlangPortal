@@ -14,8 +14,8 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
-  User as UserSkeleton
-} from "/client/skeleton/user";
+  Creator as CreatorSkeleton
+} from "/client/skeleton/creator";
 import {
   CustomError
 } from "/server/model/error";
@@ -25,7 +25,7 @@ import {
 
 
 @modelOptions({schemaOptions: {collection: "creators"}})
-export class UserSchema {
+export class CreatorSchema {
 
   @prop({required: true, unique: true})
   public code!: string;
@@ -57,7 +57,7 @@ export class UserSchema {
   @prop()
   public approvedDate?: Date;
 
-  public async changeInformations(this: User, informations: any): Promise<User> {
+  public async changeInformations(this: Creator, informations: any): Promise<Creator> {
     let anyThis = this as any;
     for (let [key, value] of Object.entries(informations)) {
       if (value !== undefined) {
@@ -71,7 +71,7 @@ export class UserSchema {
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
-  public static async register(code: string, name: string, password: string): Promise<User> {
+  public static async register(code: string, name: string, password: string): Promise<Creator> {
     if (!code.match(/^[a-z]{3}$/)) {
       throw new CustomError("invalidUserCode");
     } else {
@@ -81,7 +81,7 @@ export class UserSchema {
       } else {
         let approved = false;
         let createdDate = new Date();
-        let user = new UserModel({code, name, approved, createdDate});
+        let user = new CreatorModel({code, name, approved, createdDate});
         await user.encryptPassword(password);
         await user.save();
         return user;
@@ -91,8 +91,8 @@ export class UserSchema {
 
   // 渡された名前とパスワードに合致するユーザーを返します。
   // 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、null を返します。
-  public static async authenticate(code: string, password: string): Promise<User | null> {
-    let user = await UserModel.findOne().where("code", code);
+  public static async authenticate(code: string, password: string): Promise<Creator | null> {
+    let user = await CreatorModel.findOne().where("code", code);
     if (user && user.comparePassword(password)) {
       return user;
     } else {
@@ -100,9 +100,9 @@ export class UserSchema {
     }
   }
 
-  public static async fetchOneByCode(code: string): Promise<User | null> {
-    let user = await UserModel.findOne().where("code", code);
-    return user;
+  public static async fetchOneByCode(code: string): Promise<Creator | null> {
+    let creator = await CreatorModel.findOne().where("code", code);
+    return creator;
   }
 
   // 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
@@ -117,21 +117,21 @@ export class UserSchema {
   }
 
   public static async checkDuplication(code: string): Promise<boolean> {
-    let userQuery = UserModel.findOne().where("code", code);
+    let creatorQuery = CreatorModel.findOne().where("code", code);
     let familyQuery = FamilyModel.findOne().where("codes.family", code);
-    let [user, family] = await Promise.all([userQuery, familyQuery]);
-    let duplicate = user !== null || family !== null;
+    let [creator, family] = await Promise.all([creatorQuery, familyQuery]);
+    let duplicate = creator !== null || family !== null;
     return duplicate;
   }
 
 }
 
 
-export class UserCreator {
+export class CreatorCreator {
 
-  public static create(raw: User): Jsonify<UserSkeleton> {
+  public static create(raw: Creator): Jsonify<CreatorSkeleton> {
     let id = raw.id;
-    let kind = "user" as const;
+    let kind = "creator" as const;
     let codes = {user: raw.code};
     let code = raw.code;
     let names = {user: raw.name};
@@ -150,5 +150,5 @@ export class UserCreator {
 }
 
 
-export type User = DocumentType<UserSchema>;
-export let UserModel = getModelForClass(UserSchema);
+export type Creator = DocumentType<CreatorSchema>;
+export let CreatorModel = getModelForClass(CreatorSchema);

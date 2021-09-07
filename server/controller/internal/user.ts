@@ -23,9 +23,9 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
-  UserCreator,
-  UserModel
-} from "/server/model/user";
+  CreatorCreator,
+  CreatorModel
+} from "/server/model/creator";
 
 
 @controller(SERVER_PATH_PREFIX)
@@ -36,7 +36,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
-    let userBody = UserCreator.create(user);
+    let userBody = CreatorCreator.create(user);
     let body = {token, user: userBody};
     Controller.respond(response, body);
   }
@@ -53,8 +53,8 @@ export class UserController extends Controller {
     let name = request.body.name;
     let password = request.body.password;
     try {
-      let user = await UserModel.register(code, name, password);
-      let body = UserCreator.create(user);
+      let user = await CreatorModel.register(code, name, password);
+      let body = CreatorCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
       let body = (error.name === "CustomError") ? CustomError.ofType(error.type) : undefined;
@@ -66,7 +66,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
     let user = request.user!;
-    let body = UserCreator.create(user);
+    let body = CreatorCreator.create(user);
     Controller.respond(response, body);
   }
 

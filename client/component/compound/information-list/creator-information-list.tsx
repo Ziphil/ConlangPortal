@@ -11,12 +11,12 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  User
-} from "/client/skeleton/user";
+  Creator
+} from "/client/skeleton/creator";
 
 
 @style(require("./information-list.scss"))
-export default class DialectInformationList extends InformationList<User> {
+export default class CreatorInformationList extends InformationList<Creator> {
 
   protected renderTwitterLink(id: string): ReactNode {
     let node = (

@@ -4,6 +4,10 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
+  Creator,
+  CreatorCodes
+} from "/client/skeleton/creator";
+import {
   Dialect,
   DialectCodes
 } from "/client/skeleton/dialect";
@@ -15,10 +19,6 @@ import {
   Language,
   LanguageCodes
 } from "/client/skeleton/language";
-import {
-  User,
-  UserCodes
-} from "/client/skeleton/user";
 
 
 export class EntryStatic {
@@ -31,13 +31,13 @@ export class EntryStatic {
     } else if (raw.kind === "family") {
       return Object.assign(Object.create(Family.prototype), raw);
     } else {
-      return Object.assign(Object.create(User.prototype), raw);
+      return Object.assign(Object.create(Creator.prototype), raw);
     }
   }
 
 }
 
 
-export type Entry = Dialect | Language | Family | User;
-export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | UserCodes;
+export type Entry = Dialect | Language | Family | Creator;
+export type EntryCodes = DialectCodes | LanguageCodes | FamilyCodes | CreatorCodes;
 export type EntryKind = Entry["kind"];

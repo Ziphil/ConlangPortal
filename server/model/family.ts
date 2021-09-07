@@ -13,8 +13,8 @@ import {
   Family as FamilySkeleton
 } from "/client/skeleton/family";
 import {
-  UserModel
-} from "/server/model/user";
+  CreatorModel
+} from "/server/model/creator";
 
 
 export class FamilyCodesSchema {
@@ -67,10 +67,10 @@ export class FamilySchema {
   }
 
   public async fetchNames(): Promise<FamilyNames> {
-    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
-    let [userName] = await Promise.all([userNamePromise]);
+    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.user).then((creator) => creator?.name);
+    let [creatorName] = await Promise.all([creatorNamePromise]);
     let familyName = this.name;
-    let names = {family: familyName, user: userName};
+    let names = {family: familyName, user: creatorName};
     return names;
   }
 

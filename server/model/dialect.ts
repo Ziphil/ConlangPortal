@@ -13,6 +13,9 @@ import {
   Dialect as DialectSkeleton
 } from "/client/skeleton/dialect";
 import {
+  CreatorModel
+} from "/server/model/creator";
+import {
   EntryCodes
 } from "/server/model/entry";
 import {
@@ -21,9 +24,6 @@ import {
 import {
   LanguageModel
 } from "/server/model/language";
-import {
-  UserModel
-} from "/server/model/user";
 
 
 export class DialectCodesSchema {
@@ -74,11 +74,11 @@ export class DialectSchema {
   public approvedDate?: Date;
 
   public async approve(this: Dialect): Promise<Dialect> {
-    let userPromise = UserModel.fetchOneByCode(this.codes.user).then((user) => {
-      if (user !== null && !user.approved) {
-        user.approved = true;
-        user.approvedDate = new Date();
-        return user.save();
+    let creatorPromise = CreatorModel.fetchOneByCode(this.codes.user).then((creator) => {
+      if (creator !== null && !creator.approved) {
+        creator.approved = true;
+        creator.approvedDate = new Date();
+        return creator.save();
       } else {
         return null;
       }
@@ -106,7 +106,7 @@ export class DialectSchema {
       this.approvedDate = new Date();
       await this.save();
     })();
-    let [user, family, language] = await Promise.all([userPromise, familyPromise, languagePromise, dialectPromise]);
+    let [creator, family, language] = await Promise.all([creatorPromise, familyPromise, languagePromise, dialectPromise]);
     return this;
   }
 
@@ -125,12 +125,12 @@ export class DialectSchema {
   }
 
   public async fetchNames(): Promise<DialectNames> {
-    let userNamePromise = UserModel.fetchOneByCode(this.codes.user).then((user) => user?.name);
+    let creatorNamePromise = CreatorModel.fetchOneByCode(this.codes.user).then((creator) => creator?.name);
     let familyNamePromise = FamilyModel.fetchOneByCodes(this.codes).then((family) => family?.name);
     let languageNamePromise = LanguageModel.fetchOneByCodes(this.codes).then((language) => language?.name);
-    let [userName, familyName, languageName] = await Promise.all([userNamePromise, familyNamePromise, languageNamePromise]);
+    let [creatorName, familyName, languageName] = await Promise.all([creatorNamePromise, familyNamePromise, languageNamePromise]);
     let dialectName = this.name;
-    let names = {dialect: dialectName, language: languageName, family: familyName, user: userName};
+    let names = {dialect: dialectName, language: languageName, family: familyName, user: creatorName};
     return names;
   }
 
