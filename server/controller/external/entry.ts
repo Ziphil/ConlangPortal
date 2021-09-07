@@ -53,12 +53,16 @@ export class EntryExternalController extends Controller {
   @get("/image/:codePath")
   public async [Symbol()](request: Request, response: Response): Promise<void> {
     let codePath = request.params["codePath"];
-    let image = await OgpUtil.createEntryImage(codePath);
-    if (image !== null) {
-      response.header("Content-Type", "image/png");
-      response.send(image).end();
-    } else {
-      response.sendStatus(400).end();
+    try {
+      let image = await OgpUtil.createEntryImage(codePath);
+      if (image !== null) {
+        response.header("Content-Type", "image/png");
+        response.send(image).end();
+      } else {
+        response.sendStatus(400).end();
+      }
+    } catch (error) {
+      response.sendStatus(500).end();
     }
   }
 
