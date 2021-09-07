@@ -48,17 +48,21 @@ export class OgpUtil {
       let rawEntry = await EntryUtil.fetchOneByCodes(codes);
       let entry = (rawEntry !== null) ? EntrySkeletonStatic.create(await EntryCreator.create(rawEntry)) : null;
       if (entry !== null) {
-        let nameArray = entry.getNameArray();
-        let mainNameString = nameArray[0] ?? "";
-        let restNameString = ((nameArray.length >= 2) ? "« " : "") + nameArray.slice(1).join(" « ");
         let css = require("/client/public/image.scss").default;
         let templateHtml = require("/client/public/image.html").default;
+        let codeArray = CodesUtil.toNormalizedCodeArray(codes);
+        let nameArray = entry.getNameArray();
+        let codeHtml = codeArray.map((code) => `<span class="code">${code}</span>`).join(`<span class="slash"></span>`);
+        let mainNameInnerHtml = ClientOgpUtil.escapeHtml(nameArray[0] ?? "");
+        let mainNameHtml = `<div class="main-name">${mainNameInnerHtml}</div>`;
+        let restNameInnerHtml = nameArray.slice(1).map((name) => `<span class="name">${ClientOgpUtil.escapeHtml(name ?? "")}</span>`).join(`<span class="arrow"></span>`);
+        let restNameHtml = (nameArray.length >= 2) ? `<div class="rest-name"><span class="arrow"></span>${restNameInnerHtml}</div>` : "";
         let injectionHtml = `
-          <div class="code">${CodesUtil.toNormalizedForm(entry.codes)}</div>
+          <div class="code">${codeHtml}</div>
           <div class="box">
             <div class="name-container">
-              <div class="main-name">${ClientOgpUtil.escapeHtml(mainNameString)}</div>
-              <div class="rest-name">${ClientOgpUtil.escapeHtml(restNameString)}</div>
+              ${mainNameHtml}
+              ${restNameHtml}
             </div>
             <div class="title">Language Portal</div>
           </div>

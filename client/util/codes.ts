@@ -73,6 +73,15 @@ export class CodesUtil {
     return string;
   }
 
+  public static toNormalizedCodeArray(codes: EntryCodes): Array<string> {
+    let codeArray = [];
+    codeArray.push(("dialect" in codes) ? codes.dialect : "*");
+    codeArray.push(("language" in codes) ? codes.language: "*");
+    codeArray.push(("family" in codes) ? codes.family : "*");
+    codeArray.push(codes.creator);
+    return codeArray;
+  }
+
   public static toBcpString(codes: EntryCodes): string {
     let string = "x-v3-";
     string += codes.creator;
