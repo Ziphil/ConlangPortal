@@ -64,7 +64,7 @@ export class OgpUtil {
               ${mainNameHtml}
               ${restNameHtml}
             </div>
-            <div class="title">Language Portal</div>
+            <div class="title">Conlang Portal</div>
           </div>
         `;
         let html = templateHtml.replace("/* css */", css).replace("<!-- html -->", injectionHtml);
