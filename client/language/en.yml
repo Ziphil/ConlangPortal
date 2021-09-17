@@ -39,6 +39,15 @@ error:
 editableText:
   empty: "(No data)"
 informationList:
+  guide: 
+    approved: "Click on each item here to edit it"
+    unapproved: "The items here will be editable after approval"
+  entryInformations:
+    creator: "Creator info"
+    family: "Language family info"
+    language: "Language info"
+    dialect: "Dialect info"
+  codeInformations: "Code info"
   name: "Name"
   homepageUrl: "Homepage URL"
   dictionaryUrl: "Dictionary URL"
@@ -46,6 +55,7 @@ informationList:
   description: "Brief description"
   biography: "Biography"
   descendantDialects: "Lower-level languages/dialects"
+  abbreviatedForms: "CLA v3 abbreviated forms (provisional)"
   fullCodeString: "CLA v3 normalised form"
   bcpString: "IETF BCP 47 compatibility notation"
   approval: "Approval status"
@@ -98,9 +108,6 @@ entryPane:
   family: "Family"
   language: "Language"
   dialect: "Dialect"
-  guide: 
-    approved: "Click on each item below to edit it"
-    unapproved: "The following items will be editable after approval"
   unspecified: >-
     There is no information in this level.
     Please refer to the one level above.

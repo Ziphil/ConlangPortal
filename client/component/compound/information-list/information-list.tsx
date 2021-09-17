@@ -20,7 +20,7 @@ import {
 } from "/client/util/codes";
 
 
-export default class InformationList<E extends Entry> extends Component<Props<E>, State<E>> {
+export default abstract class InformationList<E extends Entry> extends Component<Props<E>, State<E>> {
 
   public state: State<E> = {
     entry: undefined as any,
@@ -97,6 +97,19 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     return node;
   }
 
+  protected renderAbbreviatedForms(): ReactNode {
+    let forms = CodesUtil.getAbbreviatedForms(this.props.entry.codes);
+    let innerNodes = forms.map((form, index) => <li key={index}>{form}</li>);
+    let node = (
+      <InformationPane label={this.trans("informationList.abbreviatedForms")}>
+        <ul className="list">
+          {innerNodes}
+        </ul>
+      </InformationPane>
+    );
+    return node;
+  }
+
   protected renderFullCodeString(): ReactNode {
     let node = (
       <InformationPane label={this.trans("informationList.fullCodeString")}>
@@ -135,6 +148,31 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     return node;
   }
 
+  protected abstract renderEntryInformationPanes(): ReactNode;
+
+  protected abstract renderCodeInformationPanes(): ReactNode;
+
+  public render(): ReactNode {
+    let guideNode = (this.props.guideType !== "none") && (
+      <span styleName="guide">{this.trans(`informationList.guide.${this.props.guideType}`)}</span>
+    );
+    let node = (
+      <div styleName="root">
+        <div styleName="head">
+          <span styleName="head-inner">{this.trans(`informationList.entryInformations.${this.state.entry.kind}`)}</span>
+          {guideNode}
+        </div>
+        {this.renderEntryInformationPanes()}
+        <div styleName="head">
+          <span styleName="head-inner">{this.trans("informationList.codeInformations")}</span>
+        </div>
+        {this.renderCodeInformationPanes()}
+      </div>
+    );
+    console.log("22");
+    return node;
+  }
+
   protected setEntry<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
     let outerThis = this;
     let wrapper = function (...args: T): void {
@@ -151,6 +189,7 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
 type Props<E> = {
   entry: E,
   editable: boolean,
+  guideType: "approved" | "unapproved" | "none",
   onSet: (key: string, value: any) => void
 };
 type State<E> = {

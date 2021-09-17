@@ -168,15 +168,17 @@ export default class EntryPane extends Component<Props, State, Params> {
     let entry = this.state.entry;
     if (entry !== null) {
       let approved = entry !== null && (entry.approved || entry.kind === "creator");
+      let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.creator;
       let editable = approved && this.props.store!.user?.code === entry.codes.creator;
+      let guideType = (maybeEditable) ? (approved) ? "approved" : "unapproved" : "none" as any;
       if (entry.kind === "dialect") {
-        return <DialectInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+        return <DialectInformationList entry={entry} editable={editable} guideType={guideType} onSet={this.changeInformations.bind(this)}/>;
       } else if (entry.kind === "language") {
-        return <LanguageInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+        return <LanguageInformationList entry={entry} editable={editable} guideType={guideType} onSet={this.changeInformations.bind(this)}/>;
       } else if (entry.kind === "family") {
-        return <FamilyInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+        return <FamilyInformationList entry={entry} editable={editable} guideType={guideType} onSet={this.changeInformations.bind(this)}/>;
       } else {
-        return <CreatorInformationList entry={entry} editable={editable} onSet={this.changeInformations.bind(this)}/>;
+        return <CreatorInformationList entry={entry} editable={editable} guideType={guideType} onSet={this.changeInformations.bind(this)}/>;
       }
     }
   }
@@ -205,19 +207,7 @@ export default class EntryPane extends Component<Props, State, Params> {
     if (found !== null) {
       if (found && entry !== null) {
         if (CodesUtil.toCodeArray(entry.codes)[0] !== "~") {
-          let approved = entry !== null && (entry.approved || entry.kind === "creator");
-          let maybeEditable = entry !== null && this.props.store!.user?.code === entry.codes.creator;
-          let informationListNode = this.renderInformationList();
-          let guideNode = (maybeEditable) && (
-            <div styleName="guide">{this.trans(`entryPane.guide.${(approved) ? "approved" : "unapproved"}`)}</div>
-          );
-          let node = (
-            <Fragment>
-              {guideNode}
-              {informationListNode}
-            </Fragment>
-          );
-          return node;
+          return this.renderInformationList();
         } else {
           return this.renderUnspecifiedMessage();
         }

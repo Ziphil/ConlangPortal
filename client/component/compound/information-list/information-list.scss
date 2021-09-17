@@ -3,9 +3,35 @@
 @import "/client/component/mixin.scss";
 
 
-.root >* {
+.list >* {
   padding: 48u 96u;
   border-top: 3u var(--border-color) solid;
+}
+
+.list:not(:last-child) >*:last-child {
+  border-bottom: 3u var(--border-color) solid;
+}
+
+.head {
+  @include reset-first-margin(top);
+  margin-top: 80u;
+  padding: 0u 96u 24u 96u;
+}
+
+.head-inner {
+  font-weight: bold;
+  font-size: 120%;
+  color: var(--accent-color);
+}
+
+.guide {
+  margin-left: 48u;
+  font-weight: normal;
+  font-size: 80%;
+  color: var(--dimmed-accent-color);
+  @include smartphone {
+    display: none;
+  }
 }
 
 .root :global(.link) {

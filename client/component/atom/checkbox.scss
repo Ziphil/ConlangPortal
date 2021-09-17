@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.checkbox {
+  display: none;
+}
+
+.checkbox +.label {
+  padding-left: 1em + $blank-margin;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox +.label::before {
+  top: 0.15em;
+  left: 0em;
+  width: 1em;
+  height: 1em;
+  border-radius: 16u;
+  background: none;
+  box-shadow: -8u -8u 12u var(--pane-light-shadow-color), 8u 8u 12u var(--pane-dark-shadow-color), -8u -8u 12u transparent inset, 8u 8u 12u transparent inset;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  content: "";
+  transition: box-shadow $transition-setting, background-color $transition-setting;
+}
+
+.checkbox:hover +.label::before {
+  box-shadow: -8u -8u 12u transparent, 8u 8u 12u transparent, -8u -8u 12u var(--pane-light-shadow-color) inset, 8u 8u 12u var(--pane-dark-shadow-color) inset;
+}
+
+.checkbox:checked +.label::before,
+.checkbox:hover:checked +.label::before {
+  background-color: var(--accent-color);
+  box-shadow: -8u -8u 12u transparent, 8u 8u 12u transparent, -8u -8u 12u var(--accent-light-shadow-color) inset, 8u 8u 12u var(--accent-dark-shadow-color) inset;
+}
+
+.checkbox +.label::after {
+  @include icon-font;
+  top: 0.45em;
+  left: 0.22em;
+  font-size: 70%;
+  color: var(--background-color);
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  content: "\F00C";
+  opacity: 0;
+  transition: opacity $transition-setting;
+}
+
+.checkbox:checked +.label::after {
+  opacity: 1;
+}

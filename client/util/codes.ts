@@ -97,6 +97,32 @@ export class CodesUtil {
     return string;
   }
 
+  public static getAbbreviatedForms(codes: EntryCodes): Array<string> {
+    if ("dialect" in codes) {
+      let forms = [];
+      forms.push(`${codes.dialect}_${codes.language}_${codes.creator}.C`);
+      if (codes.family !== "~") {
+        forms.push(`${codes.dialect}_${codes.language}_${codes.family}.F`);
+      }
+      forms.push(`${codes.dialect}_${codes.creator}.CD`);
+      if (codes.family !== "~") {
+        forms.push(`${codes.dialect}_${codes.family}.FD`);
+      }
+      return forms;
+    } else if ("language" in codes) {
+      let forms = [];
+      if (codes.language !== "~") {
+        forms.push(`${codes.language}_${codes.creator}.CL`);
+        if (codes.family !== "~") {
+          forms.push(`${codes.language}_${codes.family}.FL`);
+        }
+      }
+      return forms;
+    } else {
+      return [];
+    }
+  }
+
   public static getParentCodes(codes: EntryCodes): EntryCodes | null {
     if ("dialect" in codes) {
       return {language: codes.language, family: codes.family, creator: codes.creator};

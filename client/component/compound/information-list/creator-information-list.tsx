@@ -25,9 +25,9 @@ export default class CreatorInformationList extends InformationList<Creator> {
     return node;
   }
 
-  public render(): ReactNode {
+  protected renderEntryInformationPanes(): ReactNode {
     let node = (
-      <div styleName="root">
+      <div styleName="list">
         <InformationPane label={this.trans("informationList.name")}>
           <EditableText
             value={this.state.entry.name ?? ""}
@@ -67,6 +67,14 @@ export default class CreatorInformationList extends InformationList<Creator> {
             onCancel={this.setEntry(() => this.state.entry.biography = this.props.entry.biography)}
           />
         </InformationPane>
+      </div>
+    );
+    return node;
+  }
+
+  protected renderCodeInformationPanes(): ReactNode {
+    let node = (
+      <div styleName="list">
         {this.renderDescendantDialects()}
         {this.renderFullCodeString()}
         {this.renderApproval()}

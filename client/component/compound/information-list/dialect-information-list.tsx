@@ -18,9 +18,9 @@ import {
 @style(require("./information-list.scss"))
 export default class DialectInformationList extends InformationList<Dialect> {
 
-  public render(): ReactNode {
+  protected renderEntryInformationPanes(): ReactNode {
     let node = (
-      <div styleName="root">
+      <div styleName="list">
         <InformationPane label={this.trans("informationList.name")}>
           <EditableText
             value={this.state.entry.name ?? ""}
@@ -60,6 +60,15 @@ export default class DialectInformationList extends InformationList<Dialect> {
             onCancel={this.setEntry(() => this.state.entry.description = this.props.entry.description)}
           />
         </InformationPane>
+      </div>
+    );
+    return node;
+  }
+
+  protected renderCodeInformationPanes(): ReactNode {
+    let node = (
+      <div styleName="list">
+        {this.renderAbbreviatedForms()}
         {this.renderFullCodeString()}
         {this.renderBcpString()}
         {this.renderApproval()}
