@@ -55,7 +55,7 @@ informationList:
   description: "概要"
   biography: "自己紹介"
   descendantDialects: "下位の言語/方言"
-  abbreviatedForms: "CLA v3 省略形"
+  abbreviatedForms: "CLA v3 省略形 (暫定)"
   fullCodeString: "CLA v3 正規形"
   bcpString: "IETF BCP 47 互換表記"
   approval: "承認状況"

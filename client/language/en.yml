@@ -55,7 +55,7 @@ informationList:
   description: "Brief description"
   biography: "Biography"
   descendantDialects: "Lower-level languages/dialects"
-  abbreviatedForms: "CLA v3 abbreviated forms"
+  abbreviatedForms: "CLA v3 abbreviated forms (provisional)"
   fullCodeString: "CLA v3 normalised form"
   bcpString: "IETF BCP 47 compatibility notation"
   approval: "Approval status"
