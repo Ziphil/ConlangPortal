@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import Button from "/client/component/atom/button";
+import Checkbox from "/client/component/atom/checkbox";
 import Input from "/client/component/atom/input";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
@@ -132,10 +133,13 @@ export default class AddEntryForm extends Component<Props, State> {
                   />
                 </div>
                 <div styleName="checkbox">
-                  <label>
-                    <input type="checkbox" checked={this.state.familyUnspecified} onChange={(event) => this.setState({familyUnspecified: event.target.checked})}/>
-                    {this.trans("addEntryForm.family.unspecified")}
-                  </label>
+                  <Checkbox
+                    label={this.trans("addEntryForm.family.unspecified")}
+                    name="familyUnspecified"
+                    value="true"
+                    checked={this.state.familyUnspecified}
+                    onSet={(familyUnspecified) => this.setState({familyUnspecified})}
+                  />
                 </div>
                 {familyCautionPane}
               </div>
@@ -174,10 +178,13 @@ export default class AddEntryForm extends Component<Props, State> {
                   />
                 </div>
                 <div styleName="checkbox">
-                  <label>
-                    <input type="checkbox" checked={this.state.dialectUnspecified} onChange={(event) => this.setState({dialectUnspecified: event.target.checked})}/>
-                    {this.trans("addEntryForm.dialect.unspecified")}
-                  </label>
+                  <Checkbox
+                    label={this.trans("addEntryForm.dialect.unspecified")}
+                    name="dialectUnspecified"
+                    value="true"
+                    checked={this.state.dialectUnspecified}
+                    onSet={(dialectUnspecified) => this.setState({dialectUnspecified})}
+                  />
                 </div>
               </div>
               <div styleName="head">{this.trans("addEntryForm.evidence.head")}</div>
