@@ -61,6 +61,7 @@ export default class LanguageInformationList extends InformationList<Language> {
           />
         </InformationPane>
         {this.renderDescendantDialects()}
+        {this.renderAbbreviatedForms()}
         {this.renderFullCodeString()}
         {this.renderBcpString()}
         {this.renderApproval()}

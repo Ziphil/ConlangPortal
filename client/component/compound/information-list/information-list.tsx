@@ -97,6 +97,19 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     return node;
   }
 
+  protected renderAbbreviatedForms(): ReactNode {
+    let forms = CodesUtil.getAbbreviatedForms(this.props.entry.codes);
+    let innerNodes = forms.map((form, index) => <li key={index}>{form}</li>);
+    let node = (
+      <InformationPane label={this.trans("informationList.abbreviatedForms")}>
+        <ul className="list">
+          {innerNodes}
+        </ul>
+      </InformationPane>
+    );
+    return node;
+  }
+
   protected renderFullCodeString(): ReactNode {
     let node = (
       <InformationPane label={this.trans("informationList.fullCodeString")}>
