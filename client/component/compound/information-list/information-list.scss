@@ -13,7 +13,9 @@
 }
 
 .head {
-  padding: 64u 96u 32u 96u;
+  @include reset-first-margin(top);
+  margin-top: 80u;
+  padding: 0u 96u 24u 96u;
 }
 
 .head-inner {
