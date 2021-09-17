@@ -39,12 +39,15 @@ error:
 editableText:
   empty: "(No data)"
 informationList:
+  guide: 
+    approved: "Click on each item here to edit it"
+    unapproved: "The items here will be editable after approval"
   entryInformations:
-    creator: "Creator information"
-    family: "Language family information"
-    language: "Language information"
-    dialect: "Dialect information"
-  codeInformations: "Code information"
+    creator: "Creator info"
+    family: "Language family info"
+    language: "Language info"
+    dialect: "Dialect info"
+  codeInformations: "Code info"
   name: "Name"
   homepageUrl: "Homepage URL"
   dictionaryUrl: "Dictionary URL"
@@ -105,9 +108,6 @@ entryPane:
   family: "Family"
   language: "Language"
   dialect: "Dialect"
-  guide: 
-    approved: "Click on each item below to edit it"
-    unapproved: "The following items will be editable after approval"
   unspecified: >-
     There is no information in this level.
     Please refer to the one level above.

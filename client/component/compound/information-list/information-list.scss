@@ -14,9 +14,22 @@
 
 .head {
   padding: 64u 96u 32u 96u;
+}
+
+.head-inner {
   font-weight: bold;
   font-size: 120%;
   color: var(--accent-color);
+}
+
+.guide {
+  margin-left: 48u;
+  font-weight: normal;
+  font-size: 80%;
+  color: var(--dimmed-accent-color);
+  @include smartphone {
+    display: none;
+  }
 }
 
 .root :global(.link) {

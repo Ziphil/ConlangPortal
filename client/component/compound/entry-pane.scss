@@ -183,13 +183,6 @@ $smartphone-scale-ratio: 0.7;
   }
 }
 
-.guide {
-  margin-bottom: 16u;
-  font-size: 80%;
-  color: var(--dimmed-accent-color);
-  text-align: center;
-}
-
 .message {
   @include line-height;
   padding: 0u 96u 64u 96u;

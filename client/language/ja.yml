@@ -39,6 +39,9 @@ error:
 editableText:
   empty: "(未登録)"
 informationList:
+  guide:
+    approved: "ここの各項目はクリックで編集できます"
+    unapproved: "ここの各項目は承認後に編集できるようになります"
   entryInformations:
     creator: "製作者情報"
     family: "語族情報"
@@ -105,9 +108,6 @@ entryPane:
   family: "語族"
   language: "言語"
   dialect: "方言"
-  guide: 
-    approved: "以下の各項目はクリックで編集できます"
-    unapproved: "以下の各項目は承認後に編集できるようになります"
   unspecified: >-
     この階層には情報がありません。
     1 つ上の階層を参照してください。

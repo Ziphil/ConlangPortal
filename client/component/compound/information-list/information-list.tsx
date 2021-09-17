@@ -153,11 +153,19 @@ export default abstract class InformationList<E extends Entry> extends Component
   protected abstract renderCodeInformationPanes(): ReactNode;
 
   public render(): ReactNode {
+    let guideNode = (this.props.guideType !== "none") && (
+      <span styleName="guide">{this.trans(`informationList.guide.${this.props.guideType}`)}</span>
+    );
     let node = (
       <div styleName="root">
-        <div styleName="head">{this.trans(`informationList.entryInformations.${this.state.entry.kind}`)}</div>
+        <div styleName="head">
+          <span styleName="head-inner">{this.trans(`informationList.entryInformations.${this.state.entry.kind}`)}</span>
+          {guideNode}
+        </div>
         {this.renderEntryInformationPanes()}
-        <div styleName="head">{this.trans("informationList.codeInformations")}</div>
+        <div styleName="head">
+          <span styleName="head-inner">{this.trans("informationList.codeInformations")}</span>
+        </div>
         {this.renderCodeInformationPanes()}
       </div>
     );
@@ -181,6 +189,7 @@ export default abstract class InformationList<E extends Entry> extends Component
 type Props<E> = {
   entry: E,
   editable: boolean,
+  guideType: "approved" | "unapproved" | "none",
   onSet: (key: string, value: any) => void
 };
 type State<E> = {
