@@ -20,7 +20,7 @@ import {
 } from "/client/util/codes";
 
 
-export default class InformationList<E extends Entry> extends Component<Props<E>, State<E>> {
+export default abstract class InformationList<E extends Entry> extends Component<Props<E>, State<E>> {
 
   public state: State<E> = {
     entry: undefined as any,
@@ -148,13 +148,9 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     return node;
   }
 
-  protected renderEntryInformationPanes(): ReactNode {
-    return null;
-  }
+  protected abstract renderEntryInformationPanes(): ReactNode;
 
-  protected renderCodeInformationPanes(): ReactNode {
-    return null;
-  }
+  protected abstract renderCodeInformationPanes(): ReactNode;
 
   public render(): ReactNode {
     let node = (
