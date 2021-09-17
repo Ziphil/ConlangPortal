@@ -18,9 +18,9 @@ import {
 @style(require("./information-list.scss"))
 export default class LanguageInformationList extends InformationList<Language> {
 
-  public render(): ReactNode {
+  protected renderEntryInformationPanes(): ReactNode {
     let node = (
-      <div styleName="root">
+      <div styleName="list">
         <InformationPane label={this.trans("informationList.name")}>
           <EditableText
             value={this.state.entry.name ?? ""}
@@ -60,6 +60,14 @@ export default class LanguageInformationList extends InformationList<Language> {
             onCancel={this.setEntry(() => this.state.entry.description = this.props.entry.description)}
           />
         </InformationPane>
+      </div>
+    );
+    return node;
+  }
+
+  protected renderCodeInformationPanes(): ReactNode {
+    let node = (
+      <div styleName="list">
         {this.renderDescendantDialects()}
         {this.renderAbbreviatedForms()}
         {this.renderFullCodeString()}

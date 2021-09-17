@@ -39,6 +39,12 @@ error:
 editableText:
   empty: "(未登録)"
 informationList:
+  entryInformations:
+    creator: "製作者情報"
+    family: "語族情報"
+    language: "言語情報"
+    dialect: "方言情報"
+  codeInformations: "コード情報"
   name: "名前"
   homepageUrl: "ホームページ URL"
   dictionaryUrl: "辞書 URL"

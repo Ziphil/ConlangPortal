@@ -39,6 +39,12 @@ error:
 editableText:
   empty: "(No data)"
 informationList:
+  entryInformations:
+    creator: "Creator information"
+    family: "Language family information"
+    language: "Language information"
+    dialect: "Dialect information"
+  codeInformations: "Code information"
   name: "Name"
   homepageUrl: "Homepage URL"
   dictionaryUrl: "Dictionary URL"

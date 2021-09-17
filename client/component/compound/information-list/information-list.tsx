@@ -148,6 +148,27 @@ export default class InformationList<E extends Entry> extends Component<Props<E>
     return node;
   }
 
+  protected renderEntryInformationPanes(): ReactNode {
+    return null;
+  }
+
+  protected renderCodeInformationPanes(): ReactNode {
+    return null;
+  }
+
+  public render(): ReactNode {
+    let node = (
+      <div styleName="root">
+        <div styleName="head">{this.trans(`informationList.entryInformations.${this.state.entry.kind}`)}</div>
+        {this.renderEntryInformationPanes()}
+        <div styleName="head">{this.trans("informationList.codeInformations")}</div>
+        {this.renderCodeInformationPanes()}
+      </div>
+    );
+    console.log("22");
+    return node;
+  }
+
   protected setEntry<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
     let outerThis = this;
     let wrapper = function (...args: T): void {
