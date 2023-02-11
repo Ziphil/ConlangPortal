@@ -50,7 +50,7 @@ export class Main {
     this.listen();
   }
 
-  // リクエストボディをパースするミドルウェアの設定をします。
+  /** リクエストボディをパースするミドルウェアの設定をします。*/
   private setupBodyParsers(): void {
     let urlencodedParser = express.urlencoded({extended: false});
     let jsonParser = express.json();
@@ -63,28 +63,28 @@ export class Main {
     this.application.use(middleware);
   }
 
-  // ファイルをアップロードする処理を行う Multer の設定をします。
-  // アップロードされたファイルは upload フォルダ内に保存するようにしています。
+  /** ファイルをアップロードする処理を行う Multer の設定をします。
+   * アップロードされたファイルは `upload` フォルダ内に保存するようにしています。*/
   private setupMulter(): void {
     let middleware = multer({dest: "./dist/upload/"}).single("file");
     this.application.use("/api*", middleware);
   }
 
-  // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
-  // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
+  /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
+   * typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。*/
   private setupMongo(): void {
     MongoUtil.setCheckRequired("String");
     mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 
-  // 内部処理で用いるディレクトリを用意します。
+  /** 内部処理で用いるディレクトリを用意します。*/
   private setupDirectories(): void {
     fs.mkdirSync("./dist/download", {recursive: true});
   }
 
-  // ルーターの設定を行います。
-  // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
+  /** ルーターの設定を行います。
+   * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private setupRouters(): void {
     EntryController.use(this.application);
     UserController.use(this.application);
@@ -96,9 +96,9 @@ export class Main {
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
-  // ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
-  // フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
-  // そうでない場合は、フロントエンドのトップページを返します。
+  /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
+   * フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
+   * そうでない場合は、フロントエンドのトップページを返します。*/
   private setupFallbackHandlers(): void {
     let internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;

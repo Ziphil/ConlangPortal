@@ -40,8 +40,8 @@ export class OgpUtil {
     }
   }
 
-  // サムネイル用の画像データを生成します。
-  // HTML をヘッドレス Chrome で描画して画像を生成するという実装になっており、さらに Google Fonts からフォントをダウンロードする必要もあるので、少し時間がかかります。
+  /** サムネイル用の画像データを生成します。
+   * HTML をヘッドレス Chrome で描画して画像を生成するという実装になっており、さらに Google Fonts からフォントをダウンロードする必要もあるので、少し時間がかかります。*/
   public static async createEntryImage(codePath: string): Promise<Buffer | null> {
     if (CodesUtil.isValidCodePath(codePath)) {
       let codes = CodesUtil.fromCodePath(codePath);

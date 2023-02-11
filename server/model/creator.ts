@@ -82,9 +82,9 @@ export class CreatorSchema {
     return names;
   }
 
-  // 渡された情報からユーザーを作成し、データベースに保存します。
-  // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
-  // 渡されたパスワードは自動的にハッシュ化されます。
+  /** 渡された情報からユーザーを作成し、データベースに保存します。
+   * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
+   * 渡されたパスワードは自動的にハッシュ化されます。*/
   public static async register(code: string, name: string, password: string): Promise<Creator> {
     if (!code.match(/^[a-z]{3}$/)) {
       throw new CustomError("invalidCreatorCode");
@@ -104,8 +104,8 @@ export class CreatorSchema {
     }
   }
 
-  // 渡された名前とパスワードに合致するユーザーを返します。
-  // 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、null を返します。
+  /** 渡された名前とパスワードに合致するユーザーを返します。
+   * 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、`null` を返します。*/
   public static async authenticate(code: string, password: string): Promise<Creator | null> {
     let user = await CreatorModel.findOne().where("codes.creator", code);
     if (user && user.comparePassword(password)) {
@@ -128,8 +128,8 @@ export class CreatorSchema {
     return creators;
   }
 
-  // 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
-  // データベースへの保存は行わないので、別途保存処理を行ってください。
+  /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
+   * データベースへの保存は行わないので、別途保存処理を行ってください。*/
   private async encryptPassword(password: string): Promise<void> {
     let hash = hashSync(password, 10);
     this.hash = hash;

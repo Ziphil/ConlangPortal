@@ -89,9 +89,9 @@ export class FamilySchema {
     return family;
   }
 
-  // 与えられたコードの語族データと共通のプロパティをもたなければならない全ての語族データの配列を返します。
-  // すなわち、与えられたコードのプロパティを変更したい場合、このメソッドが返す全ての語族データに対しても同じプロパティで変更する必要があります。
-  // 例えば、引数に xxx/aaa を渡した場合、このメソッドが返す配列には、完全に合致する xxx/aaa はもちろん含まれる他、xxx/bbb のような製作者部分が異なるものも含まれます。
+  /** 与えられたコードの語族データと共通のプロパティをもたなければならない全ての語族データの配列を返します。
+   * すなわち、与えられたコードのプロパティを変更したい場合、このメソッドが返す全ての語族データに対しても同じプロパティで変更する必要があります。
+   * 例えば、引数に xxx/aaa を渡した場合、このメソッドが返す配列には、完全に合致する xxx/aaa はもちろん含まれる他、xxx/bbb のような製作者部分が異なるものも含まれます。*/
   public static async fetchSyncedByCodes(codes: FamilyCodes): Promise<Array<Family>> {
     if (codes.family !== "~") {
       let families = await FamilyModel.find().where("codes.family", codes.family);

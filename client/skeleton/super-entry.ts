@@ -27,12 +27,12 @@ export class SuperEntry<K extends string, C extends SuperEntryCodes, N extends S
     return nameArray;
   }
 
-  // フロントエンド側で表示するようのコードを返します。
+  /** フロントエンド側で表示する用のコードを返します。*/
   public getCode<K extends keyof SuperEntryCodes>(kind: K): C[K] {
     return this.codes[kind];
   }
 
-  // フロントエンド側で表示するようの名称を返します。
+  /** フロントエンド側で表示する用の名称を返します。*/
   public getName<K extends keyof SuperEntryNames>(kind: K): N[K] {
     return (this.codes[kind] === "~") ? "—" : this.names[kind];
   }

@@ -92,10 +92,10 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     this.props.history!.replace(path, state);
   }
 
-  // サーバーに POST リクエストを送り、そのリスポンスを返します。
-  // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
-  // これにより、ページ上部にエラーを示すポップアップが表示されます。
-  // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
+  /** サーバーに POST リクエストを送り、そのリスポンスを返します。
+   * HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
+   * これにより、ページ上部にエラーを示すポップアップが表示されます。
+   * `ignroesError` に `true` を渡すことで、このエラータイプの送信を抑制できます。*/
   protected async request<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
     let url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
     let method = "post" as const;
